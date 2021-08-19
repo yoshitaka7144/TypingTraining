@@ -26,7 +26,9 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $question = new Question();
+
+        return view("question/create", compact("question"));
     }
 
     /**
@@ -37,7 +39,13 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $question = new Question();
+        $question->category = $request->category;
+        $question->text = $request->text;
+        $question->kana = $request->kana;
+        $question->save();
+
+        return redirect("/question");
     }
 
     /**
@@ -91,6 +99,9 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $question->delete();
+
+        return redirect("/question");
     }
 }

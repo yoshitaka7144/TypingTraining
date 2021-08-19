@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -17,16 +18,16 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 "name" => "admin",
-                "password" => "aaaa",
+                "password" => Hash::make("aaaa"),
                 "role" => 2
             ],
             [
                 "name" => "test2",
-                "password" => "bbbb",
+                "password" => Hash::make("bbbb"),
             ],
             [
                 "name" => "test3",
-                "password" => "cccc",
+                "password" => Hash::make("cccc"),
             ]
         ];
 
