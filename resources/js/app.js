@@ -4,6 +4,7 @@ import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
 import LoginComponent from "./components/LoginComponent";
 import QuestionComponent from "./components/QuestionComponent";
+import QuestionCreateComponent from "./components/QuestionCreateComponent";
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -28,6 +29,11 @@ const router = new VueRouter({
             path: "/question",
             name: "question",
             component: QuestionComponent
+        },
+        {
+            path: "/question/create",
+            name: "question.create",
+            component: QuestionCreateComponent
         },
     ]
 });

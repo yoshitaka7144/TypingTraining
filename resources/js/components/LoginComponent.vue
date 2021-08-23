@@ -64,13 +64,13 @@ export default {
   },
   methods: {
     login() {
-      //console.log(this.loginForm);
+      console.log(this.loginForm);
       axios.post("/api/login", this.loginForm)
       .then(function(response){
         console.log(response);
       })
       .catch(function(error){
-
+        console.log(error);
       });
     },
     register() {

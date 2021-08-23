@@ -19,5 +19,10 @@ use Illuminate\Http\Request;
 
 // ログイン
 Route::post('/login', 'Auth\LoginController@login')->name('login');
+// ログアウト
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+// 一覧取得
 Route::get('/question', 'QuestionController@index')->name('question');
+// 問題登録
+Route::post('/question', 'QuestionController@store')->name('question.create');

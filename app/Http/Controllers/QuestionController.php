@@ -12,4 +12,14 @@ class QuestionController extends Controller
     {
         return Question::all();
     }
+
+    public function store(Request $request){
+        $question = new Question();
+        $question->category = $request->category;
+        $question->text = $request->text;
+        $question->kana = $request->kana;
+        $question->save();
+
+        return $question;
+    }
 }
