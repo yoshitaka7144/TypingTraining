@@ -1,8 +1,223 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  font-family: $font-family-sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: $link-color;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+i {
+  margin-right: 5px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background-color: $body-bg;
+}
+
+/*----------------------------------------------
+
+ヘッダー
+
+----------------------------------------------*/
+.header-container {
+  background-color: rgb(215, 219, 226);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 200;
+
+  .header {
+    display: flex;
+    max-width: $max-width;
+    margin: 0 auto;
+    height: $header-height;
+
+    #logo {
+      a {
+        line-height: $header-height;
+        padding: 0 15px;
+        color: rgba(0, 0, 0, 0.9);
+        display: block;
+        font-size: 20px;
+        font-weight: bold;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+
+    #pc-nav {
+      margin-left: auto;
+      ul {
+        display: flex;
+        list-style: none;
+
+        a {
+          line-height: $header-height;
+          padding: 0 15px;
+          color: rgba(0, 0, 0, 0.5);
+          display: block;
+          &:hover {
+            opacity: 0.4;
+          }
+        }
+      }
+    }
+
+    #sp-nav {
+      display: flex;
+      z-index: 100;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+        text-align: center;
+        background-color: #d7dbe2;
+        width: 80%;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      li {
+        padding: 10px;
+        width: 100%;
+        a,
+        span {
+          display: block;
+          padding: 15px;
+          font-size: 16px;
+          color: rgba(0, 0, 0, 0.8);
+          cursor: pointer;
+          border-radius: 10px;
+          border: 1px solid #353535;
+          background-color: rgb(255, 255, 255);
+        }
+      }
+    }
+
+    #hamburger {
+      display: none;
+      position: relative;
+      width: 30px;
+      height: $header-height;
+      margin: 0 15px 0 auto;
+      span {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: rgba(58, 58, 58, 0.9);
+        transform: translateY(-50%);
+      }
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 25%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: rgba(58, 58, 58, 0.9);
+      }
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 25%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: rgba(58, 58, 58, 0.9);
+      }
+    }
+  }
+}
+
+/*----------------------------------------------
+
+フッター
+
+----------------------------------------------*/
+.footer-container {
+  margin-top: 10px;
+  background-color: rgb(141, 146, 146);
+  width: 100%;
+
+  .footer {
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 15px;
+    height: $footer-height;
+
+    .copyright {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+}
+
+/*----------------------------------------------
+
+メインコンテンツ
+
+----------------------------------------------*/
+.main-container {
+  width: 100%;
+  max-width: $max-width;
+  margin: 60px auto 0px auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/*----------------------------------------------
+
+レスポンシブ
+
+----------------------------------------------*/
+@media screen and (max-width: 767px) {
+  .header-container {
+    .header {
+      #pc-nav {
+        display: none;
+      }
+
+      #hamburger {
+        display: block;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+}

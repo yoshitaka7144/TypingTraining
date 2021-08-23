@@ -11,13 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::group(["middleware" => "auth"], function(){
-    Route::resource("question", "QuestionController");
-});
+Route::get("/{any}", function(){
+    return view("app");
+})->where("any", ".*");
 
-Auth::routes();
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
