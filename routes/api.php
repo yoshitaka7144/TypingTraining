@@ -17,12 +17,21 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
+// ログインユーザー
+Route::get('/user', fn() => Auth::user())->name('user');
+
 // ログイン
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+// ユーザー登録
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
-// 一覧取得
-Route::get('/question', 'QuestionController@index')->name('question');
-// 問題登録
-Route::post('/question', 'QuestionController@store')->name('question.create');
+// ログイン時のみ
+Route::group(["middleware" => "auth"], function () {
+  // 一覧取得
+  Route::get('/question', 'QuestionController@index')->name('question');
+
+  // 問題登録
+  Route::post('/question', 'QuestionController@store')->name('question.create');
+});

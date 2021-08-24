@@ -29,9 +29,14 @@ export default {
   },
   methods: {
     getQuestions() {
-      axios.get("api/question").then((res) => {
-        this.questions = res.data;
-      });
+      axios
+        .get("api/question")
+        .then((res) => {
+          this.questions = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   mounted() {

@@ -2,36 +2,46 @@
   <div class="header-container">
     <div class="header">
       <div id="logo">
-        <a href="./">TypingTraining</a>
+        <router-link v-bind:to="{ name: 'index' }">
+          TypingTraining
+        </router-link>
       </div>
       <nav id="pc-nav">
         <ul>
-          <li>
+          <li v-if="isLogined">
             <router-link v-bind:to="{ name: 'question' }">
               問題編集
             </router-link>
           </li>
-          <li>
+          <li v-if="!isLogined">
             <router-link v-bind:to="{ name: 'login' }">
               ログイン/新規登録
             </router-link>
           </li>
-          <li @click="logout">ログアウト</li>
+          <li v-if="isLogined" @click="logout"><a>ログアウト</a></li>
         </ul>
       </nav>
       <nav id="sp-nav" v-show="isShownSpNav">
         <ul>
-          <li @click="toggleSpNav">
+          <li v-if="isLogined" @click="toggleSpNav">
             <router-link v-bind:to="{ name: 'question' }">
               問題編集
             </router-link>
           </li>
-          <li @click="toggleSpNav">
+          <li v-if="!isLogined" @click="toggleSpNav">
             <router-link v-bind:to="{ name: 'login' }">
               ログイン/新規登録
             </router-link>
           </li>
-          <li @click="toggleSpNav(); logout()">ログアウト</li>
+          <li
+            v-if="isLogined"
+            @click="
+              toggleSpNav();
+              logout();
+            "
+          >
+            <a>ログアウト</a>
+          </li>
           <li @click="toggleSpNav">
             <span><i class="fas fa-times"></i>閉じる</span>
           </li>
@@ -48,22 +58,25 @@
 export default {
   data() {
     return {
-      isShownSpNav: false
+      isShownSpNav: false,
     };
   },
   methods: {
     toggleSpNav() {
       this.isShownSpNav = !this.isShownSpNav;
     },
-    logout() {
-      axios.post("/api/logout")
-        .then((res) => {
-          console.log(res);
-          this.$router.push("/");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    async logout() {
+      await this.$store.dispatch("auth/logout");
+
+      this.$router.push("/", function () {});
+    },
+  },
+  computed: {
+    isLogined() {
+      return this.$store.getters["auth/isLogined"];
+    },
+    username() {
+      return this.$store.getters["auth/username"];
     },
   },
 };

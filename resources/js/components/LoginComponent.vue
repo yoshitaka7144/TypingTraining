@@ -38,7 +38,7 @@
         <input
           type="password"
           id="register-password-confirm"
-          v-model="registerForm.passwordConfirm"
+          v-model="registerForm.password_confirmation"
         />
         <button type="submit">登録</button>
       </form>
@@ -58,23 +58,22 @@ export default {
       registerForm: {
         name: "",
         password: "",
-        passwordConfirm: "",
+        password_confirmation: "",
       },
     };
   },
   methods: {
-    login() {
-      console.log(this.loginForm);
-      axios.post("/api/login", this.loginForm)
-      .then(function(response){
-        console.log(response);
-      })
-      .catch(function(error){
-        console.log(error);
-      });
+    async login() {
+      await this.$store.dispatch("auth/login", this.loginForm);
+
+      // トップページへ
+      this.$router.push("/");
     },
-    register() {
-      console.log(this.registerForm);
+    async register() {
+      await this.$store.dispatch("auth/register", this.registerForm);
+
+      // トップページへ
+      this.$router.push("/");
     },
   },
 };

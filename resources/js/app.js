@@ -1,10 +1,9 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import store from "./store";
+import router from "./router";
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
-import LoginComponent from "./components/LoginComponent";
-import QuestionComponent from "./components/QuestionComponent";
-import QuestionCreateComponent from "./components/QuestionCreateComponent";
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -14,29 +13,6 @@ import QuestionCreateComponent from "./components/QuestionCreateComponent";
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-    mode:"history",
-    routes: [
-        {
-            path: "/login",
-            name: "login",
-            component: LoginComponent
-        },
-        {
-            path: "/question",
-            name: "question",
-            component: QuestionComponent
-        },
-        {
-            path: "/question/create",
-            name: "question.create",
-            component: QuestionCreateComponent
-        },
-    ]
-});
 
 /**
  * The following block of code may be used to automatically register your
@@ -58,7 +34,14 @@ Vue.component("footer-component", FooterComponent);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-    router
-});
+async function createApp() {
+    await store.dispatch('auth/currentUser')
+
+    new Vue({
+        el: '#app',
+        router,
+        store
+    })
+}
+
+createApp();
