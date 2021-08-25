@@ -2148,6 +2148,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2223,14 +2224,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       tab: 1,
+      loginNameError: "",
+      loginPasswordError: "",
       loginForm: {
         name: "",
         password: ""
       },
+      registerNameError: "",
+      registerPasswordError: "",
+      registerPasswordConfirmationError: "",
       registerForm: {
         name: "",
         password: "",
@@ -2307,6 +2323,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.clearError();
+  },
+  watch: {
+    "loginForm.name": function loginFormName(val) {
+      if (val.length < 1) {
+        this.loginNameError = _util__WEBPACK_IMPORTED_MODULE_1__["LOGIN_NAME_ERROR_REQUIRE"];
+      } else {
+        this.loginNameError = "";
+      }
+    },
+    "loginForm.password": function loginFormPassword(val) {
+      if (val.length < 1) {
+        this.loginPasswordError = _util__WEBPACK_IMPORTED_MODULE_1__["LOGIN_PASSWORD_ERROR_REQUIRE"];
+      } else {
+        this.loginPasswordError = "";
+      }
+    },
+    "registerForm.name": function registerFormName(val) {
+      if (val.length < 1) {
+        this.registerNameError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_NAME_ERROR_REQUIRE"];
+      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_NAME_MAX_NUMBER"]) {
+        this.registerNameError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_NAME_ERROR_LIMIT"];
+      } else {
+        this.registerNameError = "";
+      }
+    },
+    "registerForm.password": function registerFormPassword(val) {
+      var regexp = new RegExp("^[a-zA-Z0-9]{" + _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_PASSWORD_MIN_NUMBER"] + ",}$");
+
+      if (val.length < 1) {
+        this.registerPasswordError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_PASSWORD_ERROR_REQUIRE"];
+      } else if (!val.match(regexp)) {
+        this.registerPasswordError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_PASSWORD_ERROR_LIMIT"];
+      } else {
+        this.registerPasswordError = "";
+      }
+
+      if (val == this.registerForm.password_confirmation) {
+        this.registerPasswordConfirmationError = "";
+      } else {
+        this.registerPasswordConfirmationError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT"];
+      }
+    },
+    "registerForm.password_confirmation": function registerFormPassword_confirmation(val) {
+      if (val.length < 1) {
+        this.registerPasswordConfirmationError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE"];
+      } else if (val !== this.registerForm.password) {
+        this.registerPasswordConfirmationError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT"];
+      } else {
+        this.registerPasswordConfirmationError = "";
+      }
+    }
   }
 });
 
@@ -39203,6 +39270,12 @@ var render = function() {
               }
             }),
             _vm._v(" "),
+            _vm.loginNameError
+              ? _c("p", { staticClass: "error" }, [
+                  _vm._v(_vm._s(_vm.loginNameError))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -39223,6 +39296,12 @@ var render = function() {
                 }
               }
             }),
+            _vm._v(" "),
+            _vm.loginPasswordError
+              ? _c("p", { staticClass: "error" }, [
+                  _vm._v(_vm._s(_vm.loginPasswordError))
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("button", { attrs: { type: "submit" } }, [_vm._v("ログイン")])
           ]
@@ -39317,6 +39396,12 @@ var render = function() {
               }
             }),
             _vm._v(" "),
+            _vm.registerNameError
+              ? _c("p", { staticClass: "error" }, [
+                  _vm._v(_vm._s(_vm.registerNameError))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -39337,6 +39422,16 @@ var render = function() {
                 }
               }
             }),
+            _vm._v(" "),
+            _vm.registerPasswordError
+              ? _c("p", { staticClass: "error" }, [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.registerPasswordError) +
+                      "\n      "
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -39362,6 +39457,16 @@ var render = function() {
                 }
               }
             }),
+            _vm._v(" "),
+            _vm.registerPasswordConfirmationError
+              ? _c("p", { staticClass: "error" }, [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.registerPasswordConfirmationError) +
+                      "\n      "
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("button", { attrs: { type: "submit" } }, [_vm._v("登録")])
           ]
@@ -57296,7 +57401,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR */
+/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOGIN_NAME_ERROR_REQUIRE, LOGIN_PASSWORD_ERROR_REQUIRE, REGISTER_NAME_MAX_NUMBER, REGISTER_NAME_ERROR_REQUIRE, REGISTER_NAME_ERROR_LIMIT, REGISTER_PASSWORD_MIN_NUMBER, REGISTER_PASSWORD_ERROR_REQUIRE, REGISTER_PASSWORD_ERROR_LIMIT, REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE, REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57305,10 +57410,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATED", function() { return CREATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROCESSABLE_ENTITY", function() { return UNPROCESSABLE_ENTITY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGIN_NAME_ERROR_REQUIRE", function() { return LOGIN_NAME_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGIN_PASSWORD_ERROR_REQUIRE", function() { return LOGIN_PASSWORD_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_NAME_MAX_NUMBER", function() { return REGISTER_NAME_MAX_NUMBER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_NAME_ERROR_REQUIRE", function() { return REGISTER_NAME_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_NAME_ERROR_LIMIT", function() { return REGISTER_NAME_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_MIN_NUMBER", function() { return REGISTER_PASSWORD_MIN_NUMBER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_ERROR_REQUIRE", function() { return REGISTER_PASSWORD_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_ERROR_LIMIT", function() { return REGISTER_PASSWORD_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE", function() { return REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT", function() { return REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT; });
 var OK = 200;
 var CREATED = 201;
 var UNPROCESSABLE_ENTITY = 422;
 var INTERNAL_SERVER_ERROR = 500;
+var LOGIN_NAME_ERROR_REQUIRE = "ユーザー名は必須項目です。";
+var LOGIN_PASSWORD_ERROR_REQUIRE = "パスワードは必須項目です。";
+var REGISTER_NAME_MAX_NUMBER = 15;
+var REGISTER_NAME_ERROR_REQUIRE = "ユーザー名は必須項目です。";
+var REGISTER_NAME_ERROR_LIMIT = "ユーザー名は" + REGISTER_NAME_MAX_NUMBER + "文字以内で入力して下さい。";
+var REGISTER_PASSWORD_MIN_NUMBER = 4;
+var REGISTER_PASSWORD_ERROR_REQUIRE = "パスワードは必須項目です。";
+var REGISTER_PASSWORD_ERROR_LIMIT = "パスワードは半角英数字" + REGISTER_PASSWORD_MIN_NUMBER + "文字以上で入力して下さい。";
+var REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE = "パスワード確認は必須項目です。";
+var REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT = "パスワードと一致しません。";
 
 /***/ }),
 
