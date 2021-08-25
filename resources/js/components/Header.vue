@@ -68,10 +68,15 @@ export default {
     async logout() {
       await this.$store.dispatch("auth/logout");
 
-      this.$router.push("/", function () {});
+      if (this.apiStatus) {
+        this.$router.push("/", function () {});
+      }
     },
   },
   computed: {
+    apiStatus() {
+      return this.$store.state.auth.apiStatus;
+    },
     isLogined() {
       return this.$store.getters["auth/isLogined"];
     },

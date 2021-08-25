@@ -18,6 +18,14 @@
     </ul>
     <div class="panel" v-show="tab === 1">
       <form @submit.prevent="login">
+        <div v-if="loginErrors" class="errors">
+          <ul v-if="loginErrors.name">
+            <li v-for="msg in loginErrors.name" :key="msg">{{ msg }}</li>
+          </ul>
+          <ul v-if="loginErrors.password">
+            <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
+          </ul>
+        </div>
         <input type="text" id="login-name" v-model="loginForm.name" />
         <input
           type="password"
@@ -29,6 +37,19 @@
     </div>
     <div class="panel" v-show="tab === 2">
       <form @submit.prevent="register">
+        <div v-if="registerErrors" class="errors">
+          <ul v-if="registerErrors.name">
+            <li v-for="msg in registerErrors.name" :key="msg">{{ msg }}</li>
+          </ul>
+          <ul v-if="registerErrors.password">
+            <li v-for="msg in registerErrors.password" :key="msg">{{ msg }}</li>
+          </ul>
+          <ul v-if="registerErrors.password_confirmation">
+            <li v-for="msg in registerErrors.password_confirmation" :key="msg">
+              {{ msg }}
+            </li>
+          </ul>
+        </div>
         <input type="text" id="register-name" v-model="registerForm.name" />
         <input
           type="password"
@@ -66,15 +87,37 @@ export default {
     async login() {
       await this.$store.dispatch("auth/login", this.loginForm);
 
-      // トップページへ
-      this.$router.push("/");
+      if (this.apiStatus) {
+        // トップページへ
+        this.$router.push("/");
+      }
     },
     async register() {
       await this.$store.dispatch("auth/register", this.registerForm);
 
-      // トップページへ
-      this.$router.push("/");
+      if (this.apiStatus) {
+        // トップページへ
+        this.$router.push("/");
+      }
     },
+    clearError() {
+      this.$store.commit("auth/setLoginErrorMessages", null);
+      this.$store.commit("auth/setRegisterErrorMessages", null);
+    },
+  },
+  computed: {
+    apiStatus() {
+      return this.$store.state.auth.apiStatus;
+    },
+    loginErrors() {
+      return this.$store.state.auth.loginErrorMessages;
+    },
+    registerErrors() {
+      return this.$store.state.auth.registerErrorMessages;
+    },
+  },
+  created() {
+    this.clearError();
   },
 };
 </script>

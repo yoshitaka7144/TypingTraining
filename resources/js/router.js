@@ -1,11 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from './store';
-import IndexComponent from "./components/IndexComponent";
-import LoginComponent from "./components/LoginComponent";
-import QuestionComponent from "./components/QuestionComponent";
-import QuestionCreateComponent from "./components/QuestionCreateComponent";
-import NotFoundComponent from "./components/NotFoundComponent";
+import Index from "./components/Index";
+import Login from "./components/Login";
+import Question from "./components/Question";
+import QuestionCreate from "./components/QuestionCreate";
+import SystemError from "./components/SystemError";
+import NotFound from "./components/NotFound";
 
 Vue.use(VueRouter);
 
@@ -15,12 +16,12 @@ const router = new VueRouter({
     {
       path: "/",
       name: "index",
-      component: IndexComponent
+      component: Index
     },
     {
       path: "/login",
       name: "login",
-      component: LoginComponent,
+      component: Login,
       beforeEnter(to, from, next) {
         if (store.getters["auth/isLogined"]) {
           next("/");
@@ -32,7 +33,7 @@ const router = new VueRouter({
     {
       path: "/question",
       name: "question",
-      component: QuestionComponent,
+      component: Question,
       beforeEnter(to, from, next) {
         if (store.getters["auth/isLogined"]) {
           next();
@@ -44,7 +45,7 @@ const router = new VueRouter({
     {
       path: "/question/create",
       name: "question.create",
-      component: QuestionCreateComponent,
+      component: QuestionCreate,
       beforeEnter(to, from, next) {
         if (store.getters["auth/isLogined"]) {
           next();
@@ -54,9 +55,14 @@ const router = new VueRouter({
       }
     },
     {
+      path: "/500",
+      name: "systemError",
+      component: SystemError
+    },
+    {
       path: "*",
       name: "notFound",
-      component: NotFoundComponent
+      component: NotFound
     },
   ]
 });

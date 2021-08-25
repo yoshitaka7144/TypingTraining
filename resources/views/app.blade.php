@@ -22,15 +22,7 @@
 </head>
 
 <body>
-  <div id="app">
-    <div class="container">
-      <header-component></header-component>
-      <div class="main-container">
-        <router-view></router-view>
-      </div>
-      <Footer-component></Footer-component>
-    </div>
-  </div>
+  <div id="app"></div>
 </body>
 
 </html>
