@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-form">
+  <div id="auth" class="contents">
     <ul class="tab">
       <li
         class="tab-item"
@@ -18,7 +18,7 @@
     </ul>
     <div class="panel" v-show="tab === 1">
       <form @submit.prevent="login">
-        <div v-if="loginErrors" class="errors">
+        <div v-if="loginErrors" class="errors-area">
           <ul v-if="loginErrors.name">
             <li v-for="msg in loginErrors.name" :key="msg">{{ msg }}</li>
           </ul>
@@ -26,20 +26,24 @@
             <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
           </ul>
         </div>
+        <label for="login-name">ユーザー名</label>
         <input type="text" id="login-name" v-model="loginForm.name" />
         <p class="error" v-if="loginNameError">{{ loginNameError }}</p>
+        <label for="login-password">パスワード</label>
         <input
           type="password"
           id="login-password"
           v-model="loginForm.password"
         />
         <p class="error" v-if="loginPasswordError">{{ loginPasswordError }}</p>
-        <button type="submit">ログイン</button>
+        <div class="btn-wrapper">
+          <button type="submit" class="btn btn-green">ログイン</button>
+        </div>
       </form>
     </div>
     <div class="panel" v-show="tab === 2">
       <form @submit.prevent="register">
-        <div v-if="registerErrors" class="errors">
+        <div v-if="registerErrors" class="errors-area">
           <ul v-if="registerErrors.name">
             <li v-for="msg in registerErrors.name" :key="msg">{{ msg }}</li>
           </ul>
@@ -52,25 +56,37 @@
             </li>
           </ul>
         </div>
-        <input type="text" id="register-name" v-model="registerForm.name" />
+        <label for="register-name">ユーザー名</label>
+        <input
+          type="text"
+          id="register-name"
+          v-model="registerForm.name"
+          :placeholder="registerNamePlaceholder"
+        />
         <p class="error" v-if="registerNameError">{{ registerNameError }}</p>
+        <label for="register-password">パスワード</label>
         <input
           type="password"
           id="register-password"
           v-model="registerForm.password"
+          :placeholder="registerPasswordPlaceholder"
         />
         <p class="error" v-if="registerPasswordError">
           {{ registerPasswordError }}
         </p>
+        <label for="register-password-confirmation">パスワード確認</label>
         <input
           type="password"
-          id="register-password-confirm"
+          id="register-password-confirmation"
           v-model="registerForm.password_confirmation"
+          :placeholder="registerPasswordConfirmationPlaceholder"
         />
         <p class="error" v-if="registerPasswordConfirmationError">
           {{ registerPasswordConfirmationError }}
         </p>
-        <button type="submit">登録</button>
+        <div class="btn-wrapper">
+          <button type="submit" class="btn btn-blue">登録</button>
+        </div>
       </form>
     </div>
   </div>
@@ -100,8 +116,15 @@ export default {
         name: "",
         password: "",
       },
+      registerNamePlaceholder:
+        REGISTER_NAME_MAX_NUMBER + "文字以内で入力して下さい。",
       registerNameError: "",
+      registerPasswordPlaceholder:
+        "半角英数字" +
+        REGISTER_PASSWORD_MIN_NUMBER +
+        "文字以上で入力して下さい。",
       registerPasswordError: "",
+      registerPasswordConfirmationPlaceholder: "パスワードを入力して下さい。",
       registerPasswordConfirmationError: "",
       registerForm: {
         name: "",

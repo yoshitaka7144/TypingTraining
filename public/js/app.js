@@ -2097,8 +2097,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     apiStatus: function apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
-    isLogined: function isLogined() {
-      return this.$store.getters["auth/isLogined"];
+    isLogin: function isLogin() {
+      return this.$store.getters["auth/isLogin"];
     },
     username: function username() {
       return this.$store.getters["auth/username"];
@@ -2126,8 +2126,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
-    isLogined: function isLogined() {
-      return this.$store.getters["auth/isLogined"];
+    isLogin: function isLogin() {
+      return this.$store.getters["auth/isLogin"];
     },
     username: function username() {
       return this.$store.getters["auth/username"];
@@ -2233,6 +2233,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2244,8 +2260,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: "",
         password: ""
       },
+      registerNamePlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_NAME_MAX_NUMBER"] + "文字以内で入力して下さい。",
       registerNameError: "",
+      registerPasswordPlaceholder: "半角英数字" + _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_PASSWORD_MIN_NUMBER"] + "文字以上で入力して下さい。",
       registerPasswordError: "",
+      registerPasswordConfirmationPlaceholder: "パスワードを入力して下さい。",
       registerPasswordConfirmationError: "",
       registerForm: {
         name: "",
@@ -39006,7 +39025,7 @@ var render = function() {
       _vm._v(" "),
       _c("nav", { attrs: { id: "pc-nav" } }, [
         _c("ul", [
-          _vm.isLogined
+          _vm.isLogin
             ? _c(
                 "li",
                 [
@@ -39018,7 +39037,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          !_vm.isLogined
+          !_vm.isLogin
             ? _c(
                 "li",
                 [
@@ -39030,7 +39049,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.isLogined
+          _vm.isLogin
             ? _c("li", { on: { click: _vm.logout } }, [
                 _c("a", [_vm._v("ログアウト")])
               ])
@@ -39053,7 +39072,7 @@ var render = function() {
         },
         [
           _c("ul", [
-            _vm.isLogined
+            _vm.isLogin
               ? _c(
                   "li",
                   { on: { click: _vm.toggleSpNav } },
@@ -39066,7 +39085,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            !_vm.isLogined
+            !_vm.isLogin
               ? _c(
                   "li",
                   { on: { click: _vm.toggleSpNav } },
@@ -39079,7 +39098,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm.isLogined
+            _vm.isLogin
               ? _c(
                   "li",
                   {
@@ -39142,7 +39161,7 @@ var render = function() {
   return _c("div", [
     _c("p", [_vm._v("home")]),
     _vm._v(" "),
-    _vm.isLogined
+    _vm.isLogin
       ? _c("p", [_vm._v(_vm._s(_vm.username) + "でログインしています")])
       : _vm._e()
   ])
@@ -39169,7 +39188,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "auth-form" }, [
+  return _c("div", { staticClass: "contents", attrs: { id: "auth" } }, [
     _c("ul", { staticClass: "tab" }, [
       _c(
         "li",
@@ -39226,7 +39245,7 @@ var render = function() {
           },
           [
             _vm.loginErrors
-              ? _c("div", { staticClass: "errors" }, [
+              ? _c("div", { staticClass: "errors-area" }, [
                   _vm.loginErrors.name
                     ? _c(
                         "ul",
@@ -39248,6 +39267,10 @@ var render = function() {
                     : _vm._e()
                 ])
               : _vm._e(),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "login-name" } }, [
+              _vm._v("ユーザー名")
+            ]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -39276,6 +39299,10 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _c("label", { attrs: { for: "login-password" } }, [
+              _vm._v("パスワード")
+            ]),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -39303,7 +39330,7 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [_vm._v("ログイン")])
+            _vm._m(0)
           ]
         )
       ]
@@ -39335,7 +39362,7 @@ var render = function() {
           },
           [
             _vm.registerErrors
-              ? _c("div", { staticClass: "errors" }, [
+              ? _c("div", { staticClass: "errors-area" }, [
                   _vm.registerErrors.name
                     ? _c(
                         "ul",
@@ -39375,6 +39402,10 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _c("label", { attrs: { for: "register-name" } }, [
+              _vm._v("ユーザー名")
+            ]),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -39384,7 +39415,11 @@ var render = function() {
                   expression: "registerForm.name"
                 }
               ],
-              attrs: { type: "text", id: "register-name" },
+              attrs: {
+                type: "text",
+                id: "register-name",
+                placeholder: _vm.registerNamePlaceholder
+              },
               domProps: { value: _vm.registerForm.name },
               on: {
                 input: function($event) {
@@ -39402,6 +39437,10 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _c("label", { attrs: { for: "register-password" } }, [
+              _vm._v("パスワード")
+            ]),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -39411,7 +39450,11 @@ var render = function() {
                   expression: "registerForm.password"
                 }
               ],
-              attrs: { type: "password", id: "register-password" },
+              attrs: {
+                type: "password",
+                id: "register-password",
+                placeholder: _vm.registerPasswordPlaceholder
+              },
               domProps: { value: _vm.registerForm.password },
               on: {
                 input: function($event) {
@@ -39433,6 +39476,10 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _c("label", { attrs: { for: "register-password-confirmation" } }, [
+              _vm._v("パスワード確認")
+            ]),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -39442,7 +39489,11 @@ var render = function() {
                   expression: "registerForm.password_confirmation"
                 }
               ],
-              attrs: { type: "password", id: "register-password-confirm" },
+              attrs: {
+                type: "password",
+                id: "register-password-confirmation",
+                placeholder: _vm.registerPasswordConfirmationPlaceholder
+              },
               domProps: { value: _vm.registerForm.password_confirmation },
               on: {
                 input: function($event) {
@@ -39468,14 +39519,37 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [_vm._v("登録")])
+            _vm._m(1)
           ]
         )
       ]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-wrapper" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-green", attrs: { type: "submit" } },
+        [_vm._v("ログイン")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-wrapper" }, [
+      _c("button", { staticClass: "btn btn-blue", attrs: { type: "submit" } }, [
+        _vm._v("登録")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -57087,7 +57161,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: "login",
     component: _components_Login__WEBPACK_IMPORTED_MODULE_4__["default"],
     beforeEnter: function beforeEnter(to, from, next) {
-      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["auth/isLogined"]) {
+      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["auth/isLogin"]) {
         next("/");
       } else {
         next();
@@ -57098,7 +57172,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: "question",
     component: _components_Question__WEBPACK_IMPORTED_MODULE_5__["default"],
     beforeEnter: function beforeEnter(to, from, next) {
-      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["auth/isLogined"]) {
+      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["auth/isLogin"]) {
         next();
       } else {
         next("/");
@@ -57109,7 +57183,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: "question.create",
     component: _components_QuestionCreate__WEBPACK_IMPORTED_MODULE_6__["default"],
     beforeEnter: function beforeEnter(to, from, next) {
-      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["auth/isLogined"]) {
+      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["auth/isLogin"]) {
         next();
       } else {
         next("/");
@@ -57155,7 +57229,7 @@ var state = {
   registerErrorMessages: null
 };
 var getters = {
-  isLogined: function isLogined(state) {
+  isLogin: function isLogin(state) {
     return !!state.user;
   },
   username: function username(state) {

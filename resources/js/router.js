@@ -23,7 +23,7 @@ const router = new VueRouter({
       name: "login",
       component: Login,
       beforeEnter(to, from, next) {
-        if (store.getters["auth/isLogined"]) {
+        if (store.getters["auth/isLogin"]) {
           next("/");
         } else {
           next();
@@ -35,7 +35,7 @@ const router = new VueRouter({
       name: "question",
       component: Question,
       beforeEnter(to, from, next) {
-        if (store.getters["auth/isLogined"]) {
+        if (store.getters["auth/isLogin"]) {
           next();
         } else {
           next("/");
@@ -47,7 +47,7 @@ const router = new VueRouter({
       name: "question.create",
       component: QuestionCreate,
       beforeEnter(to, from, next) {
-        if (store.getters["auth/isLogined"]) {
+        if (store.getters["auth/isLogin"]) {
           next();
         } else {
           next("/");

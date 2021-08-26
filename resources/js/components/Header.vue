@@ -8,33 +8,33 @@
       </div>
       <nav id="pc-nav">
         <ul>
-          <li v-if="isLogined">
+          <li v-if="isLogin">
             <router-link v-bind:to="{ name: 'question' }">
               問題編集
             </router-link>
           </li>
-          <li v-if="!isLogined">
+          <li v-if="!isLogin">
             <router-link v-bind:to="{ name: 'login' }">
               ログイン/新規登録
             </router-link>
           </li>
-          <li v-if="isLogined" @click="logout"><a>ログアウト</a></li>
+          <li v-if="isLogin" @click="logout"><a>ログアウト</a></li>
         </ul>
       </nav>
       <nav id="sp-nav" v-show="isShownSpNav">
         <ul>
-          <li v-if="isLogined" @click="toggleSpNav">
+          <li v-if="isLogin" @click="toggleSpNav">
             <router-link v-bind:to="{ name: 'question' }">
               問題編集
             </router-link>
           </li>
-          <li v-if="!isLogined" @click="toggleSpNav">
+          <li v-if="!isLogin" @click="toggleSpNav">
             <router-link v-bind:to="{ name: 'login' }">
               ログイン/新規登録
             </router-link>
           </li>
           <li
-            v-if="isLogined"
+            v-if="isLogin"
             @click="
               toggleSpNav();
               logout();
@@ -77,8 +77,8 @@ export default {
     apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
-    isLogined() {
-      return this.$store.getters["auth/isLogined"];
+    isLogin() {
+      return this.$store.getters["auth/isLogin"];
     },
     username() {
       return this.$store.getters["auth/username"];

@@ -1,15 +1,15 @@
 <template>
   <div>
     <p>home</p>
-    <p v-if="isLogined">{{ username }}でログインしています</p>
+    <p v-if="isLogin">{{ username }}でログインしています</p>
   </div>
 </template>
 
 <script>
 export default {
   computed: {
-    isLogined() {
-      return this.$store.getters["auth/isLogined"];
+    isLogin() {
+      return this.$store.getters["auth/isLogin"];
     },
     username() {
       return this.$store.getters["auth/username"];

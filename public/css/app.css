@@ -7,6 +7,11 @@
   font-size: 0.9rem;
   line-height: 1.6;
   font-family: "Nunito", sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+ul {
+  list-style: none;
 }
 
 a {
@@ -28,6 +33,51 @@ i {
   min-height: 100vh;
   width: 100%;
   background-color: #f8fafc;
+}
+
+/*----------------------------------------------
+
+ボタン関連
+
+----------------------------------------------*/
+
+.btn {
+  padding: 10px 15px;
+  color: white;
+  display: inline-block;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+  box-shadow: none;
+}
+
+.btn-green {
+  background-color: #5dca88;
+  box-shadow: 2px 2px #1a7940;
+}
+
+.btn-blue {
+  background-color: #60d0e4;
+  box-shadow: 2px 2px #0a7b8f;
+}
+
+.btn-red {
+  background-color: #f06363;
+  box-shadow: 2px 2px #9b1111;
+}
+
+.btn-gray {
+  background-color: #999595;
+  box-shadow: 2px 2px #504e4e;
 }
 
 /*----------------------------------------------
@@ -176,7 +226,7 @@ i {
 ----------------------------------------------*/
 
 .footer-container {
-  margin-top: 10px;
+  margin: auto 0 0 0;
   background-color: #8d9292;
   width: 100%;
 }
@@ -207,6 +257,93 @@ i {
   flex-wrap: wrap;
 }
 
+.main-container .contents {
+  padding: 20px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.main-container #auth {
+  width: 40%;
+}
+
+.main-container #auth .tab {
+  list-style: none;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.main-container #auth .tab .tab-item {
+  opacity: 0.3;
+  padding: 10px;
+  border-bottom: 3px solid #292929;
+}
+
+.main-container #auth .tab .tab-item + .tab-item {
+  margin-left: 15px;
+}
+
+.main-container #auth .tab .tab-item-active {
+  opacity: 1;
+}
+
+.main-container #auth .panel .errors-area {
+  border: dashed 2px #668ad8;
+  background-color: #f1f8ff;
+}
+
+.main-container #auth .panel .errors-area li {
+  padding: 5px 10px;
+  color: #e3342f;
+}
+
+.main-container #auth .panel .error {
+  color: #e3342f;
+}
+
+.main-container #auth .panel label {
+  display: block;
+  margin-top: 10px;
+}
+
+.main-container #auth .panel input[type=text],
+.main-container #auth .panel input[type=password] {
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.main-container #auth .panel input[type=text]:focus,
+.main-container #auth .panel input[type=password]:focus {
+  outline: none;
+  border-color: dodgerBlue;
+  box-shadow: 0 0 5px 0 dodgerBlue;
+}
+
+.main-container #auth .panel input[type=text]::-moz-placeholder, .main-container #auth .panel input[type=password]::-moz-placeholder {
+  font-size: 12px;
+}
+
+.main-container #auth .panel input[type=text]:-ms-input-placeholder, .main-container #auth .panel input[type=password]:-ms-input-placeholder {
+  font-size: 12px;
+}
+
+.main-container #auth .panel input[type=text]::placeholder,
+.main-container #auth .panel input[type=password]::placeholder {
+  font-size: 12px;
+}
+
+.main-container #auth .panel .btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 15px 0;
+}
+
 /*----------------------------------------------
 
 レスポンシブ
@@ -220,6 +357,16 @@ i {
 
   .header-container .header #hamburger {
     display: block;
+  }
+
+  .main-container #auth {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main-container #auth {
+    width: 100%;
   }
 }
 
