@@ -2426,6 +2426,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2448,6 +2457,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2458,14 +2471,36 @@ __webpack_require__.r(__webpack_exports__);
     getQuestions: function getQuestions() {
       var _this = this;
 
-      axios.get("api/question").then(function (res) {
-        _this.questions = res.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get("api/question")["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
+                  _this.$store.commit("error/setCode", response.status);
+                } else {
+                  _this.questions = response.data;
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.getQuestions();
   }
 });
@@ -2481,6 +2516,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2489,25 +2533,135 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      registerErrorMessages: "",
       registerForm: {
         category: "",
         text: "",
         kana: ""
-      }
+      },
+      categoryPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"],
+      categoryError: "",
+      textPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"],
+      textError: "",
+      kanaPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"],
+      kanaError: ""
     };
   },
   methods: {
     register: function register() {
       var _this = this;
 
-      axios.post("/api/question", this.registerForm).then(function (res) {
-        _this.$router.push({
-          name: "question"
-        });
-      });
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post("/api/question", _this.registerForm)["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"]) {
+                  _this.$router.push({
+                    name: "question"
+                  });
+                } else if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                  _this.registerErrorMessages = response.data.errors;
+                } else {
+                  _this.$store.commit("error/setCode", response.status);
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  watch: {
+    "registerForm.category": function registerFormCategory(val) {
+      if (val.length < 1) {
+        this.categoryError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE"];
+      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_MAX_NUMBER"]) {
+        this.categoryError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"];
+      } else {
+        this.categoryError = "";
+      }
+    },
+    "registerForm.text": function registerFormText(val) {
+      if (val.length < 1) {
+        this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_REQUIRE"];
+      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_MAX_NUMBER"]) {
+        this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"];
+      } else {
+        this.textError = "";
+      }
+    },
+    "registerForm.kana": function registerFormKana(val) {
+      if (val.length < 1) {
+        this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_REQUIRE"];
+      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_MAX_NUMBER"]) {
+        this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"];
+      } else {
+        this.kanaError = "";
+      }
     }
   }
 });
@@ -39597,14 +39751,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "contents", attrs: { id: "question" } },
     [
+      _c("p", { staticClass: "title" }, [_vm._v("問題一覧")]),
+      _vm._v(" "),
       _c("table", [
         _vm._m(0),
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.questions, function(question, index) {
-            return _c("tr", { key: index }, [
+          _vm._l(_vm.questions, function(question) {
+            return _c("tr", { key: question.id }, [
+              _c("td", [_vm._v(_vm._s(question.id))]),
+              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(question.category))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(question.text))]),
@@ -39630,6 +39789,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
         _c("th", [_vm._v("カテゴリー")]),
         _vm._v(" "),
         _c("th", [_vm._v("問題")]),
@@ -39661,84 +39822,185 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "form",
-    {
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.register.apply(null, arguments)
-        }
-      }
-    },
+    "div",
+    { staticClass: "contents", attrs: { id: "question-create" } },
     [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.registerForm.category,
-            expression: "registerForm.category"
-          }
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.registerForm.category },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.registerForm, "category", $event.target.value)
-          }
-        }
-      }),
+      _c("p", { staticClass: "title" }, [_vm._v("問題作成")]),
       _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.registerForm.text,
-            expression: "registerForm.text"
-          }
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.registerForm.text },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.register.apply(null, arguments)
             }
-            _vm.$set(_vm.registerForm, "text", $event.target.value)
           }
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.registerForm.kana,
-            expression: "registerForm.kana"
-          }
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.registerForm.kana },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+        },
+        [
+          _vm.registerErrorMessages
+            ? _c("div", { staticClass: "errors-area" }, [
+                _vm.registerErrorMessages.category
+                  ? _c(
+                      "ul",
+                      _vm._l(_vm.registerErrorMessages.category, function(msg) {
+                        return _c("li", { key: msg }, [
+                          _vm._v("\n          " + _vm._s(msg) + "\n        ")
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.registerErrorMessages.text
+                  ? _c(
+                      "ul",
+                      _vm._l(_vm.registerErrorMessages.text, function(msg) {
+                        return _c("li", { key: msg }, [
+                          _vm._v("\n          " + _vm._s(msg) + "\n        ")
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.registerErrorMessages.kana
+                  ? _c(
+                      "ul",
+                      _vm._l(_vm.registerErrorMessages.kana, function(msg) {
+                        return _c("li", { key: msg }, [
+                          _vm._v("\n          " + _vm._s(msg) + "\n        ")
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "question-category" } }, [
+            _vm._v("カテゴリー")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.registerForm.category,
+                expression: "registerForm.category"
+              }
+            ],
+            attrs: {
+              type: "text",
+              id: "question-category",
+              autocomplete: "off",
+              placeholder: _vm.categoryPlaceholder
+            },
+            domProps: { value: _vm.registerForm.category },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.registerForm, "category", $event.target.value)
+              }
             }
-            _vm.$set(_vm.registerForm, "kana", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _vm.categoryError
+            ? _c("p", { staticClass: "error" }, [
+                _vm._v(_vm._s(_vm.categoryError))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "question-text" } }, [_vm._v("問題")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.registerForm.text,
+                expression: "registerForm.text"
+              }
+            ],
+            attrs: {
+              type: "text",
+              id: "question-text",
+              autocomplete: "off",
+              placeholder: _vm.textPlaceholder
+            },
+            domProps: { value: _vm.registerForm.text },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.registerForm, "text", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.textError
+            ? _c("p", { staticClass: "error" }, [_vm._v(_vm._s(_vm.textError))])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "question-kana" } }, [_vm._v("かな")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.registerForm.kana,
+                expression: "registerForm.kana"
+              }
+            ],
+            attrs: {
+              type: "text",
+              id: "question-kana",
+              autocomplete: "off",
+              placeholder: _vm.kanaPlaceholder
+            },
+            domProps: { value: _vm.registerForm.kana },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.registerForm, "kana", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.kanaError
+            ? _c("p", { staticClass: "error" }, [_vm._v(_vm._s(_vm.kanaError))])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      ),
       _vm._v(" "),
-      _c("button", { attrs: { type: "submit" } }, [_vm._v("登録")])
-    ]
+      _c("router-link", { attrs: { to: { name: "question" } } }, [
+        _vm._v("問題一覧")
+      ])
+    ],
+    1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-wrapper" }, [
+      _c("button", { staticClass: "btn btn-blue", attrs: { type: "submit" } }, [
+        _vm._v("登録")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -57475,7 +57737,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOGIN_NAME_ERROR_REQUIRE, LOGIN_PASSWORD_ERROR_REQUIRE, REGISTER_NAME_MAX_NUMBER, REGISTER_NAME_ERROR_REQUIRE, REGISTER_NAME_ERROR_LIMIT, REGISTER_PASSWORD_MIN_NUMBER, REGISTER_PASSWORD_ERROR_REQUIRE, REGISTER_PASSWORD_ERROR_LIMIT, REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE, REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT */
+/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOGIN_NAME_ERROR_REQUIRE, LOGIN_PASSWORD_ERROR_REQUIRE, REGISTER_NAME_MAX_NUMBER, REGISTER_NAME_ERROR_REQUIRE, REGISTER_NAME_ERROR_LIMIT, REGISTER_PASSWORD_MIN_NUMBER, REGISTER_PASSWORD_ERROR_REQUIRE, REGISTER_PASSWORD_ERROR_LIMIT, REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE, REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT, REGISTER_QUESTION_CATEGORY_MAX_NUMBER, REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE, REGISTER_QUESTION_CATEGORY_ERROR_LIMIT, REGISTER_QUESTION_TEXT_MAX_NUMBER, REGISTER_QUESTION_TEXT_ERROR_REQUIRE, REGISTER_QUESTION_TEXT_ERROR_LIMIT, REGISTER_QUESTION_KANA_MAX_NUMBER, REGISTER_QUESTION_KANA_ERROR_REQUIRE, REGISTER_QUESTION_KANA_ERROR_LIMIT */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57494,6 +57756,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_ERROR_LIMIT", function() { return REGISTER_PASSWORD_ERROR_LIMIT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE", function() { return REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT", function() { return REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_CATEGORY_MAX_NUMBER", function() { return REGISTER_QUESTION_CATEGORY_MAX_NUMBER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE", function() { return REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_CATEGORY_ERROR_LIMIT", function() { return REGISTER_QUESTION_CATEGORY_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_TEXT_MAX_NUMBER", function() { return REGISTER_QUESTION_TEXT_MAX_NUMBER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_TEXT_ERROR_REQUIRE", function() { return REGISTER_QUESTION_TEXT_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_TEXT_ERROR_LIMIT", function() { return REGISTER_QUESTION_TEXT_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_MAX_NUMBER", function() { return REGISTER_QUESTION_KANA_MAX_NUMBER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_ERROR_REQUIRE", function() { return REGISTER_QUESTION_KANA_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_ERROR_LIMIT", function() { return REGISTER_QUESTION_KANA_ERROR_LIMIT; });
 var OK = 200;
 var CREATED = 201;
 var UNPROCESSABLE_ENTITY = 422;
@@ -57508,6 +57779,15 @@ var REGISTER_PASSWORD_ERROR_REQUIRE = "パスワードは必須項目です。";
 var REGISTER_PASSWORD_ERROR_LIMIT = "パスワードは半角英数字" + REGISTER_PASSWORD_MIN_NUMBER + "文字以上で入力して下さい。";
 var REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE = "パスワード確認は必須項目です。";
 var REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT = "パスワードと一致しません。";
+var REGISTER_QUESTION_CATEGORY_MAX_NUMBER = 10;
+var REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE = "カテゴリーは必須項目です。";
+var REGISTER_QUESTION_CATEGORY_ERROR_LIMIT = "カテゴリーは" + REGISTER_QUESTION_CATEGORY_MAX_NUMBER + "文字以内で入力して下さい。";
+var REGISTER_QUESTION_TEXT_MAX_NUMBER = 100;
+var REGISTER_QUESTION_TEXT_ERROR_REQUIRE = "問題は必須項目です。";
+var REGISTER_QUESTION_TEXT_ERROR_LIMIT = "問題は" + REGISTER_QUESTION_TEXT_MAX_NUMBER + "文字以内で入力して下さい。";
+var REGISTER_QUESTION_KANA_MAX_NUMBER = 100;
+var REGISTER_QUESTION_KANA_ERROR_REQUIRE = "かなは必須項目です。";
+var REGISTER_QUESTION_KANA_ERROR_LIMIT = "かなは" + REGISTER_QUESTION_KANA_MAX_NUMBER + "文字以内で入力して下さい。";
 
 /***/ }),
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\QuestionRequest;
 use App\Question;
 
 class QuestionController extends Controller
@@ -13,7 +13,7 @@ class QuestionController extends Controller
         return Question::all();
     }
 
-    public function store(Request $request){
+    public function store(QuestionRequest $request){
         $question = new Question();
         $question->category = $request->category;
         $question->text = $request->text;

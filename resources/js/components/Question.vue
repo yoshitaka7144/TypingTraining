@@ -1,15 +1,18 @@
 <template>
-  <div>
+  <div id="question" class="contents">
+    <p class="title">問題一覧</p>
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>カテゴリー</th>
           <th>問題</th>
           <th>かな</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(question, index) in questions" :key="index">
+        <tr v-for="question in questions" :key="question.id">
+          <td>{{ question.id }}</td>
           <td>{{ question.category }}</td>
           <td>{{ question.text }}</td>
           <td>{{ question.kana }}</td>
@@ -21,6 +24,7 @@
 </template>
 
 <script>
+import { INTERNAL_SERVER_ERROR } from "../util";
 export default {
   data() {
     return {
@@ -28,18 +32,19 @@ export default {
     };
   },
   methods: {
-    getQuestions() {
-      axios
+    async getQuestions() {
+      var response = await axios
         .get("api/question")
-        .then((res) => {
-          this.questions = res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => error.response || error);
+
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
+      } else {
+        this.questions = response.data;
+      }
     },
   },
-  mounted() {
+  created() {
     this.getQuestions();
   },
 };
