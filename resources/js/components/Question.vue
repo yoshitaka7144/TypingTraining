@@ -8,6 +8,8 @@
           <th>カテゴリー</th>
           <th>問題</th>
           <th>かな</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -16,6 +18,14 @@
           <td>{{ question.category }}</td>
           <td>{{ question.text }}</td>
           <td>{{ question.kana }}</td>
+          <td>
+            <router-link
+              :to="{ name: 'question.edit', params: { questionId: question.id } }"
+            >
+              <button class="btn btn-blue">編集</button>
+            </router-link>
+          </td>
+          <td><button class="btn btn-red" @click="deleteQuestion(question.id)">削除</button></td>
         </tr>
       </tbody>
     </table>
@@ -43,6 +53,17 @@ export default {
         this.questions = response.data;
       }
     },
+    async deleteQuestion(id){
+      var response = await axios
+        .delete("api/question/" + id)
+        .catch((error) => error.response || error);
+
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
+      } else {
+        this.getQuestions();
+      }
+    }
   },
   created() {
     this.getQuestions();

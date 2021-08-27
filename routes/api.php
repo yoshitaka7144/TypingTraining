@@ -29,9 +29,18 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
 // ログイン時のみ
 Route::group(["middleware" => "auth"], function () {
-  // 一覧取得
+  // 問題一覧取得
   Route::get('/question', 'QuestionController@index')->name('question');
 
   // 問題登録
   Route::post('/question', 'QuestionController@store')->name('question.create');
+
+  // 問題取得
+  Route::get('/question/{question}', 'QuestionController@show')->name('question.show');
+
+  // 問題更新
+  Route::put('/question/{question}', 'QuestionController@update')->name('question.update');
+
+  // 問題削除
+  Route::delete('/question/{question}', 'QuestionController@destroy')->name('question.destroy');
 });
