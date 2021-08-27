@@ -20,26 +20,43 @@
           <td>{{ question.kana }}</td>
           <td>
             <router-link
-              :to="{ name: 'question.edit', params: { questionId: question.id } }"
+              :to="{
+                name: 'question.edit',
+                params: { questionId: question.id },
+              }"
             >
               <button class="btn btn-blue">編集</button>
             </router-link>
           </td>
-          <td><button class="btn btn-red" @click="deleteQuestion(question.id)">削除</button></td>
+          <td>
+            <button class="btn btn-red" @click="modalShow(question.id)">
+              削除
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
     <router-link v-bind:to="{ name: 'question.create' }">問題作成</router-link>
+    <Modal :modalOption="modalOption" />
   </div>
 </template>
 
 <script>
 import { INTERNAL_SERVER_ERROR } from "../util";
+import Modal from "./Modal.vue";
 export default {
   data() {
     return {
       questions: [],
+      modalOption: {
+        action: "",
+        targetQuestionId: "",
+        afterConfirmationFunction: "",
+      },
     };
+  },
+  components: {
+    Modal,
   },
   methods: {
     async getQuestions() {
@@ -53,7 +70,7 @@ export default {
         this.questions = response.data;
       }
     },
-    async deleteQuestion(id){
+    async deleteQuestion(id) {
       var response = await axios
         .delete("api/question/" + id)
         .catch((error) => error.response || error);
@@ -63,7 +80,13 @@ export default {
       } else {
         this.getQuestions();
       }
-    }
+    },
+    modalShow(id) {
+      this.modalOption.action = "削除";
+      this.modalOption.targetQuestionId = id;
+      this.modalOption.afterConfirmationFunction = this.deleteQuestion;
+      this.$modal.show("modal");
+    },
   },
   created() {
     this.getQuestions();

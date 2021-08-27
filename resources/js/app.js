@@ -1,10 +1,12 @@
 import Vue from "vue";
+import VModal from 'vue-js-modal';
 import store from "./store";
 import router from "./router";
 import App from "./components/App.vue"
 
 require('./bootstrap');
 window.Vue = require('vue');
+Vue.use(VModal);
 
 async function createApp() {
     await store.dispatch('auth/currentUser')
