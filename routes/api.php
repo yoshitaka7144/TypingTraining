@@ -17,15 +17,19 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-// ログインユーザー
+// ログインユーザー取得
 Route::get('/user', fn() => Auth::user())->name('user');
 
 // ログイン
 Route::post('/login', 'Auth\LoginController@login')->name('login');
+
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
 // ユーザー登録
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
+
+Route::get('/question/list/{category}', 'QuestionController@category')->name('question.category');
 
 // ログイン時のみ
 Route::group(["middleware" => "auth"], function () {

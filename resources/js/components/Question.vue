@@ -61,7 +61,7 @@ export default {
   methods: {
     async getQuestions() {
       var response = await axios
-        .get("api/question")
+        .get("/api/question")
         .catch((error) => error.response || error);
 
       if (response.status === INTERNAL_SERVER_ERROR) {
@@ -72,7 +72,7 @@ export default {
     },
     async deleteQuestion(id) {
       var response = await axios
-        .delete("api/question/" + id)
+        .delete("/api/question/" + id)
         .catch((error) => error.response || error);
 
       if (response.status === INTERNAL_SERVER_ERROR) {

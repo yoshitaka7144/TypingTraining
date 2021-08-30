@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
 
+use function PHPUnit\Framework\returnSelf;
+
 class QuestionController extends Controller
 {
     public function index()
@@ -41,6 +43,13 @@ class QuestionController extends Controller
 
     public function destroy(Question $question){
         $question->delete();
+
+        return $question;
+    }
+
+    public function category($category)
+    {
+        $question = Question::where("category", $category)->get();
 
         return $question;
     }
