@@ -29,6 +29,7 @@ class QuestionRequest extends FormRequest
             "category" => "required|string|max:10",
             "text" => "required|string|max:100",
             "kana" => "required|string|max:100",
+            "roman" => "required|string|max:100",
         ];
     }
 

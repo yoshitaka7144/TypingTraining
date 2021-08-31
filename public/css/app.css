@@ -368,18 +368,22 @@ i {
 }
 
 .main-container #question table thead th:nth-child(3) {
-  width: 25%;
+  width: 20%;
 }
 
 .main-container #question table thead th:nth-child(4) {
-  width: 35%;
+  width: 20%;
 }
 
 .main-container #question table thead th:nth-child(5) {
-  width: 10%;
+  width: 20%;
 }
 
 .main-container #question table thead th:nth-child(6) {
+  width: 10%;
+}
+
+.main-container #question table thead th:nth-child(7) {
   width: 10%;
 }
 
@@ -390,8 +394,8 @@ i {
 
 .main-container #question table tbody td:nth-child(1),
 .main-container #question table tbody td:nth-child(2),
-.main-container #question table tbody td:nth-child(5),
-.main-container #question table tbody td:nth-child(6) {
+.main-container #question table tbody td:nth-child(6),
+.main-container #question table tbody td:nth-child(7) {
   text-align: center;
 }
 
@@ -454,6 +458,157 @@ i {
   align-items: center;
   justify-content: flex-end;
   margin: 15px 0;
+}
+
+.main-container #typing .modal .inputed {
+  color: orange;
+}
+
+.main-container #typing .modal #keyboard-container {
+  display: flex;
+  justify-content: center;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row {
+  display: flex;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row .key {
+  border: 1px solid #d8d8d8;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 35px;
+  text-align: center;
+  margin: 3px 3px 3px 3px;
+  width: 35px;
+  height: 35px;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row .target-key {
+  background-color: #f6993f;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-tab {
+  width: 55px;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-enter-1 {
+  border-left: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  border-radius: 3px 3px 0 3px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 35px;
+  text-align: center;
+  margin: 3px 3px 3px 3px;
+  width: 55px;
+  position: relative;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-enter-1::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: 0px;
+  display: inline-block;
+  width: 10px;
+  height: 1px;
+  transform: translateX(-50%);
+  background-color: #d8d8d8;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-caps {
+  width: 65px;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-enter-2 {
+  border-left: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  border-radius: 0 0 3px 3px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 35px;
+  text-align: center;
+  margin: -4px 3px 3px 3px;
+  width: 45px;
+  position: relative;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-shift-left {
+  width: 80px;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-shift-right {
+  width: 70px;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-ctrl {
+  width: 50px;
+}
+
+.main-container #typing .modal #keyboard-container #keyboard .row #key-space {
+  width: 140px;
+}
+
+.main-container #typing .modal #hand-container {
+  display: flex;
+  justify-content: center;
+}
+
+.main-container #typing .modal #hand-container #hand {
+  display: flex;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left,
+.main-container #typing .modal #hand-container #hand #hand-right {
+  display: flex;
+  align-items: flex-end;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left .finger,
+.main-container #typing .modal #hand-container #hand #hand-right .finger {
+  border: 1px solid #d8d8d8;
+  border-radius: 20px 20px 0 0;
+  margin: 5px 5px 5px 5px;
+  width: 35px;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left .target-finger,
+.main-container #typing .modal #hand-container #hand #hand-right .target-finger {
+  background-color: #f6993f;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left .finger-little,
+.main-container #typing .modal #hand-container #hand #hand-right .finger-little {
+  height: 70px;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left .finger-ring,
+.main-container #typing .modal #hand-container #hand #hand-right .finger-ring {
+  height: 90px;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left .finger-middle,
+.main-container #typing .modal #hand-container #hand #hand-right .finger-middle {
+  height: 100px;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left .finger-index,
+.main-container #typing .modal #hand-container #hand #hand-right .finger-index {
+  height: 85px;
+}
+
+.main-container #typing .modal #hand-container #hand #hand-left .finger-thumb,
+.main-container #typing .modal #hand-container #hand #hand-right .finger-thumb {
+  height: 40px;
 }
 
 /*----------------------------------------------

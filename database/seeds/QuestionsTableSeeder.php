@@ -18,17 +18,20 @@ class QuestionsTableSeeder extends Seeder
             [
                 "category" => "aaa",
                 "text" => "なんかテスト問題",
-                "kana" => "なんかてすともんだい"
+                "kana" => "なんかてすともんだい",
+                "roman" => "nankatesutomondai",
             ],
             [
                 "category" => "bbb",
                 "text" => "墾田永年私財法",
-                "kana" => "こんでんえいねんしざいほう"
+                "kana" => "こんでんえいねんしざいほう",
+                "roman" => "kondeneinensizaihou",
             ],
             [
                 "category" => "aaa",
                 "text" => "札幌",
-                "kana" => "さっぽろ"
+                "kana" => "さっぽろ",
+                "roman" => "sapporo",
             ]
         ];
 

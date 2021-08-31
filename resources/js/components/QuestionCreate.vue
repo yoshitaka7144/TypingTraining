@@ -18,6 +18,11 @@
             {{ msg }}
           </li>
         </ul>
+        <ul v-if="registerErrorMessages.roman">
+          <li v-for="msg in registerErrorMessages.roman" :key="msg">
+            {{ msg }}
+          </li>
+        </ul>
       </div>
       <label for="question-category">カテゴリー</label>
       <input
@@ -46,6 +51,15 @@
         :placeholder="kanaPlaceholder"
       />
       <p class="error" v-if="kanaError">{{ kanaError }}</p>
+      <label for="question-roman">タイピング文字</label>
+      <input
+        type="text"
+        id="question-roman"
+        v-model="registerForm.roman"
+        autocomplete="off"
+        :placeholder="romanPlaceholder"
+      />
+      <p class="error" v-if="romanError">{{ romanError }}</p>
       <div class="btn-wrapper">
         <button type="submit" class="btn btn-blue">登録</button>
       </div>
@@ -58,14 +72,17 @@ import {
   CREATED,
   UNPROCESSABLE_ENTITY,
   REGISTER_QUESTION_CATEGORY_MAX_NUMBER,
-  REGISTER_QUESTION_TEXT_MAX_NUMBER,
-  REGISTER_QUESTION_KANA_MAX_NUMBER,
   REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE,
-  REGISTER_QUESTION_TEXT_ERROR_REQUIRE,
-  REGISTER_QUESTION_KANA_ERROR_REQUIRE,
   REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
+  REGISTER_QUESTION_TEXT_MAX_NUMBER,
+  REGISTER_QUESTION_TEXT_ERROR_REQUIRE,
   REGISTER_QUESTION_TEXT_ERROR_LIMIT,
+  REGISTER_QUESTION_KANA_MAX_NUMBER,
+  REGISTER_QUESTION_KANA_ERROR_REQUIRE,
   REGISTER_QUESTION_KANA_ERROR_LIMIT,
+  REGISTER_QUESTION_ROMAN_MAX_NUMBER,
+  REGISTER_QUESTION_ROMAN_ERROR_REQUIRE,
+  REGISTER_QUESTION_ROMAN_ERROR_LIMIT,
 } from "../util";
 export default {
   data() {
@@ -75,6 +92,7 @@ export default {
         category: "",
         text: "",
         kana: "",
+        roman:"",
       },
       categoryPlaceholder: REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
       categoryError: "",
@@ -82,6 +100,8 @@ export default {
       textError: "",
       kanaPlaceholder: REGISTER_QUESTION_KANA_ERROR_LIMIT,
       kanaError: "",
+      romanPlaceholder: REGISTER_QUESTION_ROMAN_ERROR_LIMIT,
+      romanError: "",
     };
   },
   methods: {
@@ -125,6 +145,15 @@ export default {
         this.kanaError = REGISTER_QUESTION_KANA_ERROR_LIMIT;
       } else {
         this.kanaError = "";
+      }
+    },
+    "registerForm.roman": function (val) {
+      if (val.length < 1) {
+        this.romanError = REGISTER_QUESTION_ROMAN_ERROR_REQUIRE;
+      } else if (val.length > REGISTER_QUESTION_ROMAN_MAX_NUMBER) {
+        this.romanError = REGISTER_QUESTION_ROMAN_ERROR_LIMIT;
+      } else {
+        this.romanError = "";
       }
     },
   },

@@ -26,6 +26,7 @@ class QuestionController extends Controller
         $question->category = $request->category;
         $question->text = $request->text;
         $question->kana = $request->kana;
+        $question->roman = $request->roman;
         $question->save();
 
         return $question;
@@ -36,6 +37,7 @@ class QuestionController extends Controller
         $question->category = $request->category;
         $question->text = $request->text;
         $question->kana = $request->kana;
+        $question->roman = $request->roman;
         $question->save();
 
         return $question;

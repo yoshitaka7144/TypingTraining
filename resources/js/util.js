@@ -3,6 +3,8 @@ export const CREATED = 201;
 export const UNPROCESSABLE_ENTITY = 422;
 export const INTERNAL_SERVER_ERROR = 500;
 
+export const END_SYMBOL = "$";
+
 export const LOGIN_NAME_ERROR_REQUIRE = "ユーザー名は必須項目です。";
 export const LOGIN_PASSWORD_ERROR_REQUIRE = "パスワードは必須項目です。";
 
@@ -25,3 +27,7 @@ export const REGISTER_QUESTION_TEXT_ERROR_LIMIT = "問題は" + REGISTER_QUESTIO
 export const REGISTER_QUESTION_KANA_MAX_NUMBER = 100;
 export const REGISTER_QUESTION_KANA_ERROR_REQUIRE = "かなは必須項目です。";
 export const REGISTER_QUESTION_KANA_ERROR_LIMIT = "かなは" + REGISTER_QUESTION_KANA_MAX_NUMBER + "文字以内で入力して下さい。";
+
+export const REGISTER_QUESTION_ROMAN_MAX_NUMBER = 100;
+export const REGISTER_QUESTION_ROMAN_ERROR_REQUIRE = "タイピング文字は必須項目です。";
+export const REGISTER_QUESTION_ROMAN_ERROR_LIMIT = "タイピング文字は" + REGISTER_QUESTION_ROMAN_MAX_NUMBER + "文字以内で入力して下さい。";

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="typing">
     <select name="" id="" v-model="selectQuestionCount">
       <option :value="n" v-for="n in questions.length" :key="n">
         {{ n }}

@@ -2544,6 +2544,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2710,6 +2712,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2718,14 +2734,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       registerForm: {
         category: "",
         text: "",
-        kana: ""
+        kana: "",
+        roman: ""
       },
       categoryPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"],
       categoryError: "",
       textPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"],
       textError: "",
       kanaPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"],
-      kanaError: ""
+      kanaError: "",
+      romanPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"],
+      romanError: ""
     };
   },
   methods: {
@@ -2791,6 +2810,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"];
       } else {
         this.kanaError = "";
+      }
+    },
+    "registerForm.roman": function registerFormRoman(val) {
+      if (val.length < 1) {
+        this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_REQUIRE"];
+      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_MAX_NUMBER"]) {
+        this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"];
+      } else {
+        this.romanError = "";
       }
     }
   }
@@ -2872,6 +2900,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2883,14 +2925,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       updateForm: {
         category: "",
         text: "",
-        kana: ""
+        kana: "",
+        roman: ""
       },
       categoryPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"],
       categoryError: "",
       textPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"],
       textError: "",
       kanaPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"],
-      kanaError: ""
+      kanaError: "",
+      romanPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"],
+      romanError: ""
     };
   },
   methods: {
@@ -2991,6 +3036,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else {
         this.kanaError = "";
       }
+    },
+    "updateForm.roman": function updateFormRoman(val) {
+      if (val.length < 1) {
+        this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_REQUIRE"];
+      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_MAX_NUMBER"]) {
+        this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"];
+      } else {
+        this.romanError = "";
+      }
     }
   }
 });
@@ -3006,20 +3060,543 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util.js */ "./resources/js/util.js");
+/* harmony import */ var _key_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../key.js */ "./resources/js/key.js");
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    modalOption: {},
     questions: [],
     questionCount: ""
   },
+  data: function data() {
+    return {
+      phase: 1,
+      currentCount: 0,
+      currentQuestion: [],
+      roman: [],
+      romanIndex: 0,
+      displayText: "",
+      displayKana: "",
+      displayRoman: "",
+      displayInputedRoman: ""
+    };
+  },
+  mounted: function mounted() {
+    window.addEventListener("keydown", this.keyAction);
+  },
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener("keydown", this.keyAction);
+  },
+  computed: {
+    isLeftLittle: function isLeftLittle() {
+      var leftLittle = ["1", "q", "a", "z"];
+      var _char = this.roman[this.romanIndex];
+      return leftLittle.includes(_char);
+    },
+    isLeftRing: function isLeftRing() {
+      var leftRing = ["2", "w", "s", "x"];
+      var _char2 = this.roman[this.romanIndex];
+      return leftRing.includes(_char2);
+    },
+    isLeftMiddle: function isLeftMiddle() {
+      var leftMiddle = ["3", "e", "d", "c"];
+      var _char3 = this.roman[this.romanIndex];
+      return leftMiddle.includes(_char3);
+    },
+    isLeftIndex: function isLeftIndex() {
+      var leftIndex = ["4", "5", "r", "t", "f", "g", "v", "b"];
+      var _char4 = this.roman[this.romanIndex];
+      return leftIndex.includes(_char4);
+    },
+    isRightIndex: function isRightIndex() {
+      var rightIndex = ["6", "7", "y", "u", "h", "j", "n", "m"];
+      var _char5 = this.roman[this.romanIndex];
+      return rightIndex.includes(_char5);
+    },
+    isRightMiddle: function isRightMiddle() {
+      var rightMiddle = ["8", "i", "k", ","];
+      var _char6 = this.roman[this.romanIndex];
+      return rightMiddle.includes(_char6);
+    },
+    isRightRing: function isRightRing() {
+      var rightRing = ["9", "o", "l", "."];
+      var _char7 = this.roman[this.romanIndex];
+      return rightRing.includes(_char7);
+    },
+    isRightLittle: function isRightLittle() {
+      var rightLittle = ["0", "p"];
+      var _char8 = this.roman[this.romanIndex];
+      return rightLittle.includes(_char8);
+    }
+  },
   methods: {
     hide: function hide() {
-      this.$modal.hide("modal");
+      this.clear();
+      this.$modal.hide("typing-modal");
+    },
+    start: function start() {
+      this.initQuestion();
+      this.phase = 2;
+    },
+    next: function next() {
+      if (this.questionCount > this.currentCount + 1) {
+        this.currentCount++;
+      } else {
+        this.phase = 3;
+      }
+    },
+    clear: function clear() {
+      this.roman = [];
+      this.currentCount = 0;
+      this.phase = 1;
+    },
+    initQuestion: function initQuestion() {
+      this.roman = [];
+      this.romanIndex = 0;
+      this.currentQuestion = this.questions[this.currentCount];
+      this.roman = this.currentQuestion.roman.split("");
+      this.roman.push(_util_js__WEBPACK_IMPORTED_MODULE_0__["END_SYMBOL"]);
+      this.displayText = this.currentQuestion.text;
+      this.displayKana = this.currentQuestion.kana;
+      this.displayRoman = this.currentQuestion.roman;
+      this.displayInputedRoman = "";
+    },
+    keyAction: function keyAction(e) {
+      if (this.phase === 2) {
+        e.preventDefault();
+
+        switch (Object(_key_js__WEBPACK_IMPORTED_MODULE_1__["checkInputKey"])(e.code, this.roman, this.romanIndex)) {
+          case 1:
+          case 2:
+            this.romanIndex++;
+
+            if (this.roman[this.romanIndex] === _util_js__WEBPACK_IMPORTED_MODULE_0__["END_SYMBOL"]) {
+              this.next();
+              if (this.phase === 3) break;
+              this.initQuestion();
+            } else {
+              this.displayRoman = "";
+              this.displayInputedRoman = "";
+
+              for (var i = this.romanIndex; i < this.roman.length - 1; i++) {
+                this.displayRoman += this.roman[i];
+              }
+
+              for (var i = 0; i < this.romanIndex; i++) {
+                this.displayInputedRoman += this.roman[i];
+              }
+            }
+
+            break;
+
+          case 3:
+            //タイプミス時
+            break;
+
+          default:
+            break;
+        }
+      }
     }
   }
 });
@@ -40344,6 +40921,8 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(question.kana))]),
               _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(question.roman))]),
+              _vm._v(" "),
               _c(
                 "td",
                 [
@@ -40410,6 +40989,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("問題")]),
         _vm._v(" "),
         _c("th", [_vm._v("かな")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("タイピング文字")]),
         _vm._v(" "),
         _c("th"),
         _vm._v(" "),
@@ -40486,6 +41067,18 @@ var render = function() {
                   ? _c(
                       "ul",
                       _vm._l(_vm.registerErrorMessages.kana, function(msg) {
+                        return _c("li", { key: msg }, [
+                          _vm._v("\n          " + _vm._s(msg) + "\n        ")
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.registerErrorMessages.roman
+                  ? _c(
+                      "ul",
+                      _vm._l(_vm.registerErrorMessages.roman, function(msg) {
                         return _c("li", { key: msg }, [
                           _vm._v("\n          " + _vm._s(msg) + "\n        ")
                         ])
@@ -40596,6 +41189,42 @@ var render = function() {
             ? _c("p", { staticClass: "error" }, [_vm._v(_vm._s(_vm.kanaError))])
             : _vm._e(),
           _vm._v(" "),
+          _c("label", { attrs: { for: "question-roman" } }, [
+            _vm._v("タイピング文字")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.registerForm.roman,
+                expression: "registerForm.roman"
+              }
+            ],
+            attrs: {
+              type: "text",
+              id: "question-roman",
+              autocomplete: "off",
+              placeholder: _vm.romanPlaceholder
+            },
+            domProps: { value: _vm.registerForm.roman },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.registerForm, "roman", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.romanError
+            ? _c("p", { staticClass: "error" }, [
+                _vm._v(_vm._s(_vm.romanError))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _vm._m(0)
         ]
       ),
@@ -40687,6 +41316,18 @@ var render = function() {
                   ? _c(
                       "ul",
                       _vm._l(_vm.updateErrorMessages.kana, function(msg) {
+                        return _c("li", { key: msg }, [
+                          _vm._v("\n          " + _vm._s(msg) + "\n        ")
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.updateErrorMessages.roman
+                  ? _c(
+                      "ul",
+                      _vm._l(_vm.updateErrorMessages.roman, function(msg) {
                         return _c("li", { key: msg }, [
                           _vm._v("\n          " + _vm._s(msg) + "\n        ")
                         ])
@@ -40799,6 +41440,42 @@ var render = function() {
             ? _c("p", { staticClass: "error" }, [_vm._v(_vm._s(_vm.kanaError))])
             : _vm._e(),
           _vm._v(" "),
+          _c("label", { attrs: { for: "question-roman" } }, [
+            _vm._v("タイピング文字")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.updateForm.roman,
+                expression: "updateForm.roman"
+              }
+            ],
+            attrs: {
+              type: "text",
+              id: "question-roman",
+              autocomplete: "off",
+              placeholder: _vm.romanPlaceholder
+            },
+            domProps: { value: _vm.updateForm.roman },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.updateForm, "roman", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.romanError
+            ? _c("p", { staticClass: "error" }, [
+                _vm._v(_vm._s(_vm.romanError))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _vm._m(0)
         ]
       ),
@@ -40869,8 +41546,584 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "modal",
-    { staticClass: "modal", attrs: { name: "typing-modal", resizable: true } },
-    [_vm._v("\n  " + _vm._s(_vm.questionCount) + "\n")]
+    {
+      staticClass: "modal",
+      attrs: {
+        name: "typing-modal",
+        resizable: true,
+        clickToClose: false,
+        width: "80%",
+        height: "70%"
+      }
+    },
+    [
+      _c("button", { staticClass: "btn btn-red", on: { click: _vm.hide } }, [
+        _vm._v("close")
+      ]),
+      _vm._v(" "),
+      _vm.phase === 1
+        ? _c("div", {}, [
+            _c(
+              "button",
+              { staticClass: "btn btn-blue", on: { click: _vm.start } },
+              [_vm._v("スタート")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.phase === 2
+        ? _c("div", {}, [
+            _c("p", [_vm._v(_vm._s(_vm.displayText))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.displayKana))]),
+            _vm._v(" "),
+            _c("p", [
+              _c("span", { staticClass: "inputed" }, [
+                _vm._v(_vm._s(_vm.displayInputedRoman))
+              ]),
+              _vm._v(_vm._s(_vm.displayRoman) + "\n    ")
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.phase === 1 || _vm.phase === 2
+        ? _c("div", { attrs: { id: "keyboard-container" } }, [
+            _c("div", { attrs: { id: "keyboard" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "1" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-1" }
+                  },
+                  [_vm._v("\n          1\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "2" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-2" }
+                  },
+                  [_vm._v("\n          2\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "3" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-3" }
+                  },
+                  [_vm._v("\n          3\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "4" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-4" }
+                  },
+                  [_vm._v("\n          4\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "5" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-5" }
+                  },
+                  [_vm._v("\n          5\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "6" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-6" }
+                  },
+                  [_vm._v("\n          6\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "7" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-7" }
+                  },
+                  [_vm._v("\n          7\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "8" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-8" }
+                  },
+                  [_vm._v("\n          8\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "9" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-9" }
+                  },
+                  [_vm._v("\n          9\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "0" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-0" }
+                  },
+                  [_vm._v("\n          0\n        ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "key", attrs: { id: "key-tab" } }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "q" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-q" }
+                  },
+                  [_vm._v("\n          Q\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "w" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-w" }
+                  },
+                  [_vm._v("\n          W\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "e" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-e" }
+                  },
+                  [_vm._v("\n          E\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "r" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-r" }
+                  },
+                  [_vm._v("\n          R\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "t" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-t" }
+                  },
+                  [_vm._v("\n          T\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "y" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-y" }
+                  },
+                  [_vm._v("\n          Y\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "u" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-u" }
+                  },
+                  [_vm._v("\n          U\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "i" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-i" }
+                  },
+                  [_vm._v("\n          I\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "o" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-o" }
+                  },
+                  [_vm._v("\n          O\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "p" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-p" }
+                  },
+                  [_vm._v("\n          P\n        ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "key-enter-1" } })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "key", attrs: { id: "key-caps" } }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "a" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-a" }
+                  },
+                  [_vm._v("\n          A\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "s" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-s" }
+                  },
+                  [_vm._v("\n          S\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "d" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-d" }
+                  },
+                  [_vm._v("\n          D\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "f" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-f" }
+                  },
+                  [_vm._v("\n          F\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "g" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-g" }
+                  },
+                  [_vm._v("\n          G\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "h" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-h" }
+                  },
+                  [_vm._v("\n          H\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "j" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-j" }
+                  },
+                  [_vm._v("\n          J\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "k" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-k" }
+                  },
+                  [_vm._v("\n          K\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "l" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-l" }
+                  },
+                  [_vm._v("\n          L\n        ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "key-enter-2" } })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", {
+                  staticClass: "key",
+                  attrs: { id: "key-shift-left" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "z" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-z" }
+                  },
+                  [_vm._v("\n          Z\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "x" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-x" }
+                  },
+                  [_vm._v("\n          X\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "c" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-c" }
+                  },
+                  [_vm._v("\n          C\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "v" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-v" }
+                  },
+                  [_vm._v("\n          V\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "b" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-b" }
+                  },
+                  [_vm._v("\n          B\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "n" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-n" }
+                  },
+                  [_vm._v("\n          N\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "m" === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-m" }
+                  },
+                  [_vm._v("\n          M\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "," === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-," }
+                  },
+                  [_vm._v("\n          ,\n        ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "key",
+                    class: { "target-key": "." === _vm.roman[_vm.romanIndex] },
+                    attrs: { id: "key-." }
+                  },
+                  [_vm._v("\n          .\n        ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "key",
+                  attrs: { id: "key-shift-right" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "key", attrs: { id: "key-ctrl" } }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "key",
+                  class: { "target-key": 0 === _vm.roman.length },
+                  attrs: { id: "key-space" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "key" })
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.phase === 1 || _vm.phase === 2
+        ? _c("div", { attrs: { id: "hand-container" } }, [
+            _c("div", { attrs: { id: "hand" } }, [
+              _c("div", { attrs: { id: "hand-left" } }, [
+                _c("div", {
+                  staticClass: "finger finger-little",
+                  class: { "target-finger": _vm.isLeftLittle },
+                  attrs: { id: "left-little" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-ring",
+                  class: { "target-finger": _vm.isLeftRing },
+                  attrs: { id: "left-ring" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-middle",
+                  class: { "target-finger": _vm.isLeftMiddle },
+                  attrs: { id: "left-middle" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-index",
+                  class: { "target-finger": _vm.isLeftIndex },
+                  attrs: { id: "left-index" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-thumb",
+                  attrs: { id: "left-thumb" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "hand-right" } }, [
+                _c("div", {
+                  staticClass: "finger finger-thumb",
+                  attrs: { id: "right-thumb" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-index",
+                  class: { "target-finger": _vm.isRightIndex },
+                  attrs: { id: "right-index" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-middle",
+                  class: { "target-finger": _vm.isRightMiddle },
+                  attrs: { id: "right-middle" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-ring",
+                  class: { "target-finger": _vm.isRightRing },
+                  attrs: { id: "right-ring" }
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "finger finger-little",
+                  class: { "target-finger": _vm.isRightLittle },
+                  attrs: { id: "right-little" }
+                })
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.phase === 3
+        ? _c("div", {}, [_c("p", [_vm._v("結果画面")])])
+        : _vm._e()
+    ]
   )
 }
 var staticRenderFns = []
@@ -40897,6 +42150,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { attrs: { id: "typing" } },
     [
       _c(
         "select",
@@ -58587,6 +59841,458 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/key.js":
+/*!*****************************!*\
+  !*** ./resources/js/key.js ***!
+  \*****************************/
+/*! exports provided: getChar, checkInputKey */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChar", function() { return getChar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkInputKey", function() { return checkInputKey; });
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./resources/js/util.js");
+
+function getChar(code) {
+  switch (code) {
+    case "KeyA":
+      return "a";
+
+    case "KeyB":
+      return "b";
+
+    case "KeyC":
+      return "c";
+
+    case "KeyD":
+      return "d";
+
+    case "KeyE":
+      return "e";
+
+    case "KeyF":
+      return "f";
+
+    case "KeyG":
+      return "g";
+
+    case "KeyH":
+      return "h";
+
+    case "KeyI":
+      return "i";
+
+    case "KeyJ":
+      return "j";
+
+    case "KeyK":
+      return "k";
+
+    case "KeyL":
+      return "l";
+
+    case "KeyM":
+      return "m";
+
+    case "KeyN":
+      return "n";
+
+    case "KeyO":
+      return "o";
+
+    case "KeyP":
+      return "p";
+
+    case "KeyQ":
+      return "q";
+
+    case "KeyR":
+      return "r";
+
+    case "KeyS":
+      return "s";
+
+    case "KeyT":
+      return "t";
+
+    case "KeyU":
+      return "u";
+
+    case "KeyV":
+      return "v";
+
+    case "KeyW":
+      return "w";
+
+    case "KeyX":
+      return "x";
+
+    case "KeyY":
+      return "y";
+
+    case "KeyZ":
+      return "z";
+
+    case "Digit0":
+      return "0";
+
+    case "Digit1":
+      return "1";
+
+    case "Digit2":
+      return "2";
+
+    case "Digit3":
+      return "3";
+
+    case "Digit4":
+      return "4";
+
+    case "Digit5":
+      return "5";
+
+    case "Digit6":
+      return "6";
+
+    case "Digit7":
+      return "7";
+
+    case "Digit8":
+      return "8";
+
+    case "Digit9":
+      return "9";
+
+    case "Comma":
+      return ",";
+
+    case "Period":
+      return ".";
+
+    default:
+      return "";
+  }
+}
+function checkInputKey(code, roman, romanIndex) {
+  var inputChar = getChar(code);
+  var currentChar = roman[romanIndex];
+  var prevChar3 = romanIndex >= 3 ? roman[romanIndex - 3] : "";
+  var prevChar2 = romanIndex >= 2 ? roman[romanIndex - 2] : "";
+  var prevChar = romanIndex >= 1 ? roman[romanIndex - 1] : "";
+  var nextChar = roman[romanIndex + 1];
+  var nextChar2 = nextChar === _util__WEBPACK_IMPORTED_MODULE_0__["END_SYMBOL"] ? _util__WEBPACK_IMPORTED_MODULE_0__["END_SYMBOL"] : roman[romanIndex + 2];
+
+  if (inputChar === "") {
+    return 0;
+  }
+
+  if (inputChar === currentChar) {
+    return 1;
+  } //「い」の曖昧入力判定
+
+
+  if (inputChar === 'y' && currentChar === 'i' && (prevChar === '' || prevChar === 'a' || prevChar === 'i' || prevChar === 'u' || prevChar === 'e' || prevChar === 'o')) {
+    roman.splice(romanIndex, 0, 'y');
+    return 2;
+  }
+
+  if (inputChar === 'y' && currentChar === 'i' && prevChar === 'n' && prevChar2 === 'n' && prevChar3 !== 'n') {
+    roman.splice(romanIndex, 0, 'y');
+    return 2;
+  }
+
+  if (inputChar === 'y' && currentChar === 'i' && prevChar === 'n' && prevChar2 === 'x') {
+    roman.splice(romanIndex, 0, 'y');
+    return 2;
+  } //「う」の曖昧入力判定
+
+
+  if (inputChar === 'w' && currentChar === 'u' && (prevChar === '' || prevChar === 'a' || prevChar === 'i' || prevChar === 'u' || prevChar === 'e' || prevChar === 'o')) {
+    roman.splice(romanIndex, 0, 'w');
+    return 2;
+  }
+
+  if (inputChar === 'w' && currentChar === 'u' && prevChar === 'n' && prevChar2 === 'n' && prevChar3 !== 'n') {
+    roman.splice(romanIndex, 0, 'w');
+    return 2;
+  }
+
+  if (inputChar === 'w' && currentChar === 'u' && prevChar === 'n' && prevChar2 === 'x') {
+    roman.splice(romanIndex, 0, 'w');
+    return 2;
+  }
+
+  if (inputChar === 'h' && prevChar2 !== 't' && prevChar2 !== 'd' && prevChar === 'w' && currentChar === 'u') {
+    roman.splice(romanIndex, 0, 'h');
+    return 2;
+  } //「か」「く」「こ」の曖昧入力判定
+
+
+  if (inputChar === 'c' && prevChar !== 'k' && currentChar === 'k' && (nextChar === 'a' || nextChar === 'u' || nextChar === 'o')) {
+    roman[romanIndex] = 'c';
+    return 2;
+  } //「く」の曖昧入力判定
+
+
+  if (inputChar === 'q' && prevChar !== 'k' && currentChar === 'k' && nextChar === 'u') {
+    roman[romanIndex] = 'q';
+    return 2;
+  } //「し」の曖昧入力判定
+
+
+  if (inputChar === 'h' && prevChar === 's' && currentChar === 'i') {
+    roman.splice(romanIndex, 0, 'h');
+    return 2;
+  } //「じ」の曖昧入力判定
+
+
+  if (inputChar === 'j' && currentChar === 'z' && nextChar === 'i') {
+    roman[romanIndex] = 'j';
+    return 2;
+  } //「しゃ」「しゅ」「しぇ」「しょ」の曖昧入力判定
+
+
+  if (inputChar === 'h' && prevChar === 's' && currentChar === 'y') {
+    roman[romanIndex] = 'h';
+    return 2;
+  } //「じゃ」「じゅ」「じぇ」「じょ」の曖昧入力判定
+
+
+  if (inputChar === 'z' && prevChar !== 'j' && currentChar === 'j' && (nextChar === 'a' || nextChar === 'u' || nextChar === 'e' || nextChar === 'o')) {
+    roman[romanIndex] = 'z';
+    roman.splice(romanIndex + 1, 0, 'y');
+    return 2;
+  } //「し」「せ」の曖昧入力判定
+
+
+  if (inputChar === 'c' && prevChar !== 's' && currentChar === 's' && (nextChar === 'i' || nextChar === 'e')) {
+    roman[romanIndex] = 'c';
+    return 2;
+  } //「ち」の曖昧入力判定
+
+
+  if (inputChar === 'c' && prevChar !== 't' && currentChar === 't' && nextChar === 'i') {
+    roman[romanIndex] = 'c';
+    roman.splice(romanIndex + 1, 0, 'h');
+    return 2;
+  } //「ちゃ」「ちゅ」「ちぇ」「ちょ」の曖昧入力判定
+
+
+  if (inputChar === 'c' && prevChar !== 't' && currentChar === 't' && nextChar === 'y') {
+    roman[romanIndex] = 'c';
+    return 2;
+  } //「cya」=>「cha」
+
+
+  if (inputChar === 'h' && prevChar === 'c' && currentChar === 'y') {
+    roman[romanIndex] = 'h';
+    return 2;
+  } //「つ」の曖昧入力判定
+
+
+  if (inputChar === 's' && prevChar === 't' && currentChar === 'u') {
+    roman.splice(romanIndex, 0, 's');
+    return 2;
+  } //「つぁ」「つぃ」「つぇ」「つぉ」の分解入力判定
+
+
+  if (inputChar === 'u' && prevChar === 't' && currentChar === 's' && (nextChar === 'a' || nextChar === 'i' || nextChar === 'e' || nextChar === 'o')) {
+    roman[romanIndex] = 'u';
+    roman.splice(romanIndex + 1, 0, 'x');
+    return 2;
+  }
+
+  if (inputChar === 'u' && prevChar2 === 't' && prevChar === 's' && (currentChar === 'a' || currentChar === 'i' || currentChar === 'e' || currentChar === 'o')) {
+    roman.splice(romanIndex, 0, 'u');
+    roman.splice(romanIndex + 1, 0, 'x');
+    return 2;
+  } //「てぃ」の分解入力判定
+
+
+  if (inputChar === 'e' && prevChar === 't' && currentChar === 'h' && nextChar === 'i') {
+    roman[romanIndex] = 'e';
+    roman.splice(romanIndex + 1, 0, 'x');
+    return 2;
+  } //「でぃ」の分解入力判定
+
+
+  if (inputChar === 'e' && prevChar === 'd' && currentChar === 'h' && nextChar === 'i') {
+    roman[romanIndex] = 'e';
+    roman.splice(romanIndex + 1, 0, 'x');
+    return 2;
+  } //「でゅ」の分解入力判定
+
+
+  if (inputChar === 'e' && prevChar === 'd' && currentChar === 'h' && nextChar === 'u') {
+    roman[romanIndex] = 'e';
+    roman.splice(romanIndex + 1, 0, 'x');
+    roman.splice(romanIndex + 2, 0, 'y');
+    return 2;
+  } //「とぅ」の分解入力判定
+
+
+  if (inputChar === 'o' && prevChar === 't' && currentChar === 'w' && nextChar === 'u') {
+    roman[romanIndex] = 'o';
+    roman.splice(romanIndex + 1, 0, 'x');
+    return 2;
+  } //「どぅ」の分解入力判定
+
+
+  if (inputChar === 'o' && prevChar === 'd' && currentChar === 'w' && nextChar === 'u') {
+    roman[romanIndex] = 'o';
+    roman.splice(romanIndex + 1, 0, 'x');
+    return 2;
+  } //「ふ」の曖昧入力判定
+
+
+  if (inputChar === 'f' && currentChar === 'h' && nextChar === 'u') {
+    roman[romanIndex] = 'f';
+    return 2;
+  } //「ふぁ」「ふぃ」「ふぇ」「ふぉ」の分解入力判定
+
+
+  if (inputChar === 'w' && prevChar === 'f' && (currentChar === 'a' || currentChar === 'i' || currentChar === 'e' || currentChar === 'o')) {
+    roman.splice(romanIndex, 0, 'w');
+    return 2;
+  }
+
+  if (inputChar === 'y' && prevChar === 'f' && (currentChar === 'i' || currentChar === 'e')) {
+    roman.splice(romanIndex, 0, 'y');
+    return 2;
+  }
+
+  if (inputChar === 'h' && prevChar !== 'f' && currentChar === 'f' && (nextChar === 'a' || nextChar === 'i' || nextChar === 'e' || nextChar === 'o')) {
+    roman[romanIndex] = 'h';
+    roman.splice(romanIndex + 1, 0, 'u');
+    roman.splice(romanIndex + 2, 0, 'x');
+    return 2;
+  }
+
+  if (inputChar === 'u' && prevChar === 'f' && (currentChar === 'a' || currentChar === 'i' || currentChar === 'e' || currentChar === 'o')) {
+    roman.splice(romanIndex, 0, 'u');
+    roman.splice(romanIndex + 1, 0, 'x');
+    return 2;
+  } //「ん」の曖昧入力判定（「n'」には未対応）
+
+
+  if (inputChar === 'n' && prevChar2 !== 'n' && prevChar === 'n' && currentChar !== 'a' && currentChar !== 'i' && currentChar !== 'u' && currentChar !== 'e' && currentChar !== 'o' && currentChar !== 'y') {
+    roman.splice(romanIndex, 0, 'n');
+    return 2;
+  }
+
+  if (inputChar === 'x' && prevChar !== 'n' && currentChar === 'n' && nextChar !== 'a' && nextChar !== 'i' && nextChar !== 'u' && nextChar !== 'e' && nextChar !== 'o' && nextChar !== 'y') {
+    if (nextChar === 'n') {
+      roman[romanIndex] = 'x';
+    } else {
+      roman.splice(romanIndex, 0, 'x');
+    }
+
+    return 2;
+  } //「きゃ」「にゃ」などを分解する
+
+
+  if (inputChar === 'i' && currentChar === 'y' && (prevChar === 'k' || prevChar === 's' || prevChar === 't' || prevChar === 'n' || prevChar === 'h' || prevChar === 'm' || prevChar === 'r' || prevChar === 'g' || prevChar === 'z' || prevChar === 'd' || prevChar === 'b' || prevChar === 'p') && (nextChar === 'a' || nextChar === 'u' || nextChar === 'e' || nextChar === 'o')) {
+    if (nextChar === 'e') {
+      roman[romanIndex] = 'i';
+      roman.splice(romanIndex + 1, 0, 'x');
+    } else {
+      roman.splice(romanIndex, 0, 'i');
+      roman.splice(romanIndex + 1, 0, 'x');
+    }
+
+    return 2;
+  } //「しゃ」「ちゃ」などを分解する
+
+
+  if (inputChar === 'i' && (currentChar === 'a' || currentChar === 'u' || currentChar === 'e' || currentChar === 'o') && (prevChar2 === 's' || prevChar2 === 'c') && prevChar === 'h') {
+    if (nextChar === 'e') {
+      roman.splice(romanIndex, 0, 'i');
+      roman.splice(romanIndex + 1, 0, 'x');
+    } else {
+      roman.splice(romanIndex, 'i');
+      roman.splice(romanIndex + 1, 0, 'x');
+      roman.splice(romanIndex + 2, 0, 'y');
+    }
+
+    return 2;
+  } //「しゃ」を「c」で分解する
+
+
+  if (inputChar === 'c' && currentChar === 's' && prevChar !== 's' && nextChar === 'y' && (nextChar2 === 'a' || nextChar2 === 'u' || nextChar2 === 'e' || nextChar2 === 'o')) {
+    if (nextChar2 === 'e') {
+      roman[romanIndex] = 'c';
+      roman[romanIndex + 1] = 'i';
+      roman.splice(romanIndex + 1, 0, 'x');
+    } else {
+      roman[romanIndex] = 'c';
+      roman.splice(romanIndex + 1, 0, 'i');
+      roman.splice(romanIndex + 2, 0, 'x');
+    }
+
+    return 2;
+  } //「っ」の分解入力判定
+
+
+  if ((inputChar === 'x' || inputChar === 'l') && (currentChar === 'k' && nextChar === 'k' || currentChar === 's' && nextChar === 's' || currentChar === 't' && nextChar === 't' || currentChar === 'g' && nextChar === 'g' || currentChar === 'z' && nextChar === 'z' || currentChar === 'j' && nextChar === 'j' || currentChar === 'd' && nextChar === 'd' || currentChar === 'b' && nextChar === 'b' || currentChar === 'p' && nextChar === 'p')) {
+    roman[romanIndex] = inputChar;
+    roman.splice(romanIndex + 1, 0, 't');
+    roman.splice(romanIndex + 2, 0, 'u');
+    return 2;
+  } //「っか」「っく」「っこ」の特殊入力
+
+
+  if (inputChar === 'c' && currentChar === 'k' && nextChar === 'k' && (nextChar2 === 'a' || nextChar2 === 'u' || nextChar2 === 'o')) {
+    roman[romanIndex] = 'c';
+    roman[romanIndex + 1] = 'c';
+    return 2;
+  } //「っく」の特殊入力
+
+
+  if (inputChar === 'q' && currentChar === 'k' && nextChar === 'k' && nextChar2 === 'u') {
+    roman[romanIndex] = 'q';
+    roman[romanIndex + 1] = 'q';
+    return 2;
+  } //「っし」「っせ」の特殊入力
+
+
+  if (inputChar === 'c' && currentChar === 's' && nextChar === 's' && (nextChar2 === 'i' || nextChar2 === 'e')) {
+    roman[romanIndex] = 'c';
+    roman[romanIndex + 1] = 'c';
+    return 2;
+  } //「っちゃ」「っちゅ」「っちぇ」「っちょ」の曖昧入力判定
+
+
+  if (inputChar === 'c' && currentChar === 't' && nextChar === 't' && nextChar2 === 'y') {
+    roman[romanIndex] = 'c';
+    roman[romanIndex + 1] = 'c';
+    return 2;
+  } //「っち」の曖昧入力判定
+
+
+  if (inputChar === 'c' && currentChar === 't' && nextChar === 't' && nextChar2 === 'i') {
+    roman[romanIndex] = 'c';
+    roman[romanIndex + 1] = 'c';
+    roman.splice(romanIndex + 2, 0, 'h');
+    return 2;
+  } //「l」と「x」の完全互換性
+
+
+  if (inputChar === 'x' && currentChar === 'l') {
+    roman[romanIndex] = 'x';
+    return 2;
+  }
+
+  if (inputChar === 'l' && currentChar === 'x') {
+    roman[romanIndex] = 'l';
+    return 2;
+  }
+
+  return 3;
+}
+
+/***/ }),
+
 /***/ "./resources/js/router.js":
 /*!********************************!*\
   !*** ./resources/js/router.js ***!
@@ -58962,7 +60668,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOGIN_NAME_ERROR_REQUIRE, LOGIN_PASSWORD_ERROR_REQUIRE, REGISTER_NAME_MAX_NUMBER, REGISTER_NAME_ERROR_REQUIRE, REGISTER_NAME_ERROR_LIMIT, REGISTER_PASSWORD_MIN_NUMBER, REGISTER_PASSWORD_ERROR_REQUIRE, REGISTER_PASSWORD_ERROR_LIMIT, REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE, REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT, REGISTER_QUESTION_CATEGORY_MAX_NUMBER, REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE, REGISTER_QUESTION_CATEGORY_ERROR_LIMIT, REGISTER_QUESTION_TEXT_MAX_NUMBER, REGISTER_QUESTION_TEXT_ERROR_REQUIRE, REGISTER_QUESTION_TEXT_ERROR_LIMIT, REGISTER_QUESTION_KANA_MAX_NUMBER, REGISTER_QUESTION_KANA_ERROR_REQUIRE, REGISTER_QUESTION_KANA_ERROR_LIMIT */
+/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, END_SYMBOL, LOGIN_NAME_ERROR_REQUIRE, LOGIN_PASSWORD_ERROR_REQUIRE, REGISTER_NAME_MAX_NUMBER, REGISTER_NAME_ERROR_REQUIRE, REGISTER_NAME_ERROR_LIMIT, REGISTER_PASSWORD_MIN_NUMBER, REGISTER_PASSWORD_ERROR_REQUIRE, REGISTER_PASSWORD_ERROR_LIMIT, REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE, REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT, REGISTER_QUESTION_CATEGORY_MAX_NUMBER, REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE, REGISTER_QUESTION_CATEGORY_ERROR_LIMIT, REGISTER_QUESTION_TEXT_MAX_NUMBER, REGISTER_QUESTION_TEXT_ERROR_REQUIRE, REGISTER_QUESTION_TEXT_ERROR_LIMIT, REGISTER_QUESTION_KANA_MAX_NUMBER, REGISTER_QUESTION_KANA_ERROR_REQUIRE, REGISTER_QUESTION_KANA_ERROR_LIMIT, REGISTER_QUESTION_ROMAN_MAX_NUMBER, REGISTER_QUESTION_ROMAN_ERROR_REQUIRE, REGISTER_QUESTION_ROMAN_ERROR_LIMIT */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58971,6 +60677,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATED", function() { return CREATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROCESSABLE_ENTITY", function() { return UNPROCESSABLE_ENTITY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "END_SYMBOL", function() { return END_SYMBOL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGIN_NAME_ERROR_REQUIRE", function() { return LOGIN_NAME_ERROR_REQUIRE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGIN_PASSWORD_ERROR_REQUIRE", function() { return LOGIN_PASSWORD_ERROR_REQUIRE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_NAME_MAX_NUMBER", function() { return REGISTER_NAME_MAX_NUMBER; });
@@ -58990,10 +60697,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_MAX_NUMBER", function() { return REGISTER_QUESTION_KANA_MAX_NUMBER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_ERROR_REQUIRE", function() { return REGISTER_QUESTION_KANA_ERROR_REQUIRE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_ERROR_LIMIT", function() { return REGISTER_QUESTION_KANA_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_ROMAN_MAX_NUMBER", function() { return REGISTER_QUESTION_ROMAN_MAX_NUMBER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_ROMAN_ERROR_REQUIRE", function() { return REGISTER_QUESTION_ROMAN_ERROR_REQUIRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_ROMAN_ERROR_LIMIT", function() { return REGISTER_QUESTION_ROMAN_ERROR_LIMIT; });
 var OK = 200;
 var CREATED = 201;
 var UNPROCESSABLE_ENTITY = 422;
 var INTERNAL_SERVER_ERROR = 500;
+var END_SYMBOL = "$";
 var LOGIN_NAME_ERROR_REQUIRE = "ユーザー名は必須項目です。";
 var LOGIN_PASSWORD_ERROR_REQUIRE = "パスワードは必須項目です。";
 var REGISTER_NAME_MAX_NUMBER = 15;
@@ -59013,6 +60724,9 @@ var REGISTER_QUESTION_TEXT_ERROR_LIMIT = "問題は" + REGISTER_QUESTION_TEXT_MA
 var REGISTER_QUESTION_KANA_MAX_NUMBER = 100;
 var REGISTER_QUESTION_KANA_ERROR_REQUIRE = "かなは必須項目です。";
 var REGISTER_QUESTION_KANA_ERROR_LIMIT = "かなは" + REGISTER_QUESTION_KANA_MAX_NUMBER + "文字以内で入力して下さい。";
+var REGISTER_QUESTION_ROMAN_MAX_NUMBER = 100;
+var REGISTER_QUESTION_ROMAN_ERROR_REQUIRE = "タイピング文字は必須項目です。";
+var REGISTER_QUESTION_ROMAN_ERROR_LIMIT = "タイピング文字は" + REGISTER_QUESTION_ROMAN_MAX_NUMBER + "文字以内で入力して下さい。";
 
 /***/ }),
 

@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->string("category", 10);
             $table->string("text", 100);
             $table->string("kana", 100);
+            $table->string("roman", 100);
             $table->string("editor", 20)->nullable();
             $table->timestamps();
         });

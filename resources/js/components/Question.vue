@@ -8,6 +8,7 @@
           <th>カテゴリー</th>
           <th>問題</th>
           <th>かな</th>
+          <th>タイピング文字</th>
           <th></th>
           <th></th>
         </tr>
@@ -18,6 +19,7 @@
           <td>{{ question.category }}</td>
           <td>{{ question.text }}</td>
           <td>{{ question.kana }}</td>
+          <td>{{ question.roman }}</td>
           <td>
             <router-link
               :to="{
