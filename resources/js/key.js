@@ -177,6 +177,13 @@ export function checkInputKey(code, roman, romanIndex) {
     return 2;
   }
 
+  if (inputChar === 'j' && prevChar !== 'z' && currentChar === 'z' &&
+    nextChar === 'y' && (nextChar2 === 'a' || nextChar2 === 'u' || nextChar2 === 'e' || nextChar2 === "o")) {
+    roman[romanIndex] = 'j';
+    roman.splice(romanIndex + 1, 1);
+    return 2;
+  }
+
   //「し」「せ」の曖昧入力判定
   if (inputChar === 'c' && prevChar !== 's' && currentChar === 's' &&
     (nextChar === 'i' || nextChar === 'e')) {

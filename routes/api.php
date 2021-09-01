@@ -31,6 +31,8 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
 Route::get('/question/list/{category}', 'QuestionController@category')->name('question.category');
 
+Route::post('/roman', 'RomanController@index')->name('roman');
+
 // ログイン時のみ
 Route::group(["middleware" => "auth"], function () {
   // 問題一覧取得

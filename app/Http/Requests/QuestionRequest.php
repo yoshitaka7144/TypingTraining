@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\QuestionText;
+use App\Rules\Roman;
+use App\Rules\Kana;
+
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -26,10 +30,10 @@ class QuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            "category" => "required|string|max:10",
-            "text" => "required|string|max:100",
-            "kana" => "required|string|max:100",
-            "roman" => "required|string|max:100",
+            "category" => ["required", "string", "max:10"],
+            "text" => ["required", new QuestionText, "max:100"],
+            "kana" => ["required", new Kana, "max:100"],
+            "roman" => ["required", new Roman, "max:100"],
         ];
     }
 

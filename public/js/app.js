@@ -2726,6 +2726,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2781,6 +2784,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    getRoman: function getRoman() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response, xmlData, romanList, furiganaList, roman, furigana;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(_this2.registerForm.text.length <= 0)) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 2:
+                _context2.next = 4;
+                return axios.post("/api/roman", _this2.registerForm)["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"]) {
+                  xmlData = new window.DOMParser().parseFromString(response.data, "text/xml");
+                  romanList = xmlData.querySelectorAll("Word > Roman");
+                  furiganaList = xmlData.querySelectorAll("Word > Furigana");
+                  roman = "";
+                  furigana = "";
+                  Array.from(romanList).forEach(function (item) {
+                    roman += item.textContent;
+                  });
+                  Array.from(furiganaList).forEach(function (item) {
+                    furigana += item.textContent;
+                  });
+                  _this2.registerForm.roman = roman;
+                  _this2.registerForm.kana = furigana;
+                } else {
+                  _this2.$store.commit("error/setCode", response.status);
+                }
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   },
@@ -41225,7 +41279,23 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "btn-wrapper" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-green",
+                attrs: { type: "button" },
+                on: { click: _vm.getRoman }
+              },
+              [_vm._v("\n        かな、タイピング文字生成\n      ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-blue", attrs: { type: "submit" } },
+              [_vm._v("登録")]
+            )
+          ])
         ]
       ),
       _vm._v(" "),
@@ -41236,18 +41306,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn-wrapper" }, [
-      _c("button", { staticClass: "btn btn-blue", attrs: { type: "submit" } }, [
-        _vm._v("登録")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -60062,6 +60121,12 @@ function checkInputKey(code, roman, romanIndex) {
   if (inputChar === 'z' && prevChar !== 'j' && currentChar === 'j' && (nextChar === 'a' || nextChar === 'u' || nextChar === 'e' || nextChar === 'o')) {
     roman[romanIndex] = 'z';
     roman.splice(romanIndex + 1, 0, 'y');
+    return 2;
+  }
+
+  if (inputChar === 'j' && prevChar !== 'z' && currentChar === 'z' && nextChar === 'y' && (nextChar2 === 'a' || nextChar2 === 'u' || nextChar2 === 'e' || nextChar2 === "o")) {
+    roman[romanIndex] = 'j';
+    roman.splice(romanIndex + 1, 1);
     return 2;
   } //「し」「せ」の曖昧入力判定
 

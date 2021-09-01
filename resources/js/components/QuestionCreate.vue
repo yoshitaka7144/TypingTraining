@@ -61,6 +61,9 @@
       />
       <p class="error" v-if="romanError">{{ romanError }}</p>
       <div class="btn-wrapper">
+        <button type="button" class="btn btn-green" @click="getRoman">
+          かな、タイピング文字生成
+        </button>
         <button type="submit" class="btn btn-blue">登録</button>
       </div>
     </form>
@@ -69,6 +72,7 @@
 </template>
 <script>
 import {
+  OK,
   CREATED,
   UNPROCESSABLE_ENTITY,
   REGISTER_QUESTION_CATEGORY_MAX_NUMBER,
@@ -92,7 +96,7 @@ export default {
         category: "",
         text: "",
         kana: "",
-        roman:"",
+        roman: "",
       },
       categoryPlaceholder: REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
       categoryError: "",
@@ -114,6 +118,35 @@ export default {
         this.$router.push({ name: "question" });
       } else if (response.status === UNPROCESSABLE_ENTITY) {
         this.registerErrorMessages = response.data.errors;
+      } else {
+        this.$store.commit("error/setCode", response.status);
+      }
+    },
+    async getRoman() {
+      if (this.registerForm.text.length <= 0) {
+        return;
+      }
+      var response = await axios
+        .post("/api/roman", this.registerForm)
+        .catch((error) => error.response || error);
+
+      if (response.status === OK) {
+        var xmlData = new window.DOMParser().parseFromString(
+          response.data,
+          "text/xml"
+        );
+        var romanList = xmlData.querySelectorAll("Word > Roman");
+        var furiganaList = xmlData.querySelectorAll("Word > Furigana");
+        var roman = "";
+        var furigana = "";
+        Array.from(romanList).forEach((item) => {
+          roman += item.textContent;
+        });
+        Array.from(furiganaList).forEach((item) => {
+          furigana += item.textContent;
+        });
+        this.registerForm.roman = roman;
+        this.registerForm.kana = furigana;
       } else {
         this.$store.commit("error/setCode", response.status);
       }

@@ -117,7 +117,9 @@ return [
     'uploaded'             => ':attributeのアップロードに失敗しました。',
     'url'                  => ':attributeは、有効なURL形式で指定してください。',
     'uuid'                 => ':attributeは、有効なUUIDでなければなりません。',
-
+    'roman' => ':attribute は半角英数字で入力してください',
+    'kana' => ':attribute はひらがなで入力してください',
+    "questionText" => ":attribute は漢字 or カタカナ or ひらがな or 記号（,.、。）で入力してください",
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
