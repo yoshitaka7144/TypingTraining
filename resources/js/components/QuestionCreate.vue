@@ -81,12 +81,15 @@ import {
   REGISTER_QUESTION_TEXT_MAX_NUMBER,
   REGISTER_QUESTION_TEXT_ERROR_REQUIRE,
   REGISTER_QUESTION_TEXT_ERROR_LIMIT,
+  REGISTER_QUESTION_TEXT_ERROR_PATTERN,
   REGISTER_QUESTION_KANA_MAX_NUMBER,
   REGISTER_QUESTION_KANA_ERROR_REQUIRE,
   REGISTER_QUESTION_KANA_ERROR_LIMIT,
+  REGISTER_QUESTION_KANA_ERROR_PATTERN,
   REGISTER_QUESTION_ROMAN_MAX_NUMBER,
   REGISTER_QUESTION_ROMAN_ERROR_REQUIRE,
   REGISTER_QUESTION_ROMAN_ERROR_LIMIT,
+  REGISTER_QUESTION_ROMAN_ERROR_PATTERN,
 } from "../util";
 export default {
   data() {
@@ -168,7 +171,11 @@ export default {
       } else if (val.length > REGISTER_QUESTION_TEXT_MAX_NUMBER) {
         this.textError = REGISTER_QUESTION_TEXT_ERROR_LIMIT;
       } else {
-        this.textError = "";
+        if (!val.match(/^[ぁ-んァ-ヶ一-龠々、。,\.]+$/u)) {
+          this.textError = REGISTER_QUESTION_TEXT_ERROR_PATTERN;
+        } else {
+          this.textError = "";
+        }
       }
     },
     "registerForm.kana": function (val) {
@@ -177,7 +184,11 @@ export default {
       } else if (val.length > REGISTER_QUESTION_KANA_MAX_NUMBER) {
         this.kanaError = REGISTER_QUESTION_KANA_ERROR_LIMIT;
       } else {
-        this.kanaError = "";
+        if (!val.match(/^[ぁ-ん、。,\.]+$/u)) {
+          this.kanaError = REGISTER_QUESTION_KANA_ERROR_PATTERN;
+        } else {
+          this.kanaError = "";
+        }
       }
     },
     "registerForm.roman": function (val) {
@@ -186,7 +197,11 @@ export default {
       } else if (val.length > REGISTER_QUESTION_ROMAN_MAX_NUMBER) {
         this.romanError = REGISTER_QUESTION_ROMAN_ERROR_LIMIT;
       } else {
-        this.romanError = "";
+        if (!val.match(/^[a-zA-Z0-9,\.]+$/u)) {
+          this.romanError = REGISTER_QUESTION_ROMAN_ERROR_PATTERN;
+        } else {
+          this.romanError = "";
+        }
       }
     },
   },

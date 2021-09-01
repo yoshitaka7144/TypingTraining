@@ -24,10 +24,13 @@ export const REGISTER_QUESTION_CATEGORY_ERROR_LIMIT = "カテゴリーは" + REG
 export const REGISTER_QUESTION_TEXT_MAX_NUMBER = 100;
 export const REGISTER_QUESTION_TEXT_ERROR_REQUIRE = "問題は必須項目です。";
 export const REGISTER_QUESTION_TEXT_ERROR_LIMIT = "問題は" + REGISTER_QUESTION_TEXT_MAX_NUMBER + "文字以内で入力して下さい。";
+export const REGISTER_QUESTION_TEXT_ERROR_PATTERN = "問題は漢字 or カタカナ or ひらがな or 数字 or 記号（,.、。）で入力してください";
 export const REGISTER_QUESTION_KANA_MAX_NUMBER = 100;
 export const REGISTER_QUESTION_KANA_ERROR_REQUIRE = "かなは必須項目です。";
 export const REGISTER_QUESTION_KANA_ERROR_LIMIT = "かなは" + REGISTER_QUESTION_KANA_MAX_NUMBER + "文字以内で入力して下さい。";
+export const REGISTER_QUESTION_KANA_ERROR_PATTERN = "かなはひらがな or 数字 or 記号（,.、。）で入力してください";
 
 export const REGISTER_QUESTION_ROMAN_MAX_NUMBER = 100;
 export const REGISTER_QUESTION_ROMAN_ERROR_REQUIRE = "タイピング文字は必須項目です。";
 export const REGISTER_QUESTION_ROMAN_ERROR_LIMIT = "タイピング文字は" + REGISTER_QUESTION_ROMAN_MAX_NUMBER + "文字以内で入力して下さい。";
+export const REGISTER_QUESTION_ROMAN_ERROR_PATTERN = "タイピング文字は半角英数字 or 記号（,.）で入力してください";

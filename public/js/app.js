@@ -2854,7 +2854,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_MAX_NUMBER"]) {
         this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"];
       } else {
-        this.textError = "";
+        if (!val.match(/^[,\.\u3001\u3002\u3005\u3041-\u3093\u30A1-\u30F6\u4E00-\u9FA0]+$/)) {
+          this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_PATTERN"];
+        } else {
+          this.textError = "";
+        }
       }
     },
     "registerForm.kana": function registerFormKana(val) {
@@ -2863,7 +2867,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_MAX_NUMBER"]) {
         this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"];
       } else {
-        this.kanaError = "";
+        if (!val.match(/^[,\.\u3001\u3002\u3041-\u3093]+$/)) {
+          this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_PATTERN"];
+        } else {
+          this.kanaError = "";
+        }
       }
     },
     "registerForm.roman": function registerFormRoman(val) {
@@ -2872,7 +2880,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_MAX_NUMBER"]) {
         this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"];
       } else {
-        this.romanError = "";
+        if (!val.match(/^[,\.0-9A-Za-z]+$/)) {
+          this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_PATTERN"];
+        } else {
+          this.romanError = "";
+        }
       }
     }
   }
@@ -3079,7 +3091,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_MAX_NUMBER"]) {
         this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"];
       } else {
-        this.textError = "";
+        if (!val.match(/^[,\.\u3001\u3002\u3005\u3041-\u3093\u30A1-\u30F6\u4E00-\u9FA0]+$/)) {
+          this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_PATTERN"];
+        } else {
+          this.textError = "";
+        }
       }
     },
     "updateForm.kana": function updateFormKana(val) {
@@ -3088,7 +3104,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_MAX_NUMBER"]) {
         this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"];
       } else {
-        this.kanaError = "";
+        if (!val.match(/^[,\.\u3001\u3002\u3041-\u3093]+$/)) {
+          this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_PATTERN"];
+        } else {
+          this.kanaError = "";
+        }
       }
     },
     "updateForm.roman": function updateFormRoman(val) {
@@ -3097,7 +3117,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_MAX_NUMBER"]) {
         this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"];
       } else {
-        this.romanError = "";
+        if (!val.match(/^[,\.0-9A-Za-z]+$/)) {
+          this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_PATTERN"];
+        } else {
+          this.romanError = "";
+        }
       }
     }
   }
@@ -60733,7 +60757,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, END_SYMBOL, LOGIN_NAME_ERROR_REQUIRE, LOGIN_PASSWORD_ERROR_REQUIRE, REGISTER_NAME_MAX_NUMBER, REGISTER_NAME_ERROR_REQUIRE, REGISTER_NAME_ERROR_LIMIT, REGISTER_PASSWORD_MIN_NUMBER, REGISTER_PASSWORD_ERROR_REQUIRE, REGISTER_PASSWORD_ERROR_LIMIT, REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE, REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT, REGISTER_QUESTION_CATEGORY_MAX_NUMBER, REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE, REGISTER_QUESTION_CATEGORY_ERROR_LIMIT, REGISTER_QUESTION_TEXT_MAX_NUMBER, REGISTER_QUESTION_TEXT_ERROR_REQUIRE, REGISTER_QUESTION_TEXT_ERROR_LIMIT, REGISTER_QUESTION_KANA_MAX_NUMBER, REGISTER_QUESTION_KANA_ERROR_REQUIRE, REGISTER_QUESTION_KANA_ERROR_LIMIT, REGISTER_QUESTION_ROMAN_MAX_NUMBER, REGISTER_QUESTION_ROMAN_ERROR_REQUIRE, REGISTER_QUESTION_ROMAN_ERROR_LIMIT */
+/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, END_SYMBOL, LOGIN_NAME_ERROR_REQUIRE, LOGIN_PASSWORD_ERROR_REQUIRE, REGISTER_NAME_MAX_NUMBER, REGISTER_NAME_ERROR_REQUIRE, REGISTER_NAME_ERROR_LIMIT, REGISTER_PASSWORD_MIN_NUMBER, REGISTER_PASSWORD_ERROR_REQUIRE, REGISTER_PASSWORD_ERROR_LIMIT, REGISTER_PASSWORD_CONFIRMATION_ERROR_REQUIRE, REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT, REGISTER_QUESTION_CATEGORY_MAX_NUMBER, REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE, REGISTER_QUESTION_CATEGORY_ERROR_LIMIT, REGISTER_QUESTION_TEXT_MAX_NUMBER, REGISTER_QUESTION_TEXT_ERROR_REQUIRE, REGISTER_QUESTION_TEXT_ERROR_LIMIT, REGISTER_QUESTION_TEXT_ERROR_PATTERN, REGISTER_QUESTION_KANA_MAX_NUMBER, REGISTER_QUESTION_KANA_ERROR_REQUIRE, REGISTER_QUESTION_KANA_ERROR_LIMIT, REGISTER_QUESTION_KANA_ERROR_PATTERN, REGISTER_QUESTION_ROMAN_MAX_NUMBER, REGISTER_QUESTION_ROMAN_ERROR_REQUIRE, REGISTER_QUESTION_ROMAN_ERROR_LIMIT, REGISTER_QUESTION_ROMAN_ERROR_PATTERN */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60759,12 +60783,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_TEXT_MAX_NUMBER", function() { return REGISTER_QUESTION_TEXT_MAX_NUMBER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_TEXT_ERROR_REQUIRE", function() { return REGISTER_QUESTION_TEXT_ERROR_REQUIRE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_TEXT_ERROR_LIMIT", function() { return REGISTER_QUESTION_TEXT_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_TEXT_ERROR_PATTERN", function() { return REGISTER_QUESTION_TEXT_ERROR_PATTERN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_MAX_NUMBER", function() { return REGISTER_QUESTION_KANA_MAX_NUMBER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_ERROR_REQUIRE", function() { return REGISTER_QUESTION_KANA_ERROR_REQUIRE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_ERROR_LIMIT", function() { return REGISTER_QUESTION_KANA_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_KANA_ERROR_PATTERN", function() { return REGISTER_QUESTION_KANA_ERROR_PATTERN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_ROMAN_MAX_NUMBER", function() { return REGISTER_QUESTION_ROMAN_MAX_NUMBER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_ROMAN_ERROR_REQUIRE", function() { return REGISTER_QUESTION_ROMAN_ERROR_REQUIRE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_ROMAN_ERROR_LIMIT", function() { return REGISTER_QUESTION_ROMAN_ERROR_LIMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_QUESTION_ROMAN_ERROR_PATTERN", function() { return REGISTER_QUESTION_ROMAN_ERROR_PATTERN; });
 var OK = 200;
 var CREATED = 201;
 var UNPROCESSABLE_ENTITY = 422;
@@ -60786,12 +60813,15 @@ var REGISTER_QUESTION_CATEGORY_ERROR_LIMIT = "カテゴリーは" + REGISTER_QUE
 var REGISTER_QUESTION_TEXT_MAX_NUMBER = 100;
 var REGISTER_QUESTION_TEXT_ERROR_REQUIRE = "問題は必須項目です。";
 var REGISTER_QUESTION_TEXT_ERROR_LIMIT = "問題は" + REGISTER_QUESTION_TEXT_MAX_NUMBER + "文字以内で入力して下さい。";
+var REGISTER_QUESTION_TEXT_ERROR_PATTERN = "問題は漢字 or カタカナ or ひらがな or 数字 or 記号（,.、。）で入力してください";
 var REGISTER_QUESTION_KANA_MAX_NUMBER = 100;
 var REGISTER_QUESTION_KANA_ERROR_REQUIRE = "かなは必須項目です。";
 var REGISTER_QUESTION_KANA_ERROR_LIMIT = "かなは" + REGISTER_QUESTION_KANA_MAX_NUMBER + "文字以内で入力して下さい。";
+var REGISTER_QUESTION_KANA_ERROR_PATTERN = "かなはひらがな or 数字 or 記号（,.、。）で入力してください";
 var REGISTER_QUESTION_ROMAN_MAX_NUMBER = 100;
 var REGISTER_QUESTION_ROMAN_ERROR_REQUIRE = "タイピング文字は必須項目です。";
 var REGISTER_QUESTION_ROMAN_ERROR_LIMIT = "タイピング文字は" + REGISTER_QUESTION_ROMAN_MAX_NUMBER + "文字以内で入力して下さい。";
+var REGISTER_QUESTION_ROMAN_ERROR_PATTERN = "タイピング文字は半角英数字 or 記号（,.）で入力してください";
 
 /***/ }),
 
