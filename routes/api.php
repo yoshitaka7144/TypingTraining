@@ -49,4 +49,7 @@ Route::group(["middleware" => "auth"], function () {
 
   // 問題削除
   Route::delete('/question/{question}', 'QuestionController@destroy')->name('question.destroy');
+
+  // ユーザー情報更新
+  Route::put('/user/{user}', 'UserController@update')->name('user.update');
 });

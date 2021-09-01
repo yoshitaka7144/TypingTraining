@@ -100,6 +100,7 @@ export default {
         text: "",
         kana: "",
         roman: "",
+        editorId: this.$store.getters["auth/userId"],
       },
       categoryPlaceholder: REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
       categoryError: "",

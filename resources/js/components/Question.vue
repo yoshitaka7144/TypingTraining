@@ -22,6 +22,7 @@
           <td>{{ question.roman }}</td>
           <td>
             <router-link
+              v-if="userRole === 2 || question.editor_id === userId"
               :to="{
                 name: 'question.edit',
                 params: { questionId: question.id },
@@ -31,7 +32,11 @@
             </router-link>
           </td>
           <td>
-            <button class="btn btn-red" @click="modalShow(question.id)">
+            <button
+              v-if="userRole === 2 || question.editor_id === userId"
+              class="btn btn-red"
+              @click="modalShow(question.id)"
+            >
               削除
             </button>
           </td>
@@ -88,6 +93,14 @@ export default {
       this.modalOption.targetQuestionId = id;
       this.modalOption.afterConfirmationFunction = this.deleteQuestion;
       this.$modal.show("modal");
+    },
+  },
+  computed: {
+    userId() {
+      return this.$store.getters["auth/userId"];
+    },
+    userRole() {
+      return this.$store.getters["auth/userRole"];
     },
   },
   created() {

@@ -39,7 +39,7 @@ export default {
       return this.$store.getters["auth/isLogin"];
     },
     username() {
-      return this.$store.getters["auth/username"];
+      return this.$store.getters["auth/userName"];
     },
   },
 };

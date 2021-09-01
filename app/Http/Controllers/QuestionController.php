@@ -27,6 +27,7 @@ class QuestionController extends Controller
         $question->text = $request->text;
         $question->kana = $request->kana;
         $question->roman = $request->roman;
+        $question->editor_id = $request->editorId;
         $question->save();
 
         return $question;
@@ -38,6 +39,7 @@ class QuestionController extends Controller
         $question->text = $request->text;
         $question->kana = $request->kana;
         $question->roman = $request->roman;
+        $question->editor_id = $request->editorId;
         $question->save();
 
         return $question;

@@ -394,11 +394,19 @@
 
     <div class="" v-if="phase === 3">
       <p>結果画面</p>
+      <p>{{ typeCount }}</p>
+      <p>{{ missTypeCount }}</p>
+      <p>{{ typeTime }}</p>
     </div>
   </modal>
 </template>
 <script>
-import { END_SYMBOL } from "../util.js";
+import {
+  OK,
+  UNPROCESSABLE_ENTITY,
+  INTERNAL_SERVER_ERROR,
+  END_SYMBOL,
+} from "../util.js";
 import { checkInputKey } from "../key.js";
 export default {
   props: {
@@ -416,6 +424,9 @@ export default {
       displayKana: "",
       displayRoman: "",
       displayInputedRoman: "",
+      typeCount: 0,
+      missTypeCount: 0,
+      typeTime: 0,
     };
   },
   mounted() {
@@ -425,6 +436,12 @@ export default {
     window.removeEventListener("keydown", this.keyAction);
   },
   computed: {
+    isLogin() {
+      return this.$store.getters["auth/isLogin"];
+    },
+    userId() {
+      return this.$store.getters["auth/userId"];
+    },
     isLeftLittle() {
       var leftLittle = ["1", "q", "a", "z"];
       var char = this.roman[this.romanIndex];
@@ -473,19 +490,37 @@ export default {
     },
     start() {
       this.initQuestion();
+      this.typeTime = performance.now();
       this.phase = 2;
     },
     next() {
       if (this.questionCount > this.currentCount + 1) {
         this.currentCount++;
       } else {
-        this.phase = 3;
+        this.showResult();
       }
+    },
+    showResult() {
+      // 時間測定終了
+      this.typeTime = performance.now() - this.typeTime;
+
+      // 色々結果集計処理
+
+      // ログイン時、データ更新と履歴データ作成
+      if (this.isLogin) {
+        this.updateUserInfo();
+        //this.createHistory();
+      }
+
+      // 結果画面表示
+      this.phase = 3;
     },
     clear() {
       this.roman = [];
       this.currentCount = 0;
       this.phase = 1;
+      this.typeCount = 0;
+      this.missTypeCount = 0;
     },
     initQuestion() {
       this.roman = [];
@@ -499,12 +534,36 @@ export default {
       this.displayRoman = this.currentQuestion.roman;
       this.displayInputedRoman = "";
     },
+    async updateUserInfo() {
+      var response = await axios
+        .put("/api/user/" + this.userId, { typeCount: this.typeCount })
+        .catch((error) => error.response || error);
+
+      if (response.status === OK) {
+      } else if (response.status === UNPROCESSABLE_ENTITY) {
+      } else {
+        this.$store.commit("error/setCode", response.status);
+      }
+    },
+    async createHistory() {
+      var params = {};
+      var response = await axios
+        .post("/api/history", params)
+        .catch((error) => error.response || error);
+
+      if (response.status === OK) {
+      } else if (response.status === UNPROCESSABLE_ENTITY) {
+      } else {
+        this.$store.commit("error/setCode", response.status);
+      }
+    },
     keyAction(e) {
       if (this.phase === 2) {
         e.preventDefault();
         switch (checkInputKey(e.code, this.roman, this.romanIndex)) {
           case 1:
           case 2:
+            this.typeCount++;
             this.romanIndex++;
             if (this.roman[this.romanIndex] === END_SYMBOL) {
               this.next();
@@ -521,8 +580,10 @@ export default {
               }
             }
             break;
+          case 0:
           case 3:
             //タイプミス時
+            this.missTypeCount++;
 
             break;
           default:

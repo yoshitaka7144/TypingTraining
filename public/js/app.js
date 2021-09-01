@@ -2157,7 +2157,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.getters["auth/isLogin"];
     },
     username: function username() {
-      return this.$store.getters["auth/username"];
+      return this.$store.getters["auth/userName"];
     }
   }
 });
@@ -2546,6 +2546,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2630,6 +2635,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modalOption.targetQuestionId = id;
       this.modalOption.afterConfirmationFunction = this.deleteQuestion;
       this.$modal.show("modal");
+    }
+  },
+  computed: {
+    userId: function userId() {
+      return this.$store.getters["auth/userId"];
+    },
+    userRole: function userRole() {
+      return this.$store.getters["auth/userRole"];
     }
   },
   created: function created() {
@@ -2738,7 +2751,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         category: "",
         text: "",
         kana: "",
-        roman: ""
+        roman: "",
+        editorId: this.$store.getters["auth/userId"]
       },
       categoryPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"],
       categoryError: "",
@@ -2992,7 +3006,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         category: "",
         text: "",
         kana: "",
-        roman: ""
+        roman: "",
+        editorId: this.$store.getters["auth/userId"]
       },
       categoryPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"],
       categoryError: "",
@@ -3025,7 +3040,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
                   _this.$store.commit("error/setCode", response.status);
                 } else {
-                  _this.updateForm = response.data;
+                  _this.updateForm.category = response.data.category;
+                  _this.updateForm.text = response.data.text;
+                  _this.updateForm.kana = response.data.kana;
+                  _this.updateForm.roman = response.data.roman;
                 }
 
               case 4:
@@ -3138,8 +3156,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util.js */ "./resources/js/util.js");
-/* harmony import */ var _key_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../key.js */ "./resources/js/key.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util.js */ "./resources/js/util.js");
+/* harmony import */ var _key_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../key.js */ "./resources/js/key.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
 //
 //
 //
@@ -3556,7 +3585,10 @@ __webpack_require__.r(__webpack_exports__);
       displayText: "",
       displayKana: "",
       displayRoman: "",
-      displayInputedRoman: ""
+      displayInputedRoman: "",
+      typeCount: 0,
+      missTypeCount: 0,
+      typeTime: 0
     };
   },
   mounted: function mounted() {
@@ -3566,6 +3598,12 @@ __webpack_require__.r(__webpack_exports__);
     window.removeEventListener("keydown", this.keyAction);
   },
   computed: {
+    isLogin: function isLogin() {
+      return this.$store.getters["auth/isLogin"];
+    },
+    userId: function userId() {
+      return this.$store.getters["auth/userId"];
+    },
     isLeftLittle: function isLeftLittle() {
       var leftLittle = ["1", "q", "a", "z"];
       var _char = this.roman[this.romanIndex];
@@ -3614,41 +3652,87 @@ __webpack_require__.r(__webpack_exports__);
     },
     start: function start() {
       this.initQuestion();
+      this.typeTime = performance.now();
       this.phase = 2;
     },
     next: function next() {
       if (this.questionCount > this.currentCount + 1) {
         this.currentCount++;
       } else {
-        this.phase = 3;
+        this.showResult();
       }
+    },
+    showResult: function showResult() {
+      // 時間測定終了
+      this.typeTime = performance.now() - this.typeTime; // ログイン時、データ更新
+
+      if (this.isLogin) {
+        this.updateUserInfo();
+      } // 結果画面表示
+
+
+      this.phase = 3;
     },
     clear: function clear() {
       this.roman = [];
       this.currentCount = 0;
       this.phase = 1;
+      this.typeCount = 0;
+      this.missTypeCount = 0;
     },
     initQuestion: function initQuestion() {
       this.roman = [];
       this.romanIndex = 0;
       this.currentQuestion = this.questions[this.currentCount];
       this.roman = this.currentQuestion.roman.split("");
-      this.roman.push(_util_js__WEBPACK_IMPORTED_MODULE_0__["END_SYMBOL"]);
+      this.roman.push(_util_js__WEBPACK_IMPORTED_MODULE_1__["END_SYMBOL"]);
       this.displayText = this.currentQuestion.text;
       this.displayKana = this.currentQuestion.kana;
       this.displayRoman = this.currentQuestion.roman;
       this.displayInputedRoman = "";
     },
+    updateUserInfo: function updateUserInfo() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.put("/api/user/" + _this.userId, {
+                  typeCount: _this.typeCount
+                })["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["OK"]) {} else if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
+                  _this.$store.commit("error/setCode", response.status);
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     keyAction: function keyAction(e) {
       if (this.phase === 2) {
         e.preventDefault();
 
-        switch (Object(_key_js__WEBPACK_IMPORTED_MODULE_1__["checkInputKey"])(e.code, this.roman, this.romanIndex)) {
+        switch (Object(_key_js__WEBPACK_IMPORTED_MODULE_2__["checkInputKey"])(e.code, this.roman, this.romanIndex)) {
           case 1:
           case 2:
+            this.typeCount++;
             this.romanIndex++;
 
-            if (this.roman[this.romanIndex] === _util_js__WEBPACK_IMPORTED_MODULE_0__["END_SYMBOL"]) {
+            if (this.roman[this.romanIndex] === _util_js__WEBPACK_IMPORTED_MODULE_1__["END_SYMBOL"]) {
               this.next();
               if (this.phase === 3) break;
               this.initQuestion();
@@ -3667,8 +3751,10 @@ __webpack_require__.r(__webpack_exports__);
 
             break;
 
+          case 0:
           case 3:
             //タイプミス時
+            this.missTypeCount++;
             break;
 
           default:
@@ -41004,39 +41090,43 @@ var render = function() {
               _c(
                 "td",
                 [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        to: {
-                          name: "question.edit",
-                          params: { questionId: question.id }
-                        }
-                      }
-                    },
-                    [
-                      _c("button", { staticClass: "btn btn-blue" }, [
-                        _vm._v("編集")
-                      ])
-                    ]
-                  )
+                  _vm.userRole === 2 || question.editor_id === _vm.userId
+                    ? _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to: {
+                              name: "question.edit",
+                              params: { questionId: question.id }
+                            }
+                          }
+                        },
+                        [
+                          _c("button", { staticClass: "btn btn-blue" }, [
+                            _vm._v("編集")
+                          ])
+                        ]
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
               _vm._v(" "),
               _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-red",
-                    on: {
-                      click: function($event) {
-                        return _vm.modalShow(question.id)
-                      }
-                    }
-                  },
-                  [_vm._v("\n            削除\n          ")]
-                )
+                _vm.userRole === 2 || question.editor_id === _vm.userId
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-red",
+                        on: {
+                          click: function($event) {
+                            return _vm.modalShow(question.id)
+                          }
+                        }
+                      },
+                      [_vm._v("\n            削除\n          ")]
+                    )
+                  : _vm._e()
               ])
             ])
           }),
@@ -42204,7 +42294,15 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.phase === 3
-        ? _c("div", {}, [_c("p", [_vm._v("結果画面")])])
+        ? _c("div", {}, [
+            _c("p", [_vm._v("結果画面")]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.typeCount))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.missTypeCount))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.typeTime))])
+          ])
         : _vm._e()
     ]
   )
@@ -60514,8 +60612,14 @@ var getters = {
   isLogin: function isLogin(state) {
     return !!state.user;
   },
-  username: function username(state) {
+  userId: function userId(state) {
+    return state.user ? state.user.id : "";
+  },
+  userName: function userName(state) {
     return state.user ? state.user.name : "";
+  },
+  userRole: function userRole(state) {
+    return state.user ? state.user.role : "";
   }
 };
 var mutations = {

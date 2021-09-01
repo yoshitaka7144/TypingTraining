@@ -101,6 +101,7 @@ export default {
         text: "",
         kana: "",
         roman: "",
+        editorId: this.$store.getters["auth/userId"],
       },
       categoryPlaceholder: REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
       categoryError: "",
@@ -121,7 +122,10 @@ export default {
       if (response.status === INTERNAL_SERVER_ERROR) {
         this.$store.commit("error/setCode", response.status);
       } else {
-        this.updateForm = response.data;
+        this.updateForm.category = response.data.category;
+        this.updateForm.text = response.data.text;
+        this.updateForm.kana = response.data.kana;
+        this.updateForm.roman = response.data.roman;
       }
     },
     async update() {

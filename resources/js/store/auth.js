@@ -9,7 +9,9 @@ const state = {
 
 const getters = {
   isLogin: state => !!state.user,
-  username: state => state.user ? state.user.name : ""
+  userId: state => state.user ? state.user.id : "",
+  userName: state => state.user ? state.user.name : "",
+  userRole: state => state.user ? state.user.role : "",
 }
 
 const mutations = {
