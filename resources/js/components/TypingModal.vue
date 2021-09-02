@@ -22,7 +22,17 @@
       </p>
     </div>
 
-    <div id="keyboard-container" v-if="phase === 1 || phase === 2">
+    <div class="" v-if="phase === 3">
+      <p>結果画面</p>
+      <p>正しいタイプ数：{{ correctTypeCount }}</p>
+      <p>ミスタイプ数：{{ missTypeCount }}</p>
+      <p>時間：{{ typeTime }}</p>
+      <p>WPM：{{ wpm }}</p>
+      <p>正答率：{{ correctPercentage }}</p>
+      <p>{{ missTypeKeyHash }}</p>
+    </div>
+
+    <div id="keyboard-container">
       <div id="keyboard">
         <div class="row">
           <div class="key"></div>
@@ -30,6 +40,7 @@
             id="key-1"
             class="key"
             :class="{ 'target-key': '1' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['1']"
           >
             1
           </div>
@@ -37,6 +48,7 @@
             id="key-2"
             class="key"
             :class="{ 'target-key': '2' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['2']"
           >
             2
           </div>
@@ -44,6 +56,7 @@
             id="key-3"
             class="key"
             :class="{ 'target-key': '3' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['3']"
           >
             3
           </div>
@@ -51,6 +64,7 @@
             id="key-4"
             class="key"
             :class="{ 'target-key': '4' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['4']"
           >
             4
           </div>
@@ -58,6 +72,7 @@
             id="key-5"
             class="key"
             :class="{ 'target-key': '5' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['5']"
           >
             5
           </div>
@@ -65,6 +80,7 @@
             id="key-6"
             class="key"
             :class="{ 'target-key': '6' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['6']"
           >
             6
           </div>
@@ -72,6 +88,7 @@
             id="key-7"
             class="key"
             :class="{ 'target-key': '7' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['7']"
           >
             7
           </div>
@@ -79,6 +96,7 @@
             id="key-8"
             class="key"
             :class="{ 'target-key': '8' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['8']"
           >
             8
           </div>
@@ -86,6 +104,7 @@
             id="key-9"
             class="key"
             :class="{ 'target-key': '9' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['9']"
           >
             9
           </div>
@@ -93,6 +112,7 @@
             id="key-0"
             class="key"
             :class="{ 'target-key': '0' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['0']"
           >
             0
           </div>
@@ -108,6 +128,7 @@
             id="key-q"
             class="key"
             :class="{ 'target-key': 'q' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['q']"
           >
             Q
           </div>
@@ -115,6 +136,7 @@
             id="key-w"
             class="key"
             :class="{ 'target-key': 'w' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['w']"
           >
             W
           </div>
@@ -122,6 +144,7 @@
             id="key-e"
             class="key"
             :class="{ 'target-key': 'e' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['e']"
           >
             E
           </div>
@@ -129,6 +152,7 @@
             id="key-r"
             class="key"
             :class="{ 'target-key': 'r' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['r']"
           >
             R
           </div>
@@ -136,6 +160,7 @@
             id="key-t"
             class="key"
             :class="{ 'target-key': 't' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['t']"
           >
             T
           </div>
@@ -143,6 +168,7 @@
             id="key-y"
             class="key"
             :class="{ 'target-key': 'y' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['y']"
           >
             Y
           </div>
@@ -150,6 +176,7 @@
             id="key-u"
             class="key"
             :class="{ 'target-key': 'u' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['u']"
           >
             U
           </div>
@@ -157,6 +184,7 @@
             id="key-i"
             class="key"
             :class="{ 'target-key': 'i' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['i']"
           >
             I
           </div>
@@ -164,6 +192,7 @@
             id="key-o"
             class="key"
             :class="{ 'target-key': 'o' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['o']"
           >
             O
           </div>
@@ -171,6 +200,7 @@
             id="key-p"
             class="key"
             :class="{ 'target-key': 'p' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['p']"
           >
             P
           </div>
@@ -185,6 +215,7 @@
             id="key-a"
             class="key"
             :class="{ 'target-key': 'a' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['a']"
           >
             A
           </div>
@@ -192,6 +223,7 @@
             id="key-s"
             class="key"
             :class="{ 'target-key': 's' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['s']"
           >
             S
           </div>
@@ -199,6 +231,7 @@
             id="key-d"
             class="key"
             :class="{ 'target-key': 'd' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['d']"
           >
             D
           </div>
@@ -206,6 +239,7 @@
             id="key-f"
             class="key"
             :class="{ 'target-key': 'f' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['f']"
           >
             F
           </div>
@@ -213,6 +247,7 @@
             id="key-g"
             class="key"
             :class="{ 'target-key': 'g' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['g']"
           >
             G
           </div>
@@ -220,6 +255,7 @@
             id="key-h"
             class="key"
             :class="{ 'target-key': 'h' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['h']"
           >
             H
           </div>
@@ -227,6 +263,7 @@
             id="key-j"
             class="key"
             :class="{ 'target-key': 'j' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['j']"
           >
             J
           </div>
@@ -234,6 +271,7 @@
             id="key-k"
             class="key"
             :class="{ 'target-key': 'k' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['k']"
           >
             K
           </div>
@@ -241,6 +279,7 @@
             id="key-l"
             class="key"
             :class="{ 'target-key': 'l' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['l']"
           >
             L
           </div>
@@ -256,6 +295,7 @@
             id="key-z"
             class="key"
             :class="{ 'target-key': 'z' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['z']"
           >
             Z
           </div>
@@ -263,6 +303,7 @@
             id="key-x"
             class="key"
             :class="{ 'target-key': 'x' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['x']"
           >
             X
           </div>
@@ -270,6 +311,7 @@
             id="key-c"
             class="key"
             :class="{ 'target-key': 'c' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['c']"
           >
             C
           </div>
@@ -277,6 +319,7 @@
             id="key-v"
             class="key"
             :class="{ 'target-key': 'v' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['v']"
           >
             V
           </div>
@@ -284,6 +327,7 @@
             id="key-b"
             class="key"
             :class="{ 'target-key': 'b' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['b']"
           >
             B
           </div>
@@ -291,6 +335,7 @@
             id="key-n"
             class="key"
             :class="{ 'target-key': 'n' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['n']"
           >
             N
           </div>
@@ -298,6 +343,7 @@
             id="key-m"
             class="key"
             :class="{ 'target-key': 'm' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['m']"
           >
             M
           </div>
@@ -305,6 +351,7 @@
             id="key-,"
             class="key"
             :class="{ 'target-key': ',' === roman[romanIndex] }"
+            :style="missTypeKeyStyle[',']"
           >
             ,
           </div>
@@ -312,6 +359,7 @@
             id="key-."
             class="key"
             :class="{ 'target-key': '.' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['.']"
           >
             .
           </div>
@@ -392,12 +440,6 @@
       </div>
     </div>
 
-    <div class="" v-if="phase === 3">
-      <p>結果画面</p>
-      <p>{{ typeCount }}</p>
-      <p>{{ missTypeCount }}</p>
-      <p>{{ typeTime }}</p>
-    </div>
   </modal>
 </template>
 <script>
@@ -424,9 +466,13 @@ export default {
       displayKana: "",
       displayRoman: "",
       displayInputedRoman: "",
-      typeCount: 0,
+      correctTypeCount: 0,
       missTypeCount: 0,
       typeTime: 0,
+      wpm: 0,
+      correctPercentage: 0,
+      missTypeKeyHash: {},
+      missTypeKeyStyle:{},
     };
   },
   mounted() {
@@ -504,13 +550,20 @@ export default {
       // 時間測定終了
       this.typeTime = performance.now() - this.typeTime;
 
-      // 色々結果集計処理
+      // 結果集計
+      this.wpm = Math.floor((this.correctTypeCount / this.typeTime) * 1000 * 60);
+      this.correctPercentage = Math.floor(
+        (1 - this.missTypeCount / (this.correctTypeCount + this.missTypeCount)) * 100
+      );
 
       // ログイン時、データ更新と履歴データ作成
       if (this.isLogin) {
         this.updateUserInfo();
         //this.createHistory();
       }
+
+      // ミスタイプキーのスタイル設定
+      this.setMissTypeKeyStyle();
 
       // 結果画面表示
       this.phase = 3;
@@ -519,8 +572,12 @@ export default {
       this.roman = [];
       this.currentCount = 0;
       this.phase = 1;
-      this.typeCount = 0;
+      this.correctTypeCount = 0;
       this.missTypeCount = 0;
+      this.wpm = 0;
+      this.correctPercentage = 0;
+      this.missTypeKeyHash = {};
+      this.missTypeKeyStyle = {};
     },
     initQuestion() {
       this.roman = [];
@@ -533,6 +590,12 @@ export default {
       this.displayKana = this.currentQuestion.kana;
       this.displayRoman = this.currentQuestion.roman;
       this.displayInputedRoman = "";
+    },
+    setMissTypeKeyStyle(){
+      for(let key in this.missTypeKeyHash){
+        const percentage = Math.ceil((this.missTypeKeyHash[key] / this.missTypeCount) * 10) / 10;
+        this.missTypeKeyStyle[key] = {"background-color": "rgba(255,0,0," + percentage +")"};
+      }
     },
     async updateUserInfo() {
       var response = await axios
@@ -563,7 +626,7 @@ export default {
         switch (checkInputKey(e.code, this.roman, this.romanIndex)) {
           case 1:
           case 2:
-            this.typeCount++;
+            this.correctTypeCount++;
             this.romanIndex++;
             if (this.roman[this.romanIndex] === END_SYMBOL) {
               this.next();
@@ -583,7 +646,16 @@ export default {
           case 0:
           case 3:
             //タイプミス時
+            // ミス回数カウント
             this.missTypeCount++;
+
+            // ミスタイプキーカウント
+            const missTypeKey = this.roman[this.romanIndex];
+            if (this.missTypeKeyHash[missTypeKey]) {
+              this.missTypeKeyHash[missTypeKey]++;
+            } else {
+              this.missTypeKeyHash[missTypeKey] = 1;
+            }
 
             break;
           default:

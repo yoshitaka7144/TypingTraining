@@ -3568,6 +3568,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3586,9 +3628,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       displayKana: "",
       displayRoman: "",
       displayInputedRoman: "",
-      typeCount: 0,
+      correctTypeCount: 0,
       missTypeCount: 0,
-      typeTime: 0
+      typeTime: 0,
+      wpm: 0,
+      correctPercentage: 0,
+      missTypeKeyHash: {},
+      missTypeKeyStyle: {}
     };
   },
   mounted: function mounted() {
@@ -3664,12 +3710,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     showResult: function showResult() {
       // 時間測定終了
-      this.typeTime = performance.now() - this.typeTime; // ログイン時、データ更新
+      this.typeTime = performance.now() - this.typeTime; // 結果集計
+
+      this.wpm = Math.floor(this.correctTypeCount / this.typeTime * 1000 * 60);
+      this.correctPercentage = Math.floor((1 - this.missTypeCount / (this.correctTypeCount + this.missTypeCount)) * 100); // ログイン時、データ更新と履歴データ作成
 
       if (this.isLogin) {
-        this.updateUserInfo();
-      } // 結果画面表示
+        this.updateUserInfo(); //this.createHistory();
+      } // ミスタイプキーのスタイル設定
 
+
+      this.setMissTypeKeyStyle(); // 結果画面表示
 
       this.phase = 3;
     },
@@ -3677,8 +3728,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.roman = [];
       this.currentCount = 0;
       this.phase = 1;
-      this.typeCount = 0;
+      this.correctTypeCount = 0;
       this.missTypeCount = 0;
+      this.wpm = 0;
+      this.correctPercentage = 0;
+      this.missTypeKeyHash = {};
+      this.missTypeKeyStyle = {};
     },
     initQuestion: function initQuestion() {
       this.roman = [];
@@ -3690,6 +3745,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.displayKana = this.currentQuestion.kana;
       this.displayRoman = this.currentQuestion.roman;
       this.displayInputedRoman = "";
+    },
+    setMissTypeKeyStyle: function setMissTypeKeyStyle() {
+      for (var key in this.missTypeKeyHash) {
+        var percentage = Math.ceil(this.missTypeKeyHash[key] / this.missTypeCount * 10) / 10;
+        this.missTypeKeyStyle[key] = {
+          "background-color": "rgba(255,0,0," + percentage + ")"
+        };
+      }
     },
     updateUserInfo: function updateUserInfo() {
       var _this = this;
@@ -3722,6 +3785,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
+    createHistory: function createHistory() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var params, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                params = {};
+                _context2.next = 3;
+                return axios.post("/api/history", params)["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 3:
+                response = _context2.sent;
+
+                if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["OK"]) {} else if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
+                  _this2.$store.commit("error/setCode", response.status);
+                }
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
     keyAction: function keyAction(e) {
       if (this.phase === 2) {
         e.preventDefault();
@@ -3729,7 +3822,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         switch (Object(_key_js__WEBPACK_IMPORTED_MODULE_2__["checkInputKey"])(e.code, this.roman, this.romanIndex)) {
           case 1:
           case 2:
-            this.typeCount++;
+            this.correctTypeCount++;
             this.romanIndex++;
 
             if (this.roman[this.romanIndex] === _util_js__WEBPACK_IMPORTED_MODULE_1__["END_SYMBOL"]) {
@@ -3754,7 +3847,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           case 0:
           case 3:
             //タイプミス時
-            this.missTypeCount++;
+            // ミス回数増加
+            this.missTypeCount++; // キー
+
+            var missTypeKey = this.roman[this.romanIndex];
+
+            if (this.missTypeKeyHash[missTypeKey]) {
+              this.missTypeKeyHash[missTypeKey]++;
+            } else {
+              this.missTypeKeyHash[missTypeKey] = 1;
+            }
+
             break;
 
           default:
@@ -41759,471 +41862,521 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm.phase === 1 || _vm.phase === 2
-        ? _c("div", { attrs: { id: "keyboard-container" } }, [
-            _c("div", { attrs: { id: "keyboard" } }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "1" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-1" }
-                  },
-                  [_vm._v("\n          1\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "2" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-2" }
-                  },
-                  [_vm._v("\n          2\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "3" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-3" }
-                  },
-                  [_vm._v("\n          3\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "4" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-4" }
-                  },
-                  [_vm._v("\n          4\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "5" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-5" }
-                  },
-                  [_vm._v("\n          5\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "6" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-6" }
-                  },
-                  [_vm._v("\n          6\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "7" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-7" }
-                  },
-                  [_vm._v("\n          7\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "8" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-8" }
-                  },
-                  [_vm._v("\n          8\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "9" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-9" }
-                  },
-                  [_vm._v("\n          9\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "0" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-0" }
-                  },
-                  [_vm._v("\n          0\n        ")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "key", attrs: { id: "key-tab" } }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "q" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-q" }
-                  },
-                  [_vm._v("\n          Q\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "w" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-w" }
-                  },
-                  [_vm._v("\n          W\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "e" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-e" }
-                  },
-                  [_vm._v("\n          E\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "r" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-r" }
-                  },
-                  [_vm._v("\n          R\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "t" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-t" }
-                  },
-                  [_vm._v("\n          T\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "y" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-y" }
-                  },
-                  [_vm._v("\n          Y\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "u" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-u" }
-                  },
-                  [_vm._v("\n          U\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "i" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-i" }
-                  },
-                  [_vm._v("\n          I\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "o" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-o" }
-                  },
-                  [_vm._v("\n          O\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "p" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-p" }
-                  },
-                  [_vm._v("\n          P\n        ")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { attrs: { id: "key-enter-1" } })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "key", attrs: { id: "key-caps" } }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "a" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-a" }
-                  },
-                  [_vm._v("\n          A\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "s" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-s" }
-                  },
-                  [_vm._v("\n          S\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "d" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-d" }
-                  },
-                  [_vm._v("\n          D\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "f" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-f" }
-                  },
-                  [_vm._v("\n          F\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "g" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-g" }
-                  },
-                  [_vm._v("\n          G\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "h" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-h" }
-                  },
-                  [_vm._v("\n          H\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "j" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-j" }
-                  },
-                  [_vm._v("\n          J\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "k" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-k" }
-                  },
-                  [_vm._v("\n          K\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "l" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-l" }
-                  },
-                  [_vm._v("\n          L\n        ")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { attrs: { id: "key-enter-2" } })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", {
-                  staticClass: "key",
-                  attrs: { id: "key-shift-left" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "z" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-z" }
-                  },
-                  [_vm._v("\n          Z\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "x" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-x" }
-                  },
-                  [_vm._v("\n          X\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "c" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-c" }
-                  },
-                  [_vm._v("\n          C\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "v" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-v" }
-                  },
-                  [_vm._v("\n          V\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "b" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-b" }
-                  },
-                  [_vm._v("\n          B\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "n" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-n" }
-                  },
-                  [_vm._v("\n          N\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "m" === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-m" }
-                  },
-                  [_vm._v("\n          M\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "," === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-," }
-                  },
-                  [_vm._v("\n          ,\n        ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "key",
-                    class: { "target-key": "." === _vm.roman[_vm.romanIndex] },
-                    attrs: { id: "key-." }
-                  },
-                  [_vm._v("\n          .\n        ")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "key",
-                  attrs: { id: "key-shift-right" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "key", attrs: { id: "key-ctrl" } }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "key",
-                  class: { "target-key": 0 === _vm.roman.length },
-                  attrs: { id: "key-space" }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "key" })
-              ])
-            ])
+      _vm.phase === 3
+        ? _c("div", {}, [
+            _c("p", [_vm._v("結果画面")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("正しいタイプ数：" + _vm._s(_vm.correctTypeCount))
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("ミスタイプ数：" + _vm._s(_vm.missTypeCount))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("時間：" + _vm._s(_vm.typeTime))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("WPM：" + _vm._s(_vm.wpm))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("正答率：" + _vm._s(_vm.correctPercentage))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.missTypeKeyHash))])
           ])
         : _vm._e(),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "keyboard-container" } }, [
+        _c("div", { attrs: { id: "keyboard" } }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "1" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["1"],
+                attrs: { id: "key-1" }
+              },
+              [_vm._v("\n          1\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "2" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["2"],
+                attrs: { id: "key-2" }
+              },
+              [_vm._v("\n          2\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "3" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["3"],
+                attrs: { id: "key-3" }
+              },
+              [_vm._v("\n          3\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "4" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["4"],
+                attrs: { id: "key-4" }
+              },
+              [_vm._v("\n          4\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "5" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["5"],
+                attrs: { id: "key-5" }
+              },
+              [_vm._v("\n          5\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "6" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["6"],
+                attrs: { id: "key-6" }
+              },
+              [_vm._v("\n          6\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "7" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["7"],
+                attrs: { id: "key-7" }
+              },
+              [_vm._v("\n          7\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "8" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["8"],
+                attrs: { id: "key-8" }
+              },
+              [_vm._v("\n          8\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "9" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["9"],
+                attrs: { id: "key-9" }
+              },
+              [_vm._v("\n          9\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "0" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["0"],
+                attrs: { id: "key-0" }
+              },
+              [_vm._v("\n          0\n        ")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "key", attrs: { id: "key-tab" } }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "q" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["q"],
+                attrs: { id: "key-q" }
+              },
+              [_vm._v("\n          Q\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "w" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["w"],
+                attrs: { id: "key-w" }
+              },
+              [_vm._v("\n          W\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "e" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["e"],
+                attrs: { id: "key-e" }
+              },
+              [_vm._v("\n          E\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "r" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["r"],
+                attrs: { id: "key-r" }
+              },
+              [_vm._v("\n          R\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "t" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["t"],
+                attrs: { id: "key-t" }
+              },
+              [_vm._v("\n          T\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "y" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["y"],
+                attrs: { id: "key-y" }
+              },
+              [_vm._v("\n          Y\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "u" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["u"],
+                attrs: { id: "key-u" }
+              },
+              [_vm._v("\n          U\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "i" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["i"],
+                attrs: { id: "key-i" }
+              },
+              [_vm._v("\n          I\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "o" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["o"],
+                attrs: { id: "key-o" }
+              },
+              [_vm._v("\n          O\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "p" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["p"],
+                attrs: { id: "key-p" }
+              },
+              [_vm._v("\n          P\n        ")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "key-enter-1" } })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "key", attrs: { id: "key-caps" } }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "a" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["a"],
+                attrs: { id: "key-a" }
+              },
+              [_vm._v("\n          A\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "s" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["s"],
+                attrs: { id: "key-s" }
+              },
+              [_vm._v("\n          S\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "d" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["d"],
+                attrs: { id: "key-d" }
+              },
+              [_vm._v("\n          D\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "f" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["f"],
+                attrs: { id: "key-f" }
+              },
+              [_vm._v("\n          F\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "g" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["g"],
+                attrs: { id: "key-g" }
+              },
+              [_vm._v("\n          G\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "h" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["h"],
+                attrs: { id: "key-h" }
+              },
+              [_vm._v("\n          H\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "j" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["j"],
+                attrs: { id: "key-j" }
+              },
+              [_vm._v("\n          J\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "k" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["k"],
+                attrs: { id: "key-k" }
+              },
+              [_vm._v("\n          K\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "l" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["l"],
+                attrs: { id: "key-l" }
+              },
+              [_vm._v("\n          L\n        ")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "key-enter-2" } })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "key", attrs: { id: "key-shift-left" } }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "z" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["z"],
+                attrs: { id: "key-z" }
+              },
+              [_vm._v("\n          Z\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "x" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["x"],
+                attrs: { id: "key-x" }
+              },
+              [_vm._v("\n          X\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "c" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["c"],
+                attrs: { id: "key-c" }
+              },
+              [_vm._v("\n          C\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "v" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["v"],
+                attrs: { id: "key-v" }
+              },
+              [_vm._v("\n          V\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "b" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["b"],
+                attrs: { id: "key-b" }
+              },
+              [_vm._v("\n          B\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "n" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["n"],
+                attrs: { id: "key-n" }
+              },
+              [_vm._v("\n          N\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "m" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["m"],
+                attrs: { id: "key-m" }
+              },
+              [_vm._v("\n          M\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "," === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle[","],
+                attrs: { id: "key-," }
+              },
+              [_vm._v("\n          ,\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "." === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["."],
+                attrs: { id: "key-." }
+              },
+              [_vm._v("\n          .\n        ")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key", attrs: { id: "key-shift-right" } })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "key", attrs: { id: "key-ctrl" } }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", {
+              staticClass: "key",
+              class: { "target-key": 0 === _vm.roman.length },
+              attrs: { id: "key-space" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "key" })
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _vm.phase === 1 || _vm.phase === 2
         ? _c("div", { attrs: { id: "hand-container" } }, [
@@ -42290,18 +42443,6 @@ var render = function() {
                 })
               ])
             ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.phase === 3
-        ? _c("div", {}, [
-            _c("p", [_vm._v("結果画面")]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.typeCount))]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.missTypeCount))]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.typeTime))])
           ])
         : _vm._e()
     ]
