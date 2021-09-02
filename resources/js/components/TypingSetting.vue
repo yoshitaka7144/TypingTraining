@@ -15,7 +15,7 @@ import TypingModal from "./TypingModal.vue";
 export default {
   components: { TypingModal },
   props: {
-    category: String,
+    categoryId: Number,
   },
   data() {
     return {
@@ -26,7 +26,7 @@ export default {
   methods: {
     async getQuestions() {
       var response = await axios
-        .get("/api/question/list/" + this.category)
+        .get("/api/question/list/" + this.categoryId)
         .catch((error) => error.response || error);
 
       if (response.status === INTERNAL_SERVER_ERROR) {

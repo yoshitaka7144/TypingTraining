@@ -2117,6 +2117,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2143,21 +2152,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      categories: []
+    };
+  },
   computed: {
     isLogin: function isLogin() {
       return this.$store.getters["auth/isLogin"];
     },
     username: function username() {
       return this.$store.getters["auth/userName"];
+    }
+  },
+  mounted: function mounted() {
+    this.getCategories();
+  },
+  methods: {
+    getCategories: function getCategories() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get("/api/category")["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
+                  _this.$store.commit("error/setCode", response.status);
+                } else {
+                  _this.categories = response.data;
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -2742,20 +2785,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       registerErrorMessages: "",
       registerForm: {
-        category: "",
+        categoryId: "",
         text: "",
         kana: "",
         roman: "",
         editorId: this.$store.getters["auth/userId"]
       },
-      categoryPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"],
-      categoryError: "",
+      selectOptions: [],
       textPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"],
       textError: "",
       kanaPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"],
@@ -2764,8 +2809,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       romanError: ""
     };
   },
+  mounted: function mounted() {
+    this.getCategories();
+  },
   methods: {
-    register: function register() {
+    getCategories: function getCategories() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2775,21 +2823,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post("/api/question", _this.registerForm)["catch"](function (error) {
+                return axios.get("/api/category")["catch"](function (error) {
                   return error.response || error;
                 });
 
               case 2:
                 response = _context.sent;
 
-                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"]) {
-                  _this.$router.push({
-                    name: "question"
-                  });
-                } else if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                  _this.registerErrorMessages = response.data.errors;
-                } else {
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
                   _this.$store.commit("error/setCode", response.status);
+                } else {
+                  _this.selectOptions = response.data;
                 }
 
               case 4:
@@ -2800,30 +2844,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    getRoman: function getRoman() {
+    register: function register() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response, xmlData, romanList, furiganaList, roman, furigana;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.registerForm.text.length <= 0)) {
-                  _context2.next = 2;
+                _context2.next = 2;
+                return axios.post("/api/question", _this2.registerForm)["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 2:
+                response = _context2.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"]) {
+                  _this2.$router.push({
+                    name: "question"
+                  });
+                } else if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                  _this2.registerErrorMessages = response.data.errors;
+                } else {
+                  _this2.$store.commit("error/setCode", response.status);
+                }
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    getRoman: function getRoman() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response, xmlData, romanList, furiganaList, roman, furigana;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(_this3.registerForm.text.length <= 0)) {
+                  _context3.next = 2;
                   break;
                 }
 
-                return _context2.abrupt("return");
+                return _context3.abrupt("return");
 
               case 2:
-                _context2.next = 4;
-                return axios.post("/api/roman", _this2.registerForm)["catch"](function (error) {
+                _context3.next = 4;
+                return axios.post("/api/roman", _this3.registerForm)["catch"](function (error) {
                   return error.response || error;
                 });
 
               case 4:
-                response = _context2.sent;
+                response = _context3.sent;
 
                 if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"]) {
                   xmlData = new window.DOMParser().parseFromString(response.data, "text/xml");
@@ -2837,38 +2916,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   Array.from(furiganaList).forEach(function (item) {
                     furigana += item.textContent;
                   });
-                  _this2.registerForm.roman = roman;
-                  _this2.registerForm.kana = furigana;
+                  _this3.registerForm.roman = roman;
+                  _this3.registerForm.kana = furigana;
                 } else {
-                  _this2.$store.commit("error/setCode", response.status);
+                  _this3.$store.commit("error/setCode", response.status);
                 }
 
               case 6:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     }
   },
   watch: {
-    "registerForm.category": function registerFormCategory(val) {
-      if (val.length < 1) {
-        this.categoryError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE"];
-      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_MAX_NUMBER"]) {
-        this.categoryError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"];
-      } else {
-        this.categoryError = "";
-      }
-    },
     "registerForm.text": function registerFormText(val) {
       if (val.length < 1) {
         this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_REQUIRE"];
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_MAX_NUMBER"]) {
         this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"];
       } else {
-        if (!val.match(/^[,\.\u3001\u3002\u3005\u3041-\u3093\u30A1-\u30F6\u4E00-\u9FA0]+$/)) {
+        if (!val.match(/^[,\.\u3001\u3002\u3005\u3041-\u3093\u30A1-\u30F6\u30FC\u4E00-\u9FA0]+$/)) {
           this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_PATTERN"];
         } else {
           this.textError = "";
@@ -2881,7 +2951,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_MAX_NUMBER"]) {
         this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"];
       } else {
-        if (!val.match(/^[,\.\u3001\u3002\u3041-\u3093]+$/)) {
+        if (!val.match(/^[,\.\u3001\u3002\u3041-\u3093\u30FC]+$/)) {
           this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_PATTERN"];
         } else {
           this.kanaError = "";
@@ -2894,7 +2964,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_MAX_NUMBER"]) {
         this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"];
       } else {
-        if (!val.match(/^[,\.0-9A-Za-z]+$/)) {
+        if (!val.match(/^[,-\.0-9A-Za-z]+$/)) {
           this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_PATTERN"];
         } else {
           this.romanError = "";
@@ -2994,6 +3064,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3003,14 +3077,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       updateErrorMessages: "",
       updateForm: {
-        category: "",
+        categoryId: "",
         text: "",
         kana: "",
         roman: "",
         editorId: this.$store.getters["auth/userId"]
       },
-      categoryPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"],
-      categoryError: "",
+      selectOptions: [],
       textPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"],
       textError: "",
       kanaPlaceholder: _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"],
@@ -3020,7 +3093,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    getQuestion: function getQuestion() {
+    getCategories: function getCategories() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -3030,7 +3103,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/question/" + _this.questionId)["catch"](function (error) {
+                return axios.get("/api/category")["catch"](function (error) {
                   return error.response || error;
                 });
 
@@ -3040,10 +3113,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
                   _this.$store.commit("error/setCode", response.status);
                 } else {
-                  _this.updateForm.category = response.data.category;
-                  _this.updateForm.text = response.data.text;
-                  _this.updateForm.kana = response.data.kana;
-                  _this.updateForm.roman = response.data.roman;
+                  _this.selectOptions = response.data;
                 }
 
               case 4:
@@ -3054,7 +3124,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    update: function update() {
+    getQuestion: function getQuestion() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3064,21 +3134,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.put("/api/question/" + _this2.questionId, _this2.updateForm)["catch"](function (error) {
+                return axios.get("/api/question/" + _this2.questionId)["catch"](function (error) {
                   return error.response || error;
                 });
 
               case 2:
                 response = _context2.sent;
 
-                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"]) {
-                  _this2.$router.push({
-                    name: "question"
-                  });
-                } else if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                  _this2.updateErrorMessages = response.data.errors;
-                } else {
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
                   _this2.$store.commit("error/setCode", response.status);
+                } else {
+                  _this2.updateForm.categoryId = response.data.category_id;
+                  _this2.updateForm.text = response.data.text;
+                  _this2.updateForm.kana = response.data.kana;
+                  _this2.updateForm.roman = response.data.roman;
                 }
 
               case 4:
@@ -3088,28 +3157,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    update: function update() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.put("/api/question/" + _this3.questionId, _this3.updateForm)["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 2:
+                response = _context3.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"]) {
+                  _this3.$router.push({
+                    name: "question"
+                  });
+                } else if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                  _this3.updateErrorMessages = response.data.errors;
+                } else {
+                  _this3.$store.commit("error/setCode", response.status);
+                }
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   created: function created() {
+    this.getCategories();
     this.getQuestion();
   },
   watch: {
-    "updateForm.category": function updateFormCategory(val) {
-      if (val.length < 1) {
-        this.categoryError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE"];
-      } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_MAX_NUMBER"]) {
-        this.categoryError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_CATEGORY_ERROR_LIMIT"];
-      } else {
-        this.categoryError = "";
-      }
-    },
     "updateForm.text": function updateFormText(val) {
       if (val.length < 1) {
         this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_REQUIRE"];
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_MAX_NUMBER"]) {
         this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_LIMIT"];
       } else {
-        if (!val.match(/^[,\.\u3001\u3002\u3005\u3041-\u3093\u30A1-\u30F6\u4E00-\u9FA0]+$/)) {
+        if (!val.match(/^[,\.\u3001\u3002\u3005\u3041-\u3093\u30A1-\u30F6\u30FC\u4E00-\u9FA0]+$/)) {
           this.textError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_TEXT_ERROR_PATTERN"];
         } else {
           this.textError = "";
@@ -3122,7 +3218,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_MAX_NUMBER"]) {
         this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_LIMIT"];
       } else {
-        if (!val.match(/^[,\.\u3001\u3002\u3041-\u3093]+$/)) {
+        if (!val.match(/^[,\.\u3001\u3002\u3041-\u3093\u30FC]+$/)) {
           this.kanaError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_KANA_ERROR_PATTERN"];
         } else {
           this.kanaError = "";
@@ -3135,7 +3231,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else if (val.length > _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_MAX_NUMBER"]) {
         this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_LIMIT"];
       } else {
-        if (!val.match(/^[,\.0-9A-Za-z]+$/)) {
+        if (!val.match(/^[,-\.0-9A-Za-z]+$/)) {
           this.romanError = _util__WEBPACK_IMPORTED_MODULE_1__["REGISTER_QUESTION_ROMAN_ERROR_PATTERN"];
         } else {
           this.romanError = "";
@@ -3166,6 +3262,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3847,8 +3949,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           case 0:
           case 3:
             //タイプミス時
-            // ミス回数増加
-            this.missTypeCount++; // キー
+            // ミス回数カウント
+            this.missTypeCount++; // ミスタイプキーカウント
 
             var missTypeKey = this.roman[this.romanIndex];
 
@@ -3907,7 +4009,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     TypingModal: _TypingModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
-    category: String
+    categoryId: Number
   },
   data: function data() {
     return {
@@ -3926,7 +4028,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/question/list/" + _this.category)["catch"](function (error) {
+                return axios.get("/api/question/list/" + _this.categoryId)["catch"](function (error) {
                   return error.response || error;
                 });
 
@@ -40649,37 +40751,25 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      [
-        _c(
+      _vm._l(_vm.categories, function(category) {
+        return _c(
           "router-link",
           {
+            key: category.id,
             attrs: {
-              to: { name: "typing.setting", params: { category: "aaa" } }
+              to: {
+                name: "typing.setting",
+                params: { categoryId: category.id }
+              }
             }
           },
-          [_c("button", { staticClass: "btn btn-blue" }, [_vm._v("aaa")])]
-        ),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            attrs: {
-              to: { name: "typing.setting", params: { category: "bbb" } }
-            }
-          },
-          [_c("button", { staticClass: "btn btn-blue" }, [_vm._v("bbb")])]
-        ),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            attrs: {
-              to: { name: "typing.setting", params: { category: "test3" } }
-            }
-          },
-          [_c("button", { staticClass: "btn btn-blue" }, [_vm._v("test3")])]
+          [
+            _c("button", { staticClass: "btn btn-blue" }, [
+              _vm._v(_vm._s(category.name))
+            ])
+          ]
         )
-      ],
+      }),
       1
     )
   ])
@@ -41310,10 +41400,12 @@ var render = function() {
         [
           _vm.registerErrorMessages
             ? _c("div", { staticClass: "errors-area" }, [
-                _vm.registerErrorMessages.category
+                _vm.registerErrorMessages.categoryId
                   ? _c(
                       "ul",
-                      _vm._l(_vm.registerErrorMessages.category, function(msg) {
+                      _vm._l(_vm.registerErrorMessages.categoryId, function(
+                        msg
+                      ) {
                         return _c("li", { key: msg }, [
                           _vm._v("\n          " + _vm._s(msg) + "\n        ")
                         ])
@@ -41364,37 +41456,51 @@ var render = function() {
             _vm._v("カテゴリー")
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registerForm.category,
-                expression: "registerForm.category"
-              }
-            ],
-            attrs: {
-              type: "text",
-              id: "question-category",
-              autocomplete: "off",
-              placeholder: _vm.categoryPlaceholder
-            },
-            domProps: { value: _vm.registerForm.category },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registerForm.categoryId,
+                  expression: "registerForm.categoryId"
                 }
-                _vm.$set(_vm.registerForm, "category", $event.target.value)
+              ],
+              attrs: { id: "question-category" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.registerForm,
+                    "categoryId",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
               }
-            }
-          }),
-          _vm._v(" "),
-          _vm.categoryError
-            ? _c("p", { staticClass: "error" }, [
-                _vm._v(_vm._s(_vm.categoryError))
-              ])
-            : _vm._e(),
+            },
+            [
+              _c("option", { attrs: { disabled: "", value: "" } }, [
+                _vm._v("選択して下さい")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.selectOptions, function(option) {
+                return _c(
+                  "option",
+                  { key: option.id, domProps: { value: option.id } },
+                  [_vm._v("\n        " + _vm._s(option.name) + "\n      ")]
+                )
+              })
+            ],
+            2
+          ),
           _vm._v(" "),
           _c("label", { attrs: { for: "question-text" } }, [_vm._v("問題")]),
           _vm._v(" "),
@@ -41564,10 +41670,10 @@ var render = function() {
         [
           _vm.updateErrorMessages
             ? _c("div", { staticClass: "errors-area" }, [
-                _vm.updateErrorMessages.category
+                _vm.updateErrorMessages.categoryId
                   ? _c(
                       "ul",
-                      _vm._l(_vm.updateErrorMessages.category, function(msg) {
+                      _vm._l(_vm.updateErrorMessages.categoryId, function(msg) {
                         return _c("li", { key: msg }, [
                           _vm._v("\n          " + _vm._s(msg) + "\n        ")
                         ])
@@ -41620,37 +41726,51 @@ var render = function() {
             _vm._v("カテゴリー")
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.updateForm.category,
-                expression: "updateForm.category"
-              }
-            ],
-            attrs: {
-              type: "text",
-              id: "question-category",
-              autocomplete: "off",
-              placeholder: _vm.categoryPlaceholder
-            },
-            domProps: { value: _vm.updateForm.category },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.updateForm.categoryId,
+                  expression: "updateForm.categoryId"
                 }
-                _vm.$set(_vm.updateForm, "category", $event.target.value)
+              ],
+              attrs: { id: "question-category" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.updateForm,
+                    "categoryId",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
               }
-            }
-          }),
-          _vm._v(" "),
-          _vm.categoryError
-            ? _c("p", { staticClass: "error" }, [
-                _vm._v(_vm._s(_vm.categoryError))
-              ])
-            : _vm._e(),
+            },
+            [
+              _c("option", { attrs: { disabled: "", value: "" } }, [
+                _vm._v("選択して下さい")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.selectOptions, function(option) {
+                return _c(
+                  "option",
+                  { key: option.id, domProps: { value: option.id } },
+                  [_vm._v("\n        " + _vm._s(option.name) + "\n      ")]
+                )
+              })
+            ],
+            2
+          ),
           _vm._v(" "),
           _c("label", { attrs: { for: "question-text" } }, [_vm._v("問題")]),
           _vm._v(" "),
@@ -41997,7 +42117,16 @@ var render = function() {
               [_vm._v("\n          0\n        ")]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "key" }),
+            _c(
+              "div",
+              {
+                staticClass: "key",
+                class: { "target-key": "-" === _vm.roman[_vm.romanIndex] },
+                style: _vm.missTypeKeyStyle["-"],
+                attrs: { id: "key--" }
+              },
+              [_vm._v("\n          -\n        ")]
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "key" }),
             _vm._v(" "),
@@ -60292,6 +60421,9 @@ function getChar(code) {
     case "Period":
       return ".";
 
+    case "Minus":
+      return "-";
+
     default:
       return "";
   }
@@ -60706,7 +60838,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       }
     }
   }, {
-    path: "/typing/:category",
+    path: "/typing/:categoryId",
     name: "typing.setting",
     component: _components_TypingSetting__WEBPACK_IMPORTED_MODULE_8__["default"],
     props: true

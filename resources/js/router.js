@@ -70,7 +70,7 @@ const router = new VueRouter({
       }
     },
     {
-      path: "/typing/:category",
+      path: "/typing/:categoryId",
       name: "typing.setting",
       component: TypingSetting,
       props: true,

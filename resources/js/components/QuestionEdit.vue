@@ -3,8 +3,8 @@
     <p class="title">問題編集</p>
     <form @submit.prevent="update">
       <div v-if="updateErrorMessages" class="errors-area">
-        <ul v-if="updateErrorMessages.category">
-          <li v-for="msg in updateErrorMessages.category" :key="msg">
+        <ul v-if="updateErrorMessages.categoryId">
+          <li v-for="msg in updateErrorMessages.categoryId" :key="msg">
             {{ msg }}
           </li>
         </ul>
@@ -25,15 +25,19 @@
         </ul>
       </div>
       <label>ID：{{ questionId }}</label>
+
       <label for="question-category">カテゴリー</label>
-      <input
-        type="text"
-        id="question-category"
-        v-model="updateForm.category"
-        autocomplete="off"
-        :placeholder="categoryPlaceholder"
-      />
-      <p class="error" v-if="categoryError">{{ categoryError }}</p>
+      <select id="question-category" v-model="updateForm.categoryId">
+        <option disabled value="">選択して下さい</option>
+        <option
+          v-for="option in selectOptions"
+          :value="option.id"
+          :key="option.id"
+        >
+          {{ option.name }}
+        </option>
+      </select>
+
       <label for="question-text">問題</label>
       <input
         type="text"
@@ -97,14 +101,13 @@ export default {
     return {
       updateErrorMessages: "",
       updateForm: {
-        category: "",
+        categoryId: "",
         text: "",
         kana: "",
         roman: "",
         editorId: this.$store.getters["auth/userId"],
       },
-      categoryPlaceholder: REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
-      categoryError: "",
+      selectOptions: [],
       textPlaceholder: REGISTER_QUESTION_TEXT_ERROR_LIMIT,
       textError: "",
       kanaPlaceholder: REGISTER_QUESTION_KANA_ERROR_LIMIT,
@@ -114,6 +117,17 @@ export default {
     };
   },
   methods: {
+    async getCategories() {
+      const response = await axios
+        .get("/api/category")
+        .catch((error) => error.response || error);
+
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
+      } else {
+        this.selectOptions = response.data;
+      }
+    },
     async getQuestion() {
       var response = await axios
         .get("/api/question/" + this.questionId)
@@ -122,7 +136,7 @@ export default {
       if (response.status === INTERNAL_SERVER_ERROR) {
         this.$store.commit("error/setCode", response.status);
       } else {
-        this.updateForm.category = response.data.category;
+        this.updateForm.categoryId = response.data.category_id;
         this.updateForm.text = response.data.text;
         this.updateForm.kana = response.data.kana;
         this.updateForm.roman = response.data.roman;
@@ -143,25 +157,17 @@ export default {
     },
   },
   created() {
+    this.getCategories();
     this.getQuestion();
   },
   watch: {
-    "updateForm.category": function (val) {
-      if (val.length < 1) {
-        this.categoryError = REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE;
-      } else if (val.length > REGISTER_QUESTION_CATEGORY_MAX_NUMBER) {
-        this.categoryError = REGISTER_QUESTION_CATEGORY_ERROR_LIMIT;
-      } else {
-        this.categoryError = "";
-      }
-    },
     "updateForm.text": function (val) {
       if (val.length < 1) {
         this.textError = REGISTER_QUESTION_TEXT_ERROR_REQUIRE;
       } else if (val.length > REGISTER_QUESTION_TEXT_MAX_NUMBER) {
         this.textError = REGISTER_QUESTION_TEXT_ERROR_LIMIT;
       } else {
-        if (!val.match(/^[ぁ-んァ-ヶ一-龠々、。,\.]+$/u)) {
+        if (!val.match(/^[ぁ-んァ-ヶ一-龠々ー、。,\.]+$/u)) {
           this.textError = REGISTER_QUESTION_TEXT_ERROR_PATTERN;
         } else {
           this.textError = "";
@@ -174,7 +180,7 @@ export default {
       } else if (val.length > REGISTER_QUESTION_KANA_MAX_NUMBER) {
         this.kanaError = REGISTER_QUESTION_KANA_ERROR_LIMIT;
       } else {
-        if (!val.match(/^[ぁ-ん、。,\.]+$/u)) {
+        if (!val.match(/^[ぁ-んー、。,\.]+$/u)) {
           this.kanaError = REGISTER_QUESTION_KANA_ERROR_PATTERN;
         } else {
           this.kanaError = "";
@@ -187,7 +193,7 @@ export default {
       } else if (val.length > REGISTER_QUESTION_ROMAN_MAX_NUMBER) {
         this.romanError = REGISTER_QUESTION_ROMAN_ERROR_LIMIT;
       } else {
-        if (!val.match(/^[a-zA-Z0-9,\.]+$/u)) {
+        if (!val.match(/^[a-zA-Z0-9\-,\.]+$/u)) {
           this.romanError = REGISTER_QUESTION_ROMAN_ERROR_PATTERN;
         } else {
           this.romanError = "";

@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class Kana implements Rule
+class KanaRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,7 +26,7 @@ class Kana implements Rule
     public function passes($attribute, $value)
     {
         //
-        return preg_match('/^[ぁ-ん、。,\.]+$/u', $value);
+        return preg_match('/^[ぁ-んー、。,\.]+$/u', $value);
     }
 
     /**

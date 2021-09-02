@@ -29,7 +29,10 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 // ユーザー登録
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
-Route::get('/question/list/{category}', 'QuestionController@category')->name('question.category');
+// カテゴリー取得
+Route::get('/category', 'CategoryController@index')->name('category');
+
+Route::get('/question/list/{categoryId}', 'QuestionController@category')->name('question.category');
 
 Route::post('/roman', 'RomanController@index')->name('roman');
 

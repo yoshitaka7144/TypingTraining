@@ -15,12 +15,13 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("category", 10);
+            $table->unsignedInteger("category_id");
             $table->string("text", 100);
             $table->string("kana", 100);
             $table->string("roman", 100);
             $table->integer("editor_id")->nullable();
             $table->timestamps();
+            $table->foreign("category_id")->references("id")->on("categories")->onDelete("cascade");
         });
     }
 

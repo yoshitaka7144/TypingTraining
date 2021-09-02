@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class Roman implements Rule
+class QuestionTextRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,7 +26,7 @@ class Roman implements Rule
     public function passes($attribute, $value)
     {
         //
-        return preg_match('/^[a-zA-Z0-9,\.]+$/', $value);
+        return preg_match("/^[ぁ-んァ-ヶ一-龠々ー、。,\.]+$/u", $value);
     }
 
     /**
@@ -36,6 +36,6 @@ class Roman implements Rule
      */
     public function message()
     {
-        return ":attribute は半角英数字で入力してください";
+        return ":attribute は漢字 or カタカナ or ひらがな or 記号（,.、。）で入力してください";
     }
 }

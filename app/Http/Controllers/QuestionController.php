@@ -12,7 +12,8 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        return Question::all();
+        $questions = Question::select("questions.id as id", "categories.name as category", "text", "kana", "roman", "editor_id")->join("categories", "categories.id", "=", "questions.category_id")->get();
+        return $questions;
     }
 
     public function show(Question $question)
@@ -23,7 +24,7 @@ class QuestionController extends Controller
     public function store(QuestionRequest $request)
     {
         $question = new Question();
-        $question->category = $request->category;
+        $question->category_id = $request->categoryId;
         $question->text = $request->text;
         $question->kana = $request->kana;
         $question->roman = $request->roman;
@@ -35,7 +36,7 @@ class QuestionController extends Controller
 
     public function update(QuestionRequest $request, Question $question)
     {
-        $question->category = $request->category;
+        $question->category_id = $request->categoryId;
         $question->text = $request->text;
         $question->kana = $request->kana;
         $question->roman = $request->roman;
@@ -45,16 +46,15 @@ class QuestionController extends Controller
         return $question;
     }
 
-    public function destroy(Question $question){
+    public function destroy(Question $question)
+    {
         $question->delete();
 
         return $question;
     }
 
-    public function category($category)
+    public function category($categoryId)
     {
-        $question = Question::where("category", $category)->get();
-
-        return $question;
+        return Question::where("category_id", $categoryId)->get();
     }
 }

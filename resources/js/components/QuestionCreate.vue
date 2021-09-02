@@ -3,8 +3,8 @@
     <p class="title">問題作成</p>
     <form @submit.prevent="register">
       <div v-if="registerErrorMessages" class="errors-area">
-        <ul v-if="registerErrorMessages.category">
-          <li v-for="msg in registerErrorMessages.category" :key="msg">
+        <ul v-if="registerErrorMessages.categoryId">
+          <li v-for="msg in registerErrorMessages.categoryId" :key="msg">
             {{ msg }}
           </li>
         </ul>
@@ -25,14 +25,17 @@
         </ul>
       </div>
       <label for="question-category">カテゴリー</label>
-      <input
-        type="text"
-        id="question-category"
-        v-model="registerForm.category"
-        autocomplete="off"
-        :placeholder="categoryPlaceholder"
-      />
-      <p class="error" v-if="categoryError">{{ categoryError }}</p>
+      <select id="question-category" v-model="registerForm.categoryId">
+        <option disabled value="">選択して下さい</option>
+        <option
+          v-for="option in selectOptions"
+          :value="option.id"
+          :key="option.id"
+        >
+          {{ option.name }}
+        </option>
+      </select>
+
       <label for="question-text">問題</label>
       <input
         type="text"
@@ -75,9 +78,7 @@ import {
   OK,
   CREATED,
   UNPROCESSABLE_ENTITY,
-  REGISTER_QUESTION_CATEGORY_MAX_NUMBER,
-  REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE,
-  REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
+  INTERNAL_SERVER_ERROR,
   REGISTER_QUESTION_TEXT_MAX_NUMBER,
   REGISTER_QUESTION_TEXT_ERROR_REQUIRE,
   REGISTER_QUESTION_TEXT_ERROR_LIMIT,
@@ -96,14 +97,13 @@ export default {
     return {
       registerErrorMessages: "",
       registerForm: {
-        category: "",
+        categoryId: "",
         text: "",
         kana: "",
         roman: "",
         editorId: this.$store.getters["auth/userId"],
       },
-      categoryPlaceholder: REGISTER_QUESTION_CATEGORY_ERROR_LIMIT,
-      categoryError: "",
+      selectOptions: [],
       textPlaceholder: REGISTER_QUESTION_TEXT_ERROR_LIMIT,
       textError: "",
       kanaPlaceholder: REGISTER_QUESTION_KANA_ERROR_LIMIT,
@@ -112,9 +112,23 @@ export default {
       romanError: "",
     };
   },
+  mounted() {
+    this.getCategories();
+  },
   methods: {
+    async getCategories() {
+      const response = await axios
+        .get("/api/category")
+        .catch((error) => error.response || error);
+
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
+      } else {
+        this.selectOptions = response.data;
+      }
+    },
     async register() {
-      var response = await axios
+      const response = await axios
         .post("/api/question", this.registerForm)
         .catch((error) => error.response || error);
 
@@ -130,19 +144,19 @@ export default {
       if (this.registerForm.text.length <= 0) {
         return;
       }
-      var response = await axios
+      const response = await axios
         .post("/api/roman", this.registerForm)
         .catch((error) => error.response || error);
 
       if (response.status === OK) {
-        var xmlData = new window.DOMParser().parseFromString(
+        const xmlData = new window.DOMParser().parseFromString(
           response.data,
           "text/xml"
         );
-        var romanList = xmlData.querySelectorAll("Word > Roman");
-        var furiganaList = xmlData.querySelectorAll("Word > Furigana");
-        var roman = "";
-        var furigana = "";
+        const romanList = xmlData.querySelectorAll("Word > Roman");
+        const furiganaList = xmlData.querySelectorAll("Word > Furigana");
+        let roman = "";
+        let furigana = "";
         Array.from(romanList).forEach((item) => {
           roman += item.textContent;
         });
@@ -157,22 +171,13 @@ export default {
     },
   },
   watch: {
-    "registerForm.category": function (val) {
-      if (val.length < 1) {
-        this.categoryError = REGISTER_QUESTION_CATEGORY_ERROR_REQUIRE;
-      } else if (val.length > REGISTER_QUESTION_CATEGORY_MAX_NUMBER) {
-        this.categoryError = REGISTER_QUESTION_CATEGORY_ERROR_LIMIT;
-      } else {
-        this.categoryError = "";
-      }
-    },
     "registerForm.text": function (val) {
       if (val.length < 1) {
         this.textError = REGISTER_QUESTION_TEXT_ERROR_REQUIRE;
       } else if (val.length > REGISTER_QUESTION_TEXT_MAX_NUMBER) {
         this.textError = REGISTER_QUESTION_TEXT_ERROR_LIMIT;
       } else {
-        if (!val.match(/^[ぁ-んァ-ヶ一-龠々、。,\.]+$/u)) {
+        if (!val.match(/^[ぁ-んァ-ヶ一-龠々ー、。,\.]+$/u)) {
           this.textError = REGISTER_QUESTION_TEXT_ERROR_PATTERN;
         } else {
           this.textError = "";
@@ -185,7 +190,7 @@ export default {
       } else if (val.length > REGISTER_QUESTION_KANA_MAX_NUMBER) {
         this.kanaError = REGISTER_QUESTION_KANA_ERROR_LIMIT;
       } else {
-        if (!val.match(/^[ぁ-ん、。,\.]+$/u)) {
+        if (!val.match(/^[ぁ-んー、。,\.]+$/u)) {
           this.kanaError = REGISTER_QUESTION_KANA_ERROR_PATTERN;
         } else {
           this.kanaError = "";
@@ -198,7 +203,7 @@ export default {
       } else if (val.length > REGISTER_QUESTION_ROMAN_MAX_NUMBER) {
         this.romanError = REGISTER_QUESTION_ROMAN_ERROR_LIMIT;
       } else {
-        if (!val.match(/^[a-zA-Z0-9,\.]+$/u)) {
+        if (!val.match(/^[a-zA-Z0-9\-,\.]+$/u)) {
           this.romanError = REGISTER_QUESTION_ROMAN_ERROR_PATTERN;
         } else {
           this.romanError = "";

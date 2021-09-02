@@ -116,7 +116,14 @@
           >
             0
           </div>
-          <div class="key"></div>
+          <div
+            id="key--"
+            class="key"
+            :class="{ 'target-key': '-' === roman[romanIndex] }"
+            :style="missTypeKeyStyle['-']"
+          >
+            -
+          </div>
           <div class="key"></div>
           <div class="key"></div>
           <div class="key"></div>
@@ -439,7 +446,6 @@
         </div>
       </div>
     </div>
-
   </modal>
 </template>
 <script>
@@ -472,7 +478,7 @@ export default {
       wpm: 0,
       correctPercentage: 0,
       missTypeKeyHash: {},
-      missTypeKeyStyle:{},
+      missTypeKeyStyle: {},
     };
   },
   mounted() {
@@ -551,9 +557,13 @@ export default {
       this.typeTime = performance.now() - this.typeTime;
 
       // 結果集計
-      this.wpm = Math.floor((this.correctTypeCount / this.typeTime) * 1000 * 60);
+      this.wpm = Math.floor(
+        (this.correctTypeCount / this.typeTime) * 1000 * 60
+      );
       this.correctPercentage = Math.floor(
-        (1 - this.missTypeCount / (this.correctTypeCount + this.missTypeCount)) * 100
+        (1 -
+          this.missTypeCount / (this.correctTypeCount + this.missTypeCount)) *
+          100
       );
 
       // ログイン時、データ更新と履歴データ作成
@@ -591,10 +601,13 @@ export default {
       this.displayRoman = this.currentQuestion.roman;
       this.displayInputedRoman = "";
     },
-    setMissTypeKeyStyle(){
-      for(let key in this.missTypeKeyHash){
-        const percentage = Math.ceil((this.missTypeKeyHash[key] / this.missTypeCount) * 10) / 10;
-        this.missTypeKeyStyle[key] = {"background-color": "rgba(255,0,0," + percentage +")"};
+    setMissTypeKeyStyle() {
+      for (let key in this.missTypeKeyHash) {
+        const percentage =
+          Math.ceil((this.missTypeKeyHash[key] / this.missTypeCount) * 10) / 10;
+        this.missTypeKeyStyle[key] = {
+          "background-color": "rgba(255,0,0," + percentage + ")",
+        };
       }
     },
     async updateUserInfo() {

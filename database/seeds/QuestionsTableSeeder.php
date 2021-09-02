@@ -16,19 +16,19 @@ class QuestionsTableSeeder extends Seeder
 
         $questions = [
             [
-                "category" => "aaa",
+                "category_id" => 1,
                 "text" => "なんかテスト問題",
                 "kana" => "なんかてすともんだい",
                 "roman" => "nankatesutomondai",
             ],
             [
-                "category" => "bbb",
+                "category_id" => 2,
                 "text" => "墾田永年私財法",
                 "kana" => "こんでんえいねんしざいほう",
                 "roman" => "kondeneinensizaihou",
             ],
             [
-                "category" => "aaa",
+                "category_id" => 3,
                 "text" => "札幌",
                 "kana" => "さっぽろ",
                 "roman" => "sapporo",

@@ -77,6 +77,8 @@ export function getChar(code) {
       return ",";
     case "Period":
       return ".";
+    case "Minus":
+      return "-";
     default:
       return "";
   }

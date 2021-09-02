@@ -3,8 +3,9 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use App\Category;
 
-class QuestionText implements Rule
+class CategoryRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,8 +26,8 @@ class QuestionText implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
-        return preg_match("/^[ぁ-んァ-ヶ一-龠々、。,\.]+$/u", $value);
+        $category = Category::find($value);
+        return isset($category);
     }
 
     /**
@@ -36,6 +37,6 @@ class QuestionText implements Rule
      */
     public function message()
     {
-        return ":attribute は漢字 or カタカナ or ひらがな or 記号（,.、。）で入力してください";
+        return ":attribute が不正な値です";
     }
 }
