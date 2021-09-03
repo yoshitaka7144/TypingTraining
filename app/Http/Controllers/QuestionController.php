@@ -12,7 +12,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        $questions = Question::select("questions.id as id", "categories.name as category", "text", "kana", "roman", "editor_id")->join("categories", "categories.id", "=", "questions.category_id")->get();
+        $questions = Question::select("questions.id as id", "categories.name as category", "text", "kana", "roman", "editor_user_id")->join("categories", "categories.id", "=", "questions.category_id")->get();
         return $questions;
     }
 
@@ -28,7 +28,7 @@ class QuestionController extends Controller
         $question->text = $request->text;
         $question->kana = $request->kana;
         $question->roman = $request->roman;
-        $question->editor_id = $request->editorId;
+        $question->editor_user_id = $request->editorUserId;
         $question->save();
 
         return $question;
@@ -40,7 +40,7 @@ class QuestionController extends Controller
         $question->text = $request->text;
         $question->kana = $request->kana;
         $question->roman = $request->roman;
-        $question->editor_id = $request->editorId;
+        $question->editor_user_id = $request->editorUserId;
         $question->save();
 
         return $question;

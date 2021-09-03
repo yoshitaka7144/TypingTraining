@@ -95,7 +95,7 @@ import {
 } from "../util";
 export default {
   props: {
-    questionId: Number,
+    questionId: "",
   },
   data() {
     return {
@@ -105,7 +105,7 @@ export default {
         text: "",
         kana: "",
         roman: "",
-        editorId: this.$store.getters["auth/userId"],
+        editorUserId: this.$store.getters["auth/userId"],
       },
       selectOptions: [],
       textPlaceholder: REGISTER_QUESTION_TEXT_ERROR_LIMIT,

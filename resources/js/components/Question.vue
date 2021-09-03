@@ -22,7 +22,7 @@
           <td>{{ question.roman }}</td>
           <td>
             <router-link
-              v-if="userRole === 2 || question.editor_id === userId"
+              v-if="userRole === 2 || question.editor_user_id === userId"
               :to="{
                 name: 'question.edit',
                 params: { questionId: question.id },
@@ -33,7 +33,7 @@
           </td>
           <td>
             <button
-              v-if="userRole === 2 || question.editor_id === userId"
+              v-if="userRole === 2 || question.editor_user_id === userId"
               class="btn btn-red"
               @click="modalShow(question.id)"
             >

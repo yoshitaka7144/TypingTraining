@@ -6,7 +6,7 @@
       </option>
     </select>
     <button class="btn btn-blue" @click="show">スタート</button>
-    <TypingModal :questions="questions" :questionCount="selectQuestionCount" />
+    <TypingModal :categoryId="categoryId" :questions="questions" :questionCount="selectQuestionCount" />
   </div>
 </template>
 <script>
@@ -15,7 +15,7 @@ import TypingModal from "./TypingModal.vue";
 export default {
   components: { TypingModal },
   props: {
-    categoryId: Number,
+    categoryId: "",
   },
   data() {
     return {

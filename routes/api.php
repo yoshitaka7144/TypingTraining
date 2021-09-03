@@ -32,6 +32,7 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 // カテゴリー取得
 Route::get('/category', 'CategoryController@index')->name('category');
 
+// 指定カテゴリーの問題取得
 Route::get('/question/list/{categoryId}', 'QuestionController@category')->name('question.category');
 
 Route::post('/roman', 'RomanController@index')->name('roman');
@@ -55,4 +56,10 @@ Route::group(["middleware" => "auth"], function () {
 
   // ユーザー情報更新
   Route::put('/user/{user}', 'UserController@update')->name('user.update');
+
+  // 履歴一覧取得
+  Route::get('/history', 'HistoryController@index')->name('history');
+
+  // 履歴登録
+  Route::post('/history', 'HistoryController@store')->name('history.create');
 });

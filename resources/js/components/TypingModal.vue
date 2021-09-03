@@ -396,6 +396,30 @@
       </div>
     </div>
 
+    <div id="history-container" v-if="isLogin && phase === 3">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>WPM</th>
+            <th>正答率</th>
+            <th>ミスしたキー</th>
+            <th>日付</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="history in histories" :key="history.id">
+            <td>{{ history.wpm }}</td>
+            <td>{{ history.correct_percentage }}</td>
+            <td>{{ history.miss_key }}</td>
+            <td>{{ history.created_at }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="history-graph">
+        <HistoryChart :chartData="chartData" :height="300" :width="300" />
+      </div>
+    </div>
+
     <div id="hand-container" v-if="phase === 1 || phase === 2">
       <div id="hand" class="">
         <div id="hand-left" class="">
@@ -456,8 +480,13 @@ import {
   END_SYMBOL,
 } from "../util.js";
 import { checkInputKey } from "../key.js";
+import HistoryChart from "./HistoryChart.vue";
 export default {
+  components: {
+    HistoryChart,
+  },
   props: {
+    categoryId: "",
     questions: [],
     questionCount: "",
   },
@@ -479,6 +508,8 @@ export default {
       correctPercentage: 0,
       missTypeKeyHash: {},
       missTypeKeyStyle: {},
+      histories: {},
+      chartData: {},
     };
   },
   mounted() {
@@ -569,7 +600,7 @@ export default {
       // ログイン時、データ更新と履歴データ作成
       if (this.isLogin) {
         this.updateUserInfo();
-        //this.createHistory();
+        this.createHistory();
       }
 
       // ミスタイプキーのスタイル設定
@@ -588,6 +619,8 @@ export default {
       this.correctPercentage = 0;
       this.missTypeKeyHash = {};
       this.missTypeKeyStyle = {};
+      this.histories = {};
+      this.chartData = {};
     },
     initQuestion() {
       this.roman = [];
@@ -610,8 +643,44 @@ export default {
         };
       }
     },
+    createHistoryChartData() {
+      let labels = [];
+      let wpmData = [];
+      let correctPercentageData = [];
+
+      let count = 0;
+      this.histories.forEach((history) => {
+        if(count >= 10) return;
+        labels.push(history.created_at);
+        wpmData.push(history.wpm);
+        correctPercentageData.push(history.correct_percentage);
+        count++;
+      });
+
+      this.chartData = {
+        labels: labels,
+        datasets: [
+          {
+            type: "bar",
+            label: "wpm",
+            data: wpmData,
+            backgroundColor: "lightblue",
+            yAxisID: "y-axis-1",
+          },
+          {
+            type: "line",
+            label: "正答率",
+            data: correctPercentageData,
+            borderColor: "#CFD8DC",
+            fill: false,
+            lineTension: 0.3,
+            yAxisID: "y-axis-2",
+          },
+        ],
+      };
+    },
     async updateUserInfo() {
-      var response = await axios
+      const response = await axios
         .put("/api/user/" + this.userId, { typeCount: this.typeCount })
         .catch((error) => error.response || error);
 
@@ -622,15 +691,37 @@ export default {
       }
     },
     async createHistory() {
-      var params = {};
-      var response = await axios
-        .post("/api/history", params)
+      const missKey =
+        Object.keys(this.missTypeKeyHash).length > 0
+          ? Object.keys(this.missTypeKeyHash).join(",")
+          : "";
+      const paramsCreate = {
+        userId: this.userId,
+        categoryId: this.categoryId,
+        wpm: this.wpm,
+        correctPercentage: this.correctPercentage,
+        missKey: missKey,
+      };
+      const responseCreate = await axios
+        .post("/api/history", paramsCreate)
+        .catch((error) => error.response || error);
+      if (responseCreate.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", responseCreate.status);
+      }
+
+      const params = {
+        userId: this.userId,
+        categoryId: this.categoryId,
+      };
+      const responseGet = await axios
+        .get("/api/history", { params })
         .catch((error) => error.response || error);
 
-      if (response.status === OK) {
-      } else if (response.status === UNPROCESSABLE_ENTITY) {
+      if (responseGet.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", responseGet.status);
       } else {
-        this.$store.commit("error/setCode", response.status);
+        this.histories = responseGet.data;
+        this.createHistoryChartData();
       }
     },
     keyAction(e) {

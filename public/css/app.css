@@ -611,6 +611,10 @@ i {
   height: 40px;
 }
 
+.main-container #typing .modal #history-container {
+  display: flex;
+}
+
 /*----------------------------------------------
 
 レスポンシブ

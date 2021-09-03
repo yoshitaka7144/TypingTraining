@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class CreateHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger("user_id");
             $table->unsignedInteger("category_id");
-            $table->string("text", 100);
-            $table->string("kana", 100);
-            $table->string("roman", 100);
-            $table->integer("editor_user_id")->nullable();
+            $table->integer("wpm");
+            $table->integer("correct_percentage");
+            $table->string("miss_key", 255)->nullable();
             $table->timestamps();
+            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->foreign("category_id")->references("id")->on("categories")->onDelete("cascade");
         });
     }
@@ -32,6 +33,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('histories');
     }
 }
