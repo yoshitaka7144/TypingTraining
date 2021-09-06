@@ -397,24 +397,66 @@
     </div>
 
     <div id="history-container" v-if="isLogin && phase === 3">
-      <table class="history-table">
-        <thead>
-          <tr>
-            <th>WPM</th>
-            <th>正答率</th>
-            <th>ミスしたキー</th>
-            <th>日付</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="history in histories" :key="history.id">
-            <td>{{ history.wpm }}</td>
-            <td>{{ history.correct_percentage }}</td>
-            <td>{{ history.miss_key }}</td>
-            <td>{{ history.created_at }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-area">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>WPM</th>
+              <th>正答率</th>
+              <th>ミスしたキー</th>
+              <th>日付</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="history in histories" :key="history.id">
+              <td>{{ history.wpm }}</td>
+              <td>{{ history.correct_percentage }}</td>
+              <td>{{ history.miss_key }}</td>
+              <td>{{ history.created_at }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="pagination">
+          <li
+            :class="currentPage == 1 ? 'disabled' : ''"
+            @click="changeHistoryPage(currentPage - 1)"
+          >
+            <i class="fas fa-angle-double-left"></i>
+          </li>
+          <li
+            v-for="page in startPageRange"
+            :key="page"
+            @click="changeHistoryPage(page)"
+            :class="isActive(page) ? 'active' : ''"
+          >
+            {{ page }}
+          </li>
+          <li v-show="startDot" class="disabled">...</li>
+          <li
+            v-for="page in centerPageRange"
+            :key="page"
+            @click="changeHistoryPage(page)"
+            :class="isActive(page) ? 'active' : ''"
+          >
+            {{ page }}
+          </li>
+          <li v-show="endDot" class="disabled">...</li>
+          <li
+            v-for="page in endPageRange"
+            :key="page"
+            @click="changeHistoryPage(page)"
+            :class="isActive(page) ? 'active' : ''"
+          >
+            {{ page }}
+          </li>
+          <li
+            :class="currentPage >= lastPage ? 'disabled' : ''"
+            @click="changeHistoryPage(currentPage + 1)"
+          >
+            <i class="fas fa-angle-double-right"></i>
+          </li>
+        </ul>
+      </div>
       <div class="history-graph">
         <HistoryChart :chartData="chartData" :height="300" :width="300" />
       </div>
@@ -509,6 +551,12 @@ export default {
       missTypeKeyHash: {},
       missTypeKeyStyle: {},
       histories: {},
+      perPage: 5,
+      currentPage: 1,
+      lastPage: "",
+      range: 5,
+      startDot: false,
+      endDot: false,
       chartData: {},
     };
   },
@@ -565,6 +613,47 @@ export default {
       var char = this.roman[this.romanIndex];
       return rightLittle.includes(char);
     },
+    isShortSize() {
+      return this.lastPage < this.range + 5;
+    },
+    startPageRange() {
+      if (this.isShortSize) {
+        return this.createRange(1, this.lastPage);
+      } else {
+        return this.createRange(1, 2);
+      }
+    },
+    endPageRange() {
+      if (this.isShortSize) {
+        return [];
+      } else {
+        return this.createRange(this.lastPage - 1, this.lastPage);
+      }
+    },
+    centerPageRange() {
+      if (this.isShortSize) {
+        return [];
+      } else {
+        let start, end;
+        if (this.currentPage <= this.range) {
+          start = 3;
+          end = this.range + 2;
+          this.startDot = false;
+          this.endDot = true;
+        } else if (this.currentPage > this.lastPage - this.range) {
+          start = this.lastPage - this.range - 1;
+          end = this.lastPage - 2;
+          this.startDot = true;
+          this.endDot = false;
+        } else {
+          start = this.currentPage - Math.floor(this.range / 2);
+          end = this.currentPage + Math.floor(this.range / 2);
+          this.startDot = true;
+          this.endDot = true;
+        }
+        return this.createRange(start, end);
+      }
+    },
   },
   methods: {
     hide() {
@@ -601,6 +690,7 @@ export default {
       if (this.isLogin) {
         this.updateUserInfo();
         this.createHistory();
+        this.getHistory();
       }
 
       // ミスタイプキーのスタイル設定
@@ -620,6 +710,10 @@ export default {
       this.missTypeKeyHash = {};
       this.missTypeKeyStyle = {};
       this.histories = {};
+      this.currentPage = 1;
+      this.lastPage = "";
+      this.startDot = false;
+      this.endDot = false;
       this.chartData = {};
     },
     initQuestion() {
@@ -650,7 +744,7 @@ export default {
 
       let count = 0;
       this.histories.forEach((history) => {
-        if(count >= 10) return;
+        if (count >= 10) return;
         labels.push(history.created_at);
         wpmData.push(history.wpm);
         correctPercentageData.push(history.correct_percentage);
@@ -708,21 +802,43 @@ export default {
       if (responseCreate.status === INTERNAL_SERVER_ERROR) {
         this.$store.commit("error/setCode", responseCreate.status);
       }
-
+    },
+    async getHistory() {
       const params = {
         userId: this.userId,
         categoryId: this.categoryId,
+        perPage: this.perPage,
+        page: this.currentPage,
       };
-      const responseGet = await axios
+      const response = await axios
         .get("/api/history", { params })
         .catch((error) => error.response || error);
 
-      if (responseGet.status === INTERNAL_SERVER_ERROR) {
-        this.$store.commit("error/setCode", responseGet.status);
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
       } else {
-        this.histories = responseGet.data;
+        const histories = response.data;
+        this.currentPage = histories.current_page;
+        this.lastPage = histories.last_page;
+        this.histories = histories.data;
         this.createHistoryChartData();
       }
+    },
+    createRange(start, end) {
+      const range = [];
+      for (let i = start; i <= end; i++) {
+        range.push(i);
+      }
+      return range;
+    },
+    changeHistoryPage(page) {
+      if (1 <= page && page <= this.lastPage) {
+        this.currentPage = page;
+        this.getHistory();
+      }
+    },
+    isActive(page) {
+      return this.currentPage === page;
     },
     keyAction(e) {
       if (this.phase === 2) {

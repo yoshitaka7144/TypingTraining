@@ -615,6 +615,29 @@ i {
   display: flex;
 }
 
+.main-container #typing .modal #history-container .pagination {
+  display: flex;
+}
+
+.main-container #typing .modal #history-container .pagination li {
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.main-container #typing .modal #history-container .pagination li + li {
+  border-left: none;
+}
+
+.main-container #typing .modal #history-container .pagination .active {
+  background-color: #3490dc;
+}
+
+.main-container #typing .modal #history-container .pagination .disabled {
+  cursor: not-allowed;
+}
+
 /*----------------------------------------------
 
 レスポンシブ

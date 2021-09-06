@@ -5,6 +5,7 @@ import router from "./router";
 import App from "./components/App.vue"
 
 require('./bootstrap');
+require("./fontawesome");
 window.Vue = require('vue');
 Vue.use(VModal);
 
