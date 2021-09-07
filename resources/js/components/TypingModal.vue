@@ -7,508 +7,517 @@
     :width="'80%'"
     :height="'70%'"
   >
-    <button class="btn btn-red" @click="hide">close</button>
-
-    <div class="" v-if="phase === 1">
-      <button class="btn btn-blue" @click="start">スタート</button>
+    <div class="modal-header">
+      <button class="btn btn-red" @click="hide">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
+    <div class="modal-main">
+      <div class="" v-if="phase === 1">
+        <button class="btn btn-blue" @click="start">スタート</button>
+      </div>
 
-    <div class="" v-if="phase === 2">
-      <p>{{ displayText }}</p>
-      <p>{{ displayKana }}</p>
-      <p>
-        <span class="inputed">{{ displayInputedRoman }}</span
-        >{{ displayRoman }}
-      </p>
-    </div>
+      <div class="" v-if="phase === 2">
+        <p>{{ displayText }}</p>
+        <p>{{ displayKana }}</p>
+        <p>
+          <span class="inputed">{{ displayInputedRoman }}</span
+          >{{ displayRoman }}
+        </p>
+      </div>
 
-    <div class="" v-if="phase === 3">
-      <p>結果画面</p>
-      <p>正しいタイプ数：{{ correctTypeCount }}</p>
-      <p>ミスタイプ数：{{ missTypeCount }}</p>
-      <p>時間：{{ typeTime }}</p>
-      <p>WPM：{{ wpm }}</p>
-      <p>正答率：{{ correctPercentage }}</p>
-      <p>{{ missTypeKeyHash }}</p>
-    </div>
-
-    <div id="keyboard-container">
-      <div id="keyboard">
-        <div class="row">
-          <div class="key"></div>
-          <div
-            id="key-1"
-            class="key"
-            :class="{ 'target-key': '1' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['1']"
-          >
-            1
-          </div>
-          <div
-            id="key-2"
-            class="key"
-            :class="{ 'target-key': '2' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['2']"
-          >
-            2
-          </div>
-          <div
-            id="key-3"
-            class="key"
-            :class="{ 'target-key': '3' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['3']"
-          >
-            3
-          </div>
-          <div
-            id="key-4"
-            class="key"
-            :class="{ 'target-key': '4' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['4']"
-          >
-            4
-          </div>
-          <div
-            id="key-5"
-            class="key"
-            :class="{ 'target-key': '5' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['5']"
-          >
-            5
-          </div>
-          <div
-            id="key-6"
-            class="key"
-            :class="{ 'target-key': '6' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['6']"
-          >
-            6
-          </div>
-          <div
-            id="key-7"
-            class="key"
-            :class="{ 'target-key': '7' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['7']"
-          >
-            7
-          </div>
-          <div
-            id="key-8"
-            class="key"
-            :class="{ 'target-key': '8' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['8']"
-          >
-            8
-          </div>
-          <div
-            id="key-9"
-            class="key"
-            :class="{ 'target-key': '9' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['9']"
-          >
-            9
-          </div>
-          <div
-            id="key-0"
-            class="key"
-            :class="{ 'target-key': '0' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['0']"
-          >
-            0
-          </div>
-          <div
-            id="key--"
-            class="key"
-            :class="{ 'target-key': '-' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['-']"
-          >
-            -
-          </div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
+      <div id="keyboard-container">
+        <div class="" v-if="phase === 3">
+          <p>結果画面</p>
+          <p>正しいタイプ数：{{ correctTypeCount }}</p>
+          <p>ミスタイプ数：{{ missTypeCount }}</p>
+          <p>時間：{{ typeTime }}</p>
+          <p>WPM：{{ wpm }}</p>
+          <p>正答率：{{ correctPercentage }}</p>
+          <p>{{ missTypeKeyHash }}</p>
         </div>
+        <div id="keyboard">
+          <div class="row">
+            <div class="key"></div>
+            <div
+              id="key-1"
+              class="key"
+              :class="{ 'target-key': '1' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['1']"
+            >
+              1
+            </div>
+            <div
+              id="key-2"
+              class="key"
+              :class="{ 'target-key': '2' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['2']"
+            >
+              2
+            </div>
+            <div
+              id="key-3"
+              class="key"
+              :class="{ 'target-key': '3' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['3']"
+            >
+              3
+            </div>
+            <div
+              id="key-4"
+              class="key"
+              :class="{ 'target-key': '4' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['4']"
+            >
+              4
+            </div>
+            <div
+              id="key-5"
+              class="key"
+              :class="{ 'target-key': '5' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['5']"
+            >
+              5
+            </div>
+            <div
+              id="key-6"
+              class="key"
+              :class="{ 'target-key': '6' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['6']"
+            >
+              6
+            </div>
+            <div
+              id="key-7"
+              class="key"
+              :class="{ 'target-key': '7' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['7']"
+            >
+              7
+            </div>
+            <div
+              id="key-8"
+              class="key"
+              :class="{ 'target-key': '8' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['8']"
+            >
+              8
+            </div>
+            <div
+              id="key-9"
+              class="key"
+              :class="{ 'target-key': '9' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['9']"
+            >
+              9
+            </div>
+            <div
+              id="key-0"
+              class="key"
+              :class="{ 'target-key': '0' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['0']"
+            >
+              0
+            </div>
+            <div
+              id="key--"
+              class="key"
+              :class="{ 'target-key': '-' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['-']"
+            >
+              -
+            </div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+          </div>
 
-        <div class="row">
-          <div id="key-tab" class="key"></div>
-          <div
-            id="key-q"
-            class="key"
-            :class="{ 'target-key': 'q' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['q']"
-          >
-            Q
+          <div class="row">
+            <div id="key-tab" class="key"></div>
+            <div
+              id="key-q"
+              class="key"
+              :class="{ 'target-key': 'q' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['q']"
+            >
+              Q
+            </div>
+            <div
+              id="key-w"
+              class="key"
+              :class="{ 'target-key': 'w' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['w']"
+            >
+              W
+            </div>
+            <div
+              id="key-e"
+              class="key"
+              :class="{ 'target-key': 'e' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['e']"
+            >
+              E
+            </div>
+            <div
+              id="key-r"
+              class="key"
+              :class="{ 'target-key': 'r' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['r']"
+            >
+              R
+            </div>
+            <div
+              id="key-t"
+              class="key"
+              :class="{ 'target-key': 't' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['t']"
+            >
+              T
+            </div>
+            <div
+              id="key-y"
+              class="key"
+              :class="{ 'target-key': 'y' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['y']"
+            >
+              Y
+            </div>
+            <div
+              id="key-u"
+              class="key"
+              :class="{ 'target-key': 'u' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['u']"
+            >
+              U
+            </div>
+            <div
+              id="key-i"
+              class="key"
+              :class="{ 'target-key': 'i' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['i']"
+            >
+              I
+            </div>
+            <div
+              id="key-o"
+              class="key"
+              :class="{ 'target-key': 'o' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['o']"
+            >
+              O
+            </div>
+            <div
+              id="key-p"
+              class="key"
+              :class="{ 'target-key': 'p' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['p']"
+            >
+              P
+            </div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div id="key-enter-1"></div>
           </div>
-          <div
-            id="key-w"
-            class="key"
-            :class="{ 'target-key': 'w' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['w']"
-          >
-            W
-          </div>
-          <div
-            id="key-e"
-            class="key"
-            :class="{ 'target-key': 'e' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['e']"
-          >
-            E
-          </div>
-          <div
-            id="key-r"
-            class="key"
-            :class="{ 'target-key': 'r' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['r']"
-          >
-            R
-          </div>
-          <div
-            id="key-t"
-            class="key"
-            :class="{ 'target-key': 't' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['t']"
-          >
-            T
-          </div>
-          <div
-            id="key-y"
-            class="key"
-            :class="{ 'target-key': 'y' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['y']"
-          >
-            Y
-          </div>
-          <div
-            id="key-u"
-            class="key"
-            :class="{ 'target-key': 'u' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['u']"
-          >
-            U
-          </div>
-          <div
-            id="key-i"
-            class="key"
-            :class="{ 'target-key': 'i' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['i']"
-          >
-            I
-          </div>
-          <div
-            id="key-o"
-            class="key"
-            :class="{ 'target-key': 'o' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['o']"
-          >
-            O
-          </div>
-          <div
-            id="key-p"
-            class="key"
-            :class="{ 'target-key': 'p' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['p']"
-          >
-            P
-          </div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div id="key-enter-1"></div>
-        </div>
 
-        <div class="row">
-          <div id="key-caps" class="key"></div>
-          <div
-            id="key-a"
-            class="key"
-            :class="{ 'target-key': 'a' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['a']"
-          >
-            A
+          <div class="row">
+            <div id="key-caps" class="key"></div>
+            <div
+              id="key-a"
+              class="key"
+              :class="{ 'target-key': 'a' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['a']"
+            >
+              A
+            </div>
+            <div
+              id="key-s"
+              class="key"
+              :class="{ 'target-key': 's' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['s']"
+            >
+              S
+            </div>
+            <div
+              id="key-d"
+              class="key"
+              :class="{ 'target-key': 'd' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['d']"
+            >
+              D
+            </div>
+            <div
+              id="key-f"
+              class="key"
+              :class="{ 'target-key': 'f' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['f']"
+            >
+              F
+            </div>
+            <div
+              id="key-g"
+              class="key"
+              :class="{ 'target-key': 'g' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['g']"
+            >
+              G
+            </div>
+            <div
+              id="key-h"
+              class="key"
+              :class="{ 'target-key': 'h' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['h']"
+            >
+              H
+            </div>
+            <div
+              id="key-j"
+              class="key"
+              :class="{ 'target-key': 'j' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['j']"
+            >
+              J
+            </div>
+            <div
+              id="key-k"
+              class="key"
+              :class="{ 'target-key': 'k' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['k']"
+            >
+              K
+            </div>
+            <div
+              id="key-l"
+              class="key"
+              :class="{ 'target-key': 'l' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['l']"
+            >
+              L
+            </div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div id="key-enter-2"></div>
           </div>
-          <div
-            id="key-s"
-            class="key"
-            :class="{ 'target-key': 's' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['s']"
-          >
-            S
-          </div>
-          <div
-            id="key-d"
-            class="key"
-            :class="{ 'target-key': 'd' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['d']"
-          >
-            D
-          </div>
-          <div
-            id="key-f"
-            class="key"
-            :class="{ 'target-key': 'f' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['f']"
-          >
-            F
-          </div>
-          <div
-            id="key-g"
-            class="key"
-            :class="{ 'target-key': 'g' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['g']"
-          >
-            G
-          </div>
-          <div
-            id="key-h"
-            class="key"
-            :class="{ 'target-key': 'h' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['h']"
-          >
-            H
-          </div>
-          <div
-            id="key-j"
-            class="key"
-            :class="{ 'target-key': 'j' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['j']"
-          >
-            J
-          </div>
-          <div
-            id="key-k"
-            class="key"
-            :class="{ 'target-key': 'k' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['k']"
-          >
-            K
-          </div>
-          <div
-            id="key-l"
-            class="key"
-            :class="{ 'target-key': 'l' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['l']"
-          >
-            L
-          </div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div id="key-enter-2"></div>
-        </div>
 
-        <div class="row">
-          <div id="key-shift-left" class="key"></div>
-          <div
-            id="key-z"
-            class="key"
-            :class="{ 'target-key': 'z' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['z']"
-          >
-            Z
+          <div class="row">
+            <div id="key-shift-left" class="key"></div>
+            <div
+              id="key-z"
+              class="key"
+              :class="{ 'target-key': 'z' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['z']"
+            >
+              Z
+            </div>
+            <div
+              id="key-x"
+              class="key"
+              :class="{ 'target-key': 'x' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['x']"
+            >
+              X
+            </div>
+            <div
+              id="key-c"
+              class="key"
+              :class="{ 'target-key': 'c' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['c']"
+            >
+              C
+            </div>
+            <div
+              id="key-v"
+              class="key"
+              :class="{ 'target-key': 'v' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['v']"
+            >
+              V
+            </div>
+            <div
+              id="key-b"
+              class="key"
+              :class="{ 'target-key': 'b' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['b']"
+            >
+              B
+            </div>
+            <div
+              id="key-n"
+              class="key"
+              :class="{ 'target-key': 'n' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['n']"
+            >
+              N
+            </div>
+            <div
+              id="key-m"
+              class="key"
+              :class="{ 'target-key': 'm' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['m']"
+            >
+              M
+            </div>
+            <div
+              id="key-,"
+              class="key"
+              :class="{ 'target-key': ',' === roman[romanIndex] }"
+              :style="missTypeKeyStyle[',']"
+            >
+              ,
+            </div>
+            <div
+              id="key-."
+              class="key"
+              :class="{ 'target-key': '.' === roman[romanIndex] }"
+              :style="missTypeKeyStyle['.']"
+            >
+              .
+            </div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div id="key-shift-right" class="key"></div>
           </div>
-          <div
-            id="key-x"
-            class="key"
-            :class="{ 'target-key': 'x' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['x']"
-          >
-            X
-          </div>
-          <div
-            id="key-c"
-            class="key"
-            :class="{ 'target-key': 'c' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['c']"
-          >
-            C
-          </div>
-          <div
-            id="key-v"
-            class="key"
-            :class="{ 'target-key': 'v' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['v']"
-          >
-            V
-          </div>
-          <div
-            id="key-b"
-            class="key"
-            :class="{ 'target-key': 'b' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['b']"
-          >
-            B
-          </div>
-          <div
-            id="key-n"
-            class="key"
-            :class="{ 'target-key': 'n' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['n']"
-          >
-            N
-          </div>
-          <div
-            id="key-m"
-            class="key"
-            :class="{ 'target-key': 'm' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['m']"
-          >
-            M
-          </div>
-          <div
-            id="key-,"
-            class="key"
-            :class="{ 'target-key': ',' === roman[romanIndex] }"
-            :style="missTypeKeyStyle[',']"
-          >
-            ,
-          </div>
-          <div
-            id="key-."
-            class="key"
-            :class="{ 'target-key': '.' === roman[romanIndex] }"
-            :style="missTypeKeyStyle['.']"
-          >
-            .
-          </div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div id="key-shift-right" class="key"></div>
-        </div>
 
-        <div class="row">
-          <div id="key-ctrl" class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div
-            id="key-space"
-            class="key"
-            :class="{ 'target-key': 0 === roman.length }"
-          ></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
-          <div class="key"></div>
+          <div class="row">
+            <div id="key-ctrl" class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div
+              id="key-space"
+              class="key"
+              :class="{ 'target-key': 0 === roman.length }"
+            ></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+            <div class="key"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div id="history-container" v-if="isLogin && phase === 3">
-      <div class="table-area">
-        <table class="history-table">
-          <thead>
-            <tr>
-              <th>WPM</th>
-              <th>正答率</th>
-              <th>ミスしたキー</th>
-              <th>日付</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="history in histories" :key="history.id">
-              <td>{{ history.wpm }}</td>
-              <td>{{ history.correct_percentage }}</td>
-              <td>{{ history.miss_key }}</td>
-              <td>{{ history.created_at }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <ul class="pagination">
-          <li
-            :class="currentPage == 1 ? 'disabled' : ''"
-            @click="changeHistoryPage(currentPage - 1)"
-          >
-            <i class="fas fa-angle-double-left"></i>
-          </li>
-          <li
-            v-for="page in startPageRange"
-            :key="page"
-            @click="changeHistoryPage(page)"
-            :class="isActive(page) ? 'active' : ''"
-          >
-            {{ page }}
-          </li>
-          <li v-show="startDot" class="disabled">...</li>
-          <li
-            v-for="page in centerPageRange"
-            :key="page"
-            @click="changeHistoryPage(page)"
-            :class="isActive(page) ? 'active' : ''"
-          >
-            {{ page }}
-          </li>
-          <li v-show="endDot" class="disabled">...</li>
-          <li
-            v-for="page in endPageRange"
-            :key="page"
-            @click="changeHistoryPage(page)"
-            :class="isActive(page) ? 'active' : ''"
-          >
-            {{ page }}
-          </li>
-          <li
-            :class="currentPage >= lastPage ? 'disabled' : ''"
-            @click="changeHistoryPage(currentPage + 1)"
-          >
-            <i class="fas fa-angle-double-right"></i>
-          </li>
-        </ul>
-      </div>
-      <div class="history-graph">
-        <HistoryChart :chartData="chartData" :height="300" :width="300" />
-      </div>
-    </div>
-
-    <div id="hand-container" v-if="phase === 1 || phase === 2">
-      <div id="hand" class="">
-        <div id="hand-left" class="">
-          <div
-            id="left-little"
-            class="finger finger-little"
-            :class="{ 'target-finger': isLeftLittle }"
-          ></div>
-          <div
-            id="left-ring"
-            class="finger finger-ring"
-            :class="{ 'target-finger': isLeftRing }"
-          ></div>
-          <div
-            id="left-middle"
-            class="finger finger-middle"
-            :class="{ 'target-finger': isLeftMiddle }"
-          ></div>
-          <div
-            id="left-index"
-            class="finger finger-index"
-            :class="{ 'target-finger': isLeftIndex }"
-          ></div>
-          <div id="left-thumb" class="finger finger-thumb"></div>
+      <div id="hand-container" v-if="phase === 1 || phase === 2">
+        <div id="hand" class="">
+          <div id="hand-left" class="">
+            <div
+              id="left-little"
+              class="finger finger-little"
+              :class="{ 'target-finger': isLeftLittle }"
+            ></div>
+            <div
+              id="left-ring"
+              class="finger finger-ring"
+              :class="{ 'target-finger': isLeftRing }"
+            ></div>
+            <div
+              id="left-middle"
+              class="finger finger-middle"
+              :class="{ 'target-finger': isLeftMiddle }"
+            ></div>
+            <div
+              id="left-index"
+              class="finger finger-index"
+              :class="{ 'target-finger': isLeftIndex }"
+            ></div>
+            <div id="left-thumb" class="finger finger-thumb"></div>
+          </div>
+          <div id="hand-right" class="">
+            <div id="right-thumb" class="finger finger-thumb"></div>
+            <div
+              id="right-index"
+              class="finger finger-index"
+              :class="{ 'target-finger': isRightIndex }"
+            ></div>
+            <div
+              id="right-middle"
+              class="finger finger-middle"
+              :class="{ 'target-finger': isRightMiddle }"
+            ></div>
+            <div
+              id="right-ring"
+              class="finger finger-ring"
+              :class="{ 'target-finger': isRightRing }"
+            ></div>
+            <div
+              id="right-little"
+              class="finger finger-little"
+              :class="{ 'target-finger': isRightLittle }"
+            ></div>
+          </div>
         </div>
-        <div id="hand-right" class="">
-          <div id="right-thumb" class="finger finger-thumb"></div>
-          <div
-            id="right-index"
-            class="finger finger-index"
-            :class="{ 'target-finger': isRightIndex }"
-          ></div>
-          <div
-            id="right-middle"
-            class="finger finger-middle"
-            :class="{ 'target-finger': isRightMiddle }"
-          ></div>
-          <div
-            id="right-ring"
-            class="finger finger-ring"
-            :class="{ 'target-finger': isRightRing }"
-          ></div>
-          <div
-            id="right-little"
-            class="finger finger-little"
-            :class="{ 'target-finger': isRightLittle }"
-          ></div>
+      </div>
+
+      <div id="history-container" v-if="isLogin && phase === 3">
+        <div class="table-area">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>WPM</th>
+                <th>正答率</th>
+                <th>ミスしたキー</th>
+                <th>日付</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="history in histories" :key="history.id">
+                <td>{{ history.wpm }}</td>
+                <td>{{ history.correct_percentage }}</td>
+                <td>{{ history.miss_key }}</td>
+                <td>{{ history.created_at }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="pagination">
+            <li
+              :class="currentPage == 1 ? 'disabled' : ''"
+              @click="changeHistoryPage(currentPage - 1)"
+            >
+              <i class="fas fa-angle-double-left"></i>
+            </li>
+            <li
+              v-for="page in startPageRange"
+              :key="page"
+              @click="changeHistoryPage(page)"
+              :class="isActive(page) ? 'active' : ''"
+            >
+              {{ page }}
+            </li>
+            <li v-show="startDot" class="disabled">...</li>
+            <li
+              v-for="page in centerPageRange"
+              :key="page"
+              @click="changeHistoryPage(page)"
+              :class="isActive(page) ? 'active' : ''"
+            >
+              {{ page }}
+            </li>
+            <li v-show="endDot" class="disabled">...</li>
+            <li
+              v-for="page in endPageRange"
+              :key="page"
+              @click="changeHistoryPage(page)"
+              :class="isActive(page) ? 'active' : ''"
+            >
+              {{ page }}
+            </li>
+            <li
+              :class="currentPage >= lastPage ? 'disabled' : ''"
+              @click="changeHistoryPage(currentPage + 1)"
+            >
+              <i class="fas fa-angle-double-right"></i>
+            </li>
+          </ul>
+        </div>
+        <div class="history-graph">
+          <HistoryChart
+            :chartData="chartData"
+            :options="chartOptions"
+            :height="400"
+            :width="500"
+          />
         </div>
       </div>
     </div>
@@ -558,6 +567,7 @@ export default {
       startDot: false,
       endDot: false,
       chartData: {},
+      chartOptions: {},
     };
   },
   mounted() {
@@ -715,6 +725,7 @@ export default {
       this.startDot = false;
       this.endDot = false;
       this.chartData = {};
+      this.chartOptions = {};
     },
     initQuestion() {
       this.roman = [];
@@ -742,13 +753,16 @@ export default {
       let wpmData = [];
       let correctPercentageData = [];
 
-      let count = 0;
       this.histories.forEach((history) => {
-        if (count >= 10) return;
-        labels.push(history.created_at);
+        labels.push(history.created_at.slice(5, 16));
         wpmData.push(history.wpm);
         correctPercentageData.push(history.correct_percentage);
-        count++;
+      });
+      const maxWpm = wpmData.reduce((a, b) => {
+        a > b ? a : b;
+      });
+      const minWpm = wpmData.reduce((a, b) => {
+        a < b ? a : b;
       });
 
       this.chartData = {
@@ -763,7 +777,7 @@ export default {
           },
           {
             type: "line",
-            label: "正答率",
+            label: "正答率(%)",
             data: correctPercentageData,
             borderColor: "#CFD8DC",
             fill: false,
@@ -771,6 +785,34 @@ export default {
             yAxisID: "y-axis-2",
           },
         ],
+      };
+
+      this.chartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        scales: {
+          xAxes: [{}],
+          yAxes: [
+            {
+              id: "y-axis-1",
+              position: "left",
+              ticks: {
+                max: maxWpm > 400 ? maxWpm : 400,
+                min: minWpm,
+                stepSize: 50,
+              },
+            },
+            {
+              id: "y-axis-2",
+              position: "right",
+              ticks: {
+                max: 100,
+                min: 0,
+                stepSize: 10,
+              },
+            },
+          ],
+        },
       };
     },
     async updateUserInfo() {
