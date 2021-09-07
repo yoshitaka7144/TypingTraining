@@ -264,6 +264,23 @@ i {
   border-radius: 10px;
 }
 
+.main-container #home .top-image {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.main-container #home .top-image img {
+  width: 40%;
+  margin-top: 15px;
+}
+
+.main-container #home .main {
+  display: flex;
+  justify-content: center;
+}
+
 .main-container #auth {
   width: 40%;
 }

@@ -253,6 +253,31 @@ i {
     border-radius: 10px;
   }
 
+  #home {
+    .top-image {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+
+      img {
+        width: 40%;
+        margin-top: 15px;
+      }
+    }
+
+    .main{
+      display: flex;
+      justify-content: center;
+      .login-menu{
+
+      }
+      .category-menu{
+        
+      }
+    }
+  }
+
   #auth {
     width: 40%;
     .tab {

@@ -5,7 +5,7 @@
     :resizable="false"
     :clickToClose="false"
     :width="'60%'"
-    :height="'50%'"
+    :height="'auto'"
     @before-open="beforeOpen"
   >
     <div class="header">
@@ -160,6 +160,7 @@ export default {
       kanaError: "",
       romanPlaceholder: REGISTER_QUESTION_ROMAN_ERROR_LIMIT,
       romanError: "",
+      watchFlag: true,
     };
   },
   methods: {
@@ -267,6 +268,7 @@ export default {
       }
     },
     clear() {
+      this.watchFlag = false;
       this.registerForm = {
         categoryId: "",
         text: "",
@@ -280,6 +282,7 @@ export default {
       this.romanError = "";
     },
     beforeOpen() {
+      this.watchFlag = true;
       if (this.options.mode === 1) {
         this.getCategories();
       } else if (this.options.mode === 2) {
@@ -291,6 +294,7 @@ export default {
   computed: {},
   watch: {
     "registerForm.text": function (val) {
+      if (!this.watchFlag) return;
       if (val.length < 1) {
         this.textError = REGISTER_QUESTION_TEXT_ERROR_REQUIRE;
       } else if (val.length > REGISTER_QUESTION_TEXT_MAX_NUMBER) {
@@ -304,6 +308,7 @@ export default {
       }
     },
     "registerForm.kana": function (val) {
+      if (!this.watchFlag) return;
       if (val.length < 1) {
         this.kanaError = REGISTER_QUESTION_KANA_ERROR_REQUIRE;
       } else if (val.length > REGISTER_QUESTION_KANA_MAX_NUMBER) {
@@ -317,6 +322,7 @@ export default {
       }
     },
     "registerForm.roman": function (val) {
+      if (!this.watchFlag) return;
       if (val.length < 1) {
         this.romanError = REGISTER_QUESTION_ROMAN_ERROR_REQUIRE;
       } else if (val.length > REGISTER_QUESTION_ROMAN_MAX_NUMBER) {

@@ -1,25 +1,33 @@
 <template>
-  <div>
-    <p>home</p>
-    <div v-if="!isLogin">
-      <router-link :to="{ name: 'login' }">
-        <button class="btn btn-green">ログイン</button>
-      </router-link>
+  <div id="home">
+    <div class="top-image">
+      <img :src="'./image/top.jpg'" alt="" />
     </div>
-    <div v-if="isLogin">
-      <p>{{ username }}でログインしています</p>
-      <router-link :to="{ name: 'question' }">
-        <button class="btn btn-green">問題編集</button>
-      </router-link>
-    </div>
-    <div>
-      <router-link
-        v-for="category in categories"
-        :key="category.id"
-        :to="{ name: 'typing.setting', params: { categoryId: category.id } }"
-      >
-        <button class="btn btn-blue">{{ category.name }}</button>
-      </router-link>
+
+    <div class="main">
+      <div class="login-menu">
+        <div v-if="!isLogin">
+          <router-link :to="{ name: 'login' }">
+            <button class="btn btn-green">ログイン</button>
+          </router-link>
+        </div>
+        <div v-if="isLogin">
+          <p>{{ username }}でログインしています</p>
+          <router-link :to="{ name: 'question' }">
+            <button class="btn btn-green">問題編集</button>
+          </router-link>
+        </div>
+      </div>
+
+      <div class="category-menu">
+        <router-link
+          v-for="category in categories"
+          :key="category.id"
+          :to="{ name: 'typing.setting', params: { categoryId: category.id } }"
+        >
+          <button class="btn btn-blue">{{ category.name }}</button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
