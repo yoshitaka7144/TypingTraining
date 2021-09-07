@@ -4,8 +4,6 @@ import store from './store';
 import Index from "./components/Index";
 import Login from "./components/Login";
 import Question from "./components/Question";
-import QuestionCreate from "./components/QuestionCreate";
-import QuestionEdit from "./components/QuestionEdit";
 import TypingSetting from "./components/TypingSetting";
 import SystemError from "./components/SystemError";
 import NotFound from "./components/NotFound";
@@ -36,31 +34,6 @@ const router = new VueRouter({
       path: "/question",
       name: "question",
       component: Question,
-      beforeEnter(to, from, next) {
-        if (store.getters["auth/isLogin"]) {
-          next();
-        } else {
-          next("/");
-        }
-      }
-    },
-    {
-      path: "/question/create",
-      name: "question.create",
-      component: QuestionCreate,
-      beforeEnter(to, from, next) {
-        if (store.getters["auth/isLogin"]) {
-          next();
-        } else {
-          next("/");
-        }
-      }
-    },
-    {
-      path: "/question/:questionId/edit",
-      name: "question.edit",
-      component: QuestionEdit,
-      props: true,
       beforeEnter(to, from, next) {
         if (store.getters["auth/isLogin"]) {
           next();

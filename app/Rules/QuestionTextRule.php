@@ -26,7 +26,7 @@ class QuestionTextRule implements Rule
     public function passes($attribute, $value)
     {
         //
-        return preg_match("/^[ぁ-んァ-ヶ一-龠々ー、。,\.]+$/u", $value);
+        return preg_match("/^[0-9ぁ-んァ-ヶ一-龠々ー、。,\.]+$/u", $value);
     }
 
     /**

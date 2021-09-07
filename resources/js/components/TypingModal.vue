@@ -472,7 +472,7 @@
           </table>
           <ul class="pagination">
             <li
-              :class="currentPage == 1 ? 'disabled' : ''"
+              :class="currentPage === 1 ? 'disabled' : ''"
               @click="changeHistoryPage(currentPage - 1)"
             >
               <i class="fas fa-angle-double-left"></i>
@@ -563,7 +563,7 @@ export default {
       perPage: 5,
       currentPage: 1,
       lastPage: "",
-      range: 5,
+      range: 5, // 奇数
       startDot: false,
       endDot: false,
       chartData: {},

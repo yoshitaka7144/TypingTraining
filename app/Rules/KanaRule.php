@@ -26,7 +26,7 @@ class KanaRule implements Rule
     public function passes($attribute, $value)
     {
         //
-        return preg_match('/^[ぁ-んー、。,\.]+$/u', $value);
+        return preg_match('/^[0-9ぁ-んー、。,\.]+$/u', $value);
     }
 
     /**

@@ -10,9 +10,9 @@ use function PHPUnit\Framework\returnSelf;
 
 class QuestionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::select("questions.id as id", "categories.name as category", "text", "kana", "roman", "editor_user_id")->join("categories", "categories.id", "=", "questions.category_id")->get();
+        $questions = Question::select("questions.id as id", "categories.name as category", "text", "kana", "roman", "editor_user_id")->join("categories", "categories.id", "=", "questions.category_id")->paginate($request->perPage);
         return $questions;
     }
 

@@ -364,48 +364,73 @@ i {
         }
       }
     }
+    .pagination {
+      display: flex;
+      li {
+        border: 1px solid #ddd;
+        padding: 6px 12px;
+        text-align: center;
+        cursor: pointer;
+        & + li {
+          border-left: none;
+        }
+      }
+      .active {
+        background-color: $blue;
+      }
+      .disabled {
+        cursor: not-allowed;
+      }
+    }
   }
 
-  #question-create {
-    width: 60%;
-    .errors-area {
-      border: dashed 2px #668ad8;
-      background-color: #f1f8ff;
-      li {
-        padding: 5px 10px;
-        color: $red;
-      }
+  .modal-question-edit {
+    .header {
+      text-align: right;
     }
-    .error {
-      color: $red;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input[type="text"] {
-      display: block;
-      width: 100%;
-      height: 30px;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    .main {
+      #question-edit {
+        width: 60%;
+        .errors-area {
+          border: dashed 2px #668ad8;
+          background-color: #f1f8ff;
+          li {
+            padding: 5px 10px;
+            color: $red;
+          }
+        }
+        .error {
+          color: $red;
+        }
+        label {
+          display: block;
+          margin-top: 10px;
+        }
+        input[type="text"] {
+          display: block;
+          width: 100%;
+          height: 30px;
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
 
-      &:focus {
-        outline: none;
-        border-color: dodgerBlue;
-        box-shadow: 0 0 5px 0 dodgerBlue;
-      }
+          &:focus {
+            outline: none;
+            border-color: dodgerBlue;
+            box-shadow: 0 0 5px 0 dodgerBlue;
+          }
 
-      &::placeholder {
-        font-size: 12px;
+          &::placeholder {
+            font-size: 12px;
+          }
+        }
+        .btn-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin: 15px 0;
+        }
       }
-    }
-    .btn-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin: 15px 0;
     }
   }
 

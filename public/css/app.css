@@ -403,30 +403,57 @@ i {
   background-color: #eee;
 }
 
-.main-container #question-create {
+.main-container #question .pagination {
+  display: flex;
+}
+
+.main-container #question .pagination li {
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.main-container #question .pagination li + li {
+  border-left: none;
+}
+
+.main-container #question .pagination .active {
+  background-color: #3490dc;
+}
+
+.main-container #question .pagination .disabled {
+  cursor: not-allowed;
+}
+
+.main-container .modal-question-edit .header {
+  text-align: right;
+}
+
+.main-container .modal-question-edit .main #question-edit {
   width: 60%;
 }
 
-.main-container #question-create .errors-area {
+.main-container .modal-question-edit .main #question-edit .errors-area {
   border: dashed 2px #668ad8;
   background-color: #f1f8ff;
 }
 
-.main-container #question-create .errors-area li {
+.main-container .modal-question-edit .main #question-edit .errors-area li {
   padding: 5px 10px;
   color: #e3342f;
 }
 
-.main-container #question-create .error {
+.main-container .modal-question-edit .main #question-edit .error {
   color: #e3342f;
 }
 
-.main-container #question-create label {
+.main-container .modal-question-edit .main #question-edit label {
   display: block;
   margin-top: 10px;
 }
 
-.main-container #question-create input[type=text] {
+.main-container .modal-question-edit .main #question-edit input[type=text] {
   display: block;
   width: 100%;
   height: 30px;
@@ -435,25 +462,25 @@ i {
   border: 1px solid #ccc;
 }
 
-.main-container #question-create input[type=text]:focus {
+.main-container .modal-question-edit .main #question-edit input[type=text]:focus {
   outline: none;
   border-color: dodgerBlue;
   box-shadow: 0 0 5px 0 dodgerBlue;
 }
 
-.main-container #question-create input[type=text]::-moz-placeholder {
+.main-container .modal-question-edit .main #question-edit input[type=text]::-moz-placeholder {
   font-size: 12px;
 }
 
-.main-container #question-create input[type=text]:-ms-input-placeholder {
+.main-container .modal-question-edit .main #question-edit input[type=text]:-ms-input-placeholder {
   font-size: 12px;
 }
 
-.main-container #question-create input[type=text]::placeholder {
+.main-container .modal-question-edit .main #question-edit input[type=text]::placeholder {
   font-size: 12px;
 }
 
-.main-container #question-create .btn-wrapper {
+.main-container .modal-question-edit .main #question-edit .btn-wrapper {
   display: flex;
   align-items: center;
   justify-content: flex-end;
