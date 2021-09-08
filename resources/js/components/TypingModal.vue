@@ -1,7 +1,7 @@
 <template>
   <modal
-    class="modal"
-    name="typing-modal"
+    class="modal-typing"
+    name="modal-typing"
     :resizable="true"
     :clickToClose="false"
     :width="'80%'"
@@ -14,7 +14,19 @@
     </div>
     <div class="modal-main">
       <div class="" v-if="phase === 1">
-        <button class="btn btn-blue" @click="start">スタート</button>
+        <select id="" class="form-select" v-model="questionCount">
+          <option :value="n" v-for="n in questions.length" :key="n">
+            {{ n }}
+          </option>
+        </select>
+        <input
+          type="checkbox"
+          class="form-checkbox"
+          id="audio"
+          v-model="audioCheaked"
+        />
+        <label for="audio" class="">音声の有無</label>
+        <p>スペースキーを押すとスタートします。</p>
       </div>
 
       <div class="" v-if="phase === 2">
@@ -42,7 +54,10 @@
             <div
               id="key-1"
               class="key"
-              :class="{ 'target-key': '1' === roman[romanIndex] }"
+              :class="{
+                'target-key': '1' === roman[romanIndex],
+                missed: '1' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['1']"
             >
               1
@@ -50,7 +65,10 @@
             <div
               id="key-2"
               class="key"
-              :class="{ 'target-key': '2' === roman[romanIndex] }"
+              :class="{
+                'target-key': '2' === roman[romanIndex],
+                missed: '2' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['2']"
             >
               2
@@ -58,7 +76,10 @@
             <div
               id="key-3"
               class="key"
-              :class="{ 'target-key': '3' === roman[romanIndex] }"
+              :class="{
+                'target-key': '3' === roman[romanIndex],
+                missed: '3' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['3']"
             >
               3
@@ -66,7 +87,10 @@
             <div
               id="key-4"
               class="key"
-              :class="{ 'target-key': '4' === roman[romanIndex] }"
+              :class="{
+                'target-key': '4' === roman[romanIndex],
+                missed: '4' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['4']"
             >
               4
@@ -74,7 +98,10 @@
             <div
               id="key-5"
               class="key"
-              :class="{ 'target-key': '5' === roman[romanIndex] }"
+              :class="{
+                'target-key': '5' === roman[romanIndex],
+                missed: '5' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['5']"
             >
               5
@@ -82,7 +109,10 @@
             <div
               id="key-6"
               class="key"
-              :class="{ 'target-key': '6' === roman[romanIndex] }"
+              :class="{
+                'target-key': '6' === roman[romanIndex],
+                missed: '6' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['6']"
             >
               6
@@ -90,7 +120,10 @@
             <div
               id="key-7"
               class="key"
-              :class="{ 'target-key': '7' === roman[romanIndex] }"
+              :class="{
+                'target-key': '7' === roman[romanIndex],
+                missed: '7' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['7']"
             >
               7
@@ -98,7 +131,10 @@
             <div
               id="key-8"
               class="key"
-              :class="{ 'target-key': '8' === roman[romanIndex] }"
+              :class="{
+                'target-key': '8' === roman[romanIndex],
+                missed: '8' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['8']"
             >
               8
@@ -106,7 +142,10 @@
             <div
               id="key-9"
               class="key"
-              :class="{ 'target-key': '9' === roman[romanIndex] }"
+              :class="{
+                'target-key': '9' === roman[romanIndex],
+                missed: '9' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['9']"
             >
               9
@@ -114,7 +153,10 @@
             <div
               id="key-0"
               class="key"
-              :class="{ 'target-key': '0' === roman[romanIndex] }"
+              :class="{
+                'target-key': '0' === roman[romanIndex],
+                missed: '0' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['0']"
             >
               0
@@ -122,7 +164,10 @@
             <div
               id="key--"
               class="key"
-              :class="{ 'target-key': '-' === roman[romanIndex] }"
+              :class="{
+                'target-key': '-' === roman[romanIndex],
+                missed: '-' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['-']"
             >
               -
@@ -137,7 +182,10 @@
             <div
               id="key-q"
               class="key"
-              :class="{ 'target-key': 'q' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'q' === roman[romanIndex],
+                missed: 'q' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['q']"
             >
               Q
@@ -145,7 +193,10 @@
             <div
               id="key-w"
               class="key"
-              :class="{ 'target-key': 'w' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'w' === roman[romanIndex],
+                missed: 'w' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['w']"
             >
               W
@@ -153,7 +204,10 @@
             <div
               id="key-e"
               class="key"
-              :class="{ 'target-key': 'e' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'e' === roman[romanIndex],
+                missed: 'e' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['e']"
             >
               E
@@ -161,7 +215,10 @@
             <div
               id="key-r"
               class="key"
-              :class="{ 'target-key': 'r' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'r' === roman[romanIndex],
+                missed: 'r' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['r']"
             >
               R
@@ -169,7 +226,10 @@
             <div
               id="key-t"
               class="key"
-              :class="{ 'target-key': 't' === roman[romanIndex] }"
+              :class="{
+                'target-key': 't' === roman[romanIndex],
+                missed: 't' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['t']"
             >
               T
@@ -177,7 +237,10 @@
             <div
               id="key-y"
               class="key"
-              :class="{ 'target-key': 'y' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'y' === roman[romanIndex],
+                missed: 'y' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['y']"
             >
               Y
@@ -185,7 +248,10 @@
             <div
               id="key-u"
               class="key"
-              :class="{ 'target-key': 'u' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'u' === roman[romanIndex],
+                missed: 'u' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['u']"
             >
               U
@@ -193,7 +259,10 @@
             <div
               id="key-i"
               class="key"
-              :class="{ 'target-key': 'i' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'i' === roman[romanIndex],
+                missed: 'i' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['i']"
             >
               I
@@ -201,7 +270,10 @@
             <div
               id="key-o"
               class="key"
-              :class="{ 'target-key': 'o' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'o' === roman[romanIndex],
+                missed: 'o' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['o']"
             >
               O
@@ -209,7 +281,10 @@
             <div
               id="key-p"
               class="key"
-              :class="{ 'target-key': 'p' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'p' === roman[romanIndex],
+                missed: 'p' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['p']"
             >
               P
@@ -224,7 +299,10 @@
             <div
               id="key-a"
               class="key"
-              :class="{ 'target-key': 'a' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'a' === roman[romanIndex],
+                missed: 'a' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['a']"
             >
               A
@@ -232,7 +310,10 @@
             <div
               id="key-s"
               class="key"
-              :class="{ 'target-key': 's' === roman[romanIndex] }"
+              :class="{
+                'target-key': 's' === roman[romanIndex],
+                missed: 's' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['s']"
             >
               S
@@ -240,7 +321,10 @@
             <div
               id="key-d"
               class="key"
-              :class="{ 'target-key': 'd' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'd' === roman[romanIndex],
+                missed: 'd' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['d']"
             >
               D
@@ -248,7 +332,10 @@
             <div
               id="key-f"
               class="key"
-              :class="{ 'target-key': 'f' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'f' === roman[romanIndex],
+                missed: 'f' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['f']"
             >
               F
@@ -256,7 +343,10 @@
             <div
               id="key-g"
               class="key"
-              :class="{ 'target-key': 'g' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'g' === roman[romanIndex],
+                missed: 'g' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['g']"
             >
               G
@@ -264,7 +354,10 @@
             <div
               id="key-h"
               class="key"
-              :class="{ 'target-key': 'h' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'h' === roman[romanIndex],
+                missed: 'h' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['h']"
             >
               H
@@ -272,7 +365,10 @@
             <div
               id="key-j"
               class="key"
-              :class="{ 'target-key': 'j' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'j' === roman[romanIndex],
+                missed: 'j' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['j']"
             >
               J
@@ -280,7 +376,10 @@
             <div
               id="key-k"
               class="key"
-              :class="{ 'target-key': 'k' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'k' === roman[romanIndex],
+                missed: 'k' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['k']"
             >
               K
@@ -288,7 +387,10 @@
             <div
               id="key-l"
               class="key"
-              :class="{ 'target-key': 'l' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'l' === roman[romanIndex],
+                missed: 'l' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['l']"
             >
               L
@@ -304,7 +406,10 @@
             <div
               id="key-z"
               class="key"
-              :class="{ 'target-key': 'z' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'z' === roman[romanIndex],
+                missed: 'z' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['z']"
             >
               Z
@@ -312,7 +417,10 @@
             <div
               id="key-x"
               class="key"
-              :class="{ 'target-key': 'x' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'x' === roman[romanIndex],
+                missed: 'x' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['x']"
             >
               X
@@ -320,7 +428,10 @@
             <div
               id="key-c"
               class="key"
-              :class="{ 'target-key': 'c' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'c' === roman[romanIndex],
+                missed: 'c' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['c']"
             >
               C
@@ -328,7 +439,10 @@
             <div
               id="key-v"
               class="key"
-              :class="{ 'target-key': 'v' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'v' === roman[romanIndex],
+                missed: 'v' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['v']"
             >
               V
@@ -336,7 +450,10 @@
             <div
               id="key-b"
               class="key"
-              :class="{ 'target-key': 'b' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'b' === roman[romanIndex],
+                missed: 'b' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['b']"
             >
               B
@@ -344,7 +461,10 @@
             <div
               id="key-n"
               class="key"
-              :class="{ 'target-key': 'n' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'n' === roman[romanIndex],
+                missed: 'n' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['n']"
             >
               N
@@ -352,7 +472,10 @@
             <div
               id="key-m"
               class="key"
-              :class="{ 'target-key': 'm' === roman[romanIndex] }"
+              :class="{
+                'target-key': 'm' === roman[romanIndex],
+                missed: 'm' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['m']"
             >
               M
@@ -360,7 +483,10 @@
             <div
               id="key-,"
               class="key"
-              :class="{ 'target-key': ',' === roman[romanIndex] }"
+              :class="{
+                'target-key': ',' === roman[romanIndex],
+                missed: ',' === missTypeKey,
+              }"
               :style="missTypeKeyStyle[',']"
             >
               ,
@@ -368,7 +494,10 @@
             <div
               id="key-."
               class="key"
-              :class="{ 'target-key': '.' === roman[romanIndex] }"
+              :class="{
+                'target-key': '.' === roman[romanIndex],
+                missed: '.' === missTypeKey,
+              }"
               :style="missTypeKeyStyle['.']"
             >
               .
@@ -529,6 +658,7 @@ import {
   UNPROCESSABLE_ENTITY,
   INTERNAL_SERVER_ERROR,
   END_SYMBOL,
+  DEFAULT_QUESTION_COUNT,
 } from "../util.js";
 import { checkInputKey } from "../key.js";
 import HistoryChart from "./HistoryChart.vue";
@@ -538,11 +668,12 @@ export default {
   },
   props: {
     categoryId: "",
-    questions: [],
-    questionCount: "",
+    updateParentPage: null,
   },
   data() {
     return {
+      questions: [],
+      questionCount: "",
       phase: 1,
       currentCount: 0,
       currentQuestion: [],
@@ -557,6 +688,7 @@ export default {
       typeTime: 0,
       wpm: 0,
       correctPercentage: 0,
+      missTypeKey: "",
       missTypeKeyHash: {},
       missTypeKeyStyle: {},
       histories: {},
@@ -568,6 +700,8 @@ export default {
       endDot: false,
       chartData: {},
       chartOptions: {},
+      audio: new Audio("/audio/beep.wav"),
+      audioCheaked:false,
     };
   },
   mounted() {
@@ -623,6 +757,9 @@ export default {
       var char = this.roman[this.romanIndex];
       return rightLittle.includes(char);
     },
+    canPlayAudio() {
+      return this.audioCheaked;
+    },
     isShortSize() {
       return this.lastPage < this.range + 5;
     },
@@ -668,7 +805,7 @@ export default {
   methods: {
     hide() {
       this.clear();
-      this.$modal.hide("typing-modal");
+      this.$modal.hide("modal-typing");
     },
     start() {
       this.initQuestion();
@@ -701,6 +838,8 @@ export default {
         this.updateUserInfo();
         this.createHistory();
         this.getHistory();
+        // トップページの更新
+        this.updateParentPage(1);
       }
 
       // ミスタイプキーのスタイル設定
@@ -717,6 +856,7 @@ export default {
       this.missTypeCount = 0;
       this.wpm = 0;
       this.correctPercentage = 0;
+      this.missTypeKey = "";
       this.missTypeKeyHash = {};
       this.missTypeKeyStyle = {};
       this.histories = {};
@@ -866,6 +1006,22 @@ export default {
         this.createHistoryChartData();
       }
     },
+    async getQuestions() {
+      const response = await axios
+        .get("/api/question/category/" + this.categoryId)
+        .catch((error) => error.response || error);
+
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
+      } else {
+        this.questions = response.data;
+        if (Object.keys(this.questions).length < DEFAULT_QUESTION_COUNT) {
+          this.questionCount = Object.keys(this.questions).length;
+        } else {
+          this.questionCount = DEFAULT_QUESTION_COUNT;
+        }
+      }
+    },
     createRange(start, end) {
       const range = [];
       for (let i = start; i <= end; i++) {
@@ -883,11 +1039,17 @@ export default {
       return this.currentPage === page;
     },
     keyAction(e) {
-      if (this.phase === 2) {
+      if (this.phase === 1) {
+        e.preventDefault();
+        if (e.code === "Space") {
+          this.start();
+        }
+      } else if (this.phase === 2) {
         e.preventDefault();
         switch (checkInputKey(e.code, this.roman, this.romanIndex)) {
           case 1:
           case 2:
+            this.missTypeKey = "";
             this.correctTypeCount++;
             this.romanIndex++;
             if (this.roman[this.romanIndex] === END_SYMBOL) {
@@ -908,15 +1070,22 @@ export default {
           case 0:
           case 3:
             //タイプミス時
+
+            if (this.canPlayAudio) {
+              this.audio.play();
+            }
+
             // ミス回数カウント
             this.missTypeCount++;
 
+            //
+            this.missTypeKey = this.roman[this.romanIndex];
+
             // ミスタイプキーカウント
-            const missTypeKey = this.roman[this.romanIndex];
-            if (this.missTypeKeyHash[missTypeKey]) {
-              this.missTypeKeyHash[missTypeKey]++;
+            if (this.missTypeKeyHash[this.missTypeKey]) {
+              this.missTypeKeyHash[this.missTypeKey]++;
             } else {
-              this.missTypeKeyHash[missTypeKey] = 1;
+              this.missTypeKeyHash[this.missTypeKey] = 1;
             }
 
             break;
@@ -924,6 +1093,11 @@ export default {
             break;
         }
       }
+    },
+  },
+  watch: {
+    categoryId(val) {
+      this.getQuestions();
     },
   },
 };

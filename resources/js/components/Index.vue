@@ -20,16 +20,14 @@
           </div>
         </div>
         <div class="typing-menu">
-          <router-link
+          <button
+            class="btn btn-blue"
             v-for="category in categories"
             :key="category.id"
-            :to="{
-              name: 'typing.setting',
-              params: { categoryId: category.id },
-            }"
+            @click="showTypingModal(category.id)"
           >
-            <button class="btn btn-blue">{{ category.name }}</button>
-          </router-link>
+            {{ category.name }}
+          </button>
         </div>
       </div>
 
@@ -46,7 +44,7 @@
           </thead>
           <tbody>
             <tr v-for="history in histories" :key="history.id">
-              <td>{{ history.category_id }}</td>
+              <td>{{ history.category }}</td>
               <td>{{ history.wpm }}</td>
               <td>{{ history.correct_percentage }}</td>
               <td>{{ history.miss_key }}</td>
@@ -103,14 +101,17 @@
         </div>
       </div>
     </div>
+    <TypingModal :categoryId="categoryId" :updateParentPage="getHistory" />
   </div>
 </template>
 
 <script>
 import { INTERNAL_SERVER_ERROR } from "../util";
+import TypingModal from "./TypingModal.vue";
 import HistoryChart from "./HistoryChart.vue";
 export default {
   components: {
+    TypingModal,
     HistoryChart,
   },
   data() {
@@ -125,6 +126,7 @@ export default {
       endDot: false,
       chartData: {},
       chartOptions: {},
+      categoryId: "",
     };
   },
   computed: {
@@ -178,13 +180,15 @@ export default {
         return this.createRange(start, end);
       }
     },
-    existsHistory(){
+    existsHistory() {
       return Object.keys(this.histories).length > 0;
     },
   },
   mounted() {
     this.getCategories();
-    this.getHistory();
+    if (this.isLogin) {
+      this.getHistory();
+    }
   },
   methods: {
     async getCategories() {
@@ -198,11 +202,11 @@ export default {
         this.categories = response.data;
       }
     },
-    async getHistory() {
+    async getHistory(topPage = 0) {
       const params = {
         userId: this.userId,
         perPage: this.perPage,
-        page: this.currentPage,
+        page: topPage === 0 ? this.currentPage : 1,
       };
       const response = await axios
         .get("/api/history", { params })
@@ -235,7 +239,7 @@ export default {
       return this.currentPage === page;
     },
     createHistoryChartData() {
-      if(!this.existsHistory){
+      if (!this.existsHistory) {
         return;
       }
       let labels = [];
@@ -303,6 +307,10 @@ export default {
           ],
         },
       };
+    },
+    showTypingModal(categoryId) {
+      this.categoryId = categoryId;
+      this.$modal.show("modal-typing");
     },
   },
 };

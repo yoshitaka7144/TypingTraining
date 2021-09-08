@@ -4,7 +4,6 @@ import store from './store';
 import Index from "./components/Index";
 import Login from "./components/Login";
 import Question from "./components/Question";
-import TypingSetting from "./components/TypingSetting";
 import SystemError from "./components/SystemError";
 import NotFound from "./components/NotFound";
 
@@ -41,12 +40,6 @@ const router = new VueRouter({
           next("/");
         }
       }
-    },
-    {
-      path: "/typing/:categoryId",
-      name: "typing.setting",
-      component: TypingSetting,
-      props: true,
     },
     {
       path: "/500",

@@ -49,6 +49,7 @@ i {
   display: inline-block;
   border-radius: 5px;
   text-align: center;
+  cursor: pointer;
   &:hover {
     opacity: 0.8;
   }
@@ -337,6 +338,241 @@ i {
         }
       }
     }
+
+    .modal-typing {
+      .modal-header {
+        text-align: right;
+      }
+
+      .modal-main {
+        .inputed {
+          color: orange;
+        }
+
+        .form-select {
+          width: 60px;
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          &:focus {
+            outline: none;
+            border-color: dodgerBlue;
+            box-shadow: 0 0 5px 0 dodgerBlue;
+          }
+        }
+
+        .form-checkbox {
+          display: none;
+
+          + label {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            padding-left: 25px;
+            padding-right: 10px;
+
+            &::before {
+              content: "";
+              position: absolute;
+              display: block;
+              box-sizing: border-box;
+              width: 20px;
+              height: 20px;
+              margin-top: -10px;
+              left: 0;
+              top: 50%;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            }
+          }
+
+          &:checked + label::after {
+            content: "";
+            position: absolute;
+            display: block;
+            box-sizing: border-box;
+            width: 18px;
+            height: 9px;
+            margin-top: -9px;
+            top: 50%;
+            left: 3px;
+            transform: rotate(-45deg);
+            border-bottom: 3px solid;
+            border-left: 3px solid;
+            border-color: dodgerBlue;
+          }
+        }
+
+        #keyboard-container {
+          display: flex;
+          justify-content: center;
+          #keyboard {
+            display: flex;
+            flex-direction: column;
+            .row {
+              display: flex;
+              .key {
+                border: 1px solid #d8d8d8;
+                border-radius: 3px;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 35px;
+                text-align: center;
+                margin: 3px 3px 3px 3px;
+                width: 35px;
+                height: 35px;
+              }
+              .target-key {
+                background-color: $target-key-color;
+              }
+              .missed {
+                animation: flash 0.3s linear infinite;
+              }
+              @keyframes flash {
+                0%,
+                100% {
+                  opacity: 1;
+                }
+
+                50% {
+                  opacity: 0;
+                }
+              }
+              #key-tab {
+                width: 55px;
+              }
+
+              #key-enter-1 {
+                border-left: 1px solid #d8d8d8;
+                border-top: 1px solid #d8d8d8;
+                border-right: 1px solid #d8d8d8;
+                border-radius: 3px 3px 0 3px;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 35px;
+                text-align: center;
+                margin: 3px 3px 3px 3px;
+                width: 55px;
+                position: relative;
+              }
+
+              #key-enter-1::before {
+                content: "";
+                position: absolute;
+                left: 10%;
+                bottom: 0px;
+                display: inline-block;
+                width: 10px;
+                height: 1px;
+                transform: translateX(-50%);
+                background-color: #d8d8d8;
+              }
+
+              #key-caps {
+                width: 65px;
+              }
+
+              #key-enter-2 {
+                border-left: 1px solid #d8d8d8;
+                border-bottom: 1px solid #d8d8d8;
+                border-right: 1px solid #d8d8d8;
+                border-radius: 0 0 3px 3px;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 35px;
+                text-align: center;
+                margin: -4px 3px 3px 3px;
+                width: 45px;
+                position: relative;
+              }
+
+              #key-shift-left {
+                width: 80px;
+              }
+
+              #key-shift-right {
+                width: 70px;
+              }
+
+              #key-ctrl {
+                width: 50px;
+              }
+
+              #key-space {
+                width: 140px;
+              }
+            }
+          }
+        }
+
+        #hand-container {
+          display: flex;
+          justify-content: center;
+          #hand {
+            display: flex;
+            #hand-left,
+            #hand-right {
+              display: flex;
+              align-items: flex-end;
+              .finger {
+                border: 1px solid #d8d8d8;
+                border-radius: 20px 20px 0 0;
+                margin: 5px 5px 5px 5px;
+                width: 35px;
+              }
+
+              .target-finger {
+                background-color: $target-key-color;
+              }
+
+              .finger-little {
+                height: 70px;
+              }
+
+              .finger-ring {
+                height: 90px;
+              }
+
+              .finger-middle {
+                height: 100px;
+              }
+
+              .finger-index {
+                height: 85px;
+              }
+
+              .finger-thumb {
+                height: 40px;
+              }
+            }
+          }
+        }
+
+        #history-container {
+          display: flex;
+          justify-content: center;
+
+          .pagination {
+            display: flex;
+            li {
+              border: 1px solid #ddd;
+              padding: 6px 12px;
+              text-align: center;
+              cursor: pointer;
+              & + li {
+                border-left: none;
+              }
+            }
+            .active {
+              background-color: $blue;
+            }
+            .disabled {
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
   }
 
   #auth {
@@ -492,6 +728,16 @@ i {
           display: block;
           margin-top: 10px;
         }
+        .form-select {
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          &:focus {
+            outline: none;
+            border-color: dodgerBlue;
+            box-shadow: 0 0 5px 0 dodgerBlue;
+          }
+        }
         input[type="text"] {
           display: block;
           width: 100%;
@@ -515,176 +761,6 @@ i {
           align-items: center;
           justify-content: flex-end;
           margin: 15px 0;
-        }
-      }
-    }
-  }
-
-  #typing {
-    .modal {
-      .modal-header {
-        text-align: right;
-      }
-
-      .modal-main {
-        .inputed {
-          color: orange;
-        }
-
-        #keyboard-container {
-          display: flex;
-          justify-content: center;
-          #keyboard {
-            display: flex;
-            flex-direction: column;
-            .row {
-              display: flex;
-              .key {
-                border: 1px solid #d8d8d8;
-                border-radius: 3px;
-                font-weight: bold;
-                font-size: 16px;
-                line-height: 35px;
-                text-align: center;
-                margin: 3px 3px 3px 3px;
-                width: 35px;
-                height: 35px;
-              }
-              .target-key {
-                background-color: $target-key-color;
-              }
-              #key-tab {
-                width: 55px;
-              }
-
-              #key-enter-1 {
-                border-left: 1px solid #d8d8d8;
-                border-top: 1px solid #d8d8d8;
-                border-right: 1px solid #d8d8d8;
-                border-radius: 3px 3px 0 3px;
-                font-weight: bold;
-                font-size: 16px;
-                line-height: 35px;
-                text-align: center;
-                margin: 3px 3px 3px 3px;
-                width: 55px;
-                position: relative;
-              }
-
-              #key-enter-1::before {
-                content: "";
-                position: absolute;
-                left: 10%;
-                bottom: 0px;
-                display: inline-block;
-                width: 10px;
-                height: 1px;
-                transform: translateX(-50%);
-                background-color: #d8d8d8;
-              }
-
-              #key-caps {
-                width: 65px;
-              }
-
-              #key-enter-2 {
-                border-left: 1px solid #d8d8d8;
-                border-bottom: 1px solid #d8d8d8;
-                border-right: 1px solid #d8d8d8;
-                border-radius: 0 0 3px 3px;
-                font-weight: bold;
-                font-size: 16px;
-                line-height: 35px;
-                text-align: center;
-                margin: -4px 3px 3px 3px;
-                width: 45px;
-                position: relative;
-              }
-
-              #key-shift-left {
-                width: 80px;
-              }
-
-              #key-shift-right {
-                width: 70px;
-              }
-
-              #key-ctrl {
-                width: 50px;
-              }
-
-              #key-space {
-                width: 140px;
-              }
-            }
-          }
-        }
-
-        #hand-container {
-          display: flex;
-          justify-content: center;
-          #hand {
-            display: flex;
-            #hand-left,
-            #hand-right {
-              display: flex;
-              align-items: flex-end;
-              .finger {
-                border: 1px solid #d8d8d8;
-                border-radius: 20px 20px 0 0;
-                margin: 5px 5px 5px 5px;
-                width: 35px;
-              }
-
-              .target-finger {
-                background-color: $target-key-color;
-              }
-
-              .finger-little {
-                height: 70px;
-              }
-
-              .finger-ring {
-                height: 90px;
-              }
-
-              .finger-middle {
-                height: 100px;
-              }
-
-              .finger-index {
-                height: 85px;
-              }
-
-              .finger-thumb {
-                height: 40px;
-              }
-            }
-          }
-        }
-
-        #history-container {
-          display: flex;
-          justify-content: center;
-
-          .pagination {
-            display: flex;
-            li {
-              border: 1px solid #ddd;
-              padding: 6px 12px;
-              text-align: center;
-              cursor: pointer;
-              & + li {
-                border-left: none;
-              }
-            }
-            .active {
-              background-color: $blue;
-            }
-            .disabled {
-              cursor: not-allowed;
-            }
-          }
         }
       }
     }

@@ -3,6 +3,8 @@ export const CREATED = 201;
 export const UNPROCESSABLE_ENTITY = 422;
 export const INTERNAL_SERVER_ERROR = 500;
 
+export const DEFAULT_QUESTION_COUNT = 5;
+
 export const END_SYMBOL = "$";
 
 export const LOGIN_NAME_ERROR_REQUIRE = "ユーザー名は必須項目です。";

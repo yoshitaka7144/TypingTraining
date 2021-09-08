@@ -12,9 +12,9 @@ class HistoryController extends Controller
         $user_id = $request->userId;
         $category_id = $request->categoryId;
         if (isset($user_id) && isset($category_id)) {
-            return History::where("user_id", $user_id)->where("category_id", $category_id)->orderBy("created_at","desc")->paginate($request->perPage);
+            return History::where("user_id", $user_id)->where("category_id", $category_id)->orderBy("created_at", "desc")->paginate($request->perPage);
         } else if (isset($user_id) && !isset($category_id)) {
-            return History::where("user_id", $user_id)->orderBy("created_at","desc")->paginate($request->perPage);
+            return History::select("categories.name as category", "wpm", "correct_percentage", "miss_key", "histories.created_at as created_at")->join("categories", "categories.id", "=", "histories.category_id")->where("user_id", $user_id)->orderBy("created_at", "desc")->paginate($request->perPage);
         } else {
             return false;
         }

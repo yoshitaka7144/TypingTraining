@@ -47,7 +47,7 @@
           <label v-if="options.mode === 2">ID：{{ options.questionId }}</label>
 
           <label for="question-category">カテゴリー</label>
-          <select id="question-category" v-model="registerForm.categoryId">
+          <select id="question-category" class="form-select" v-model="registerForm.categoryId">
             <option disabled value="">選択して下さい</option>
             <option
               v-for="option in selectOptions"
