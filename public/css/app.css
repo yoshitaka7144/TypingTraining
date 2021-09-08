@@ -278,7 +278,84 @@ i {
 
 .main-container #home .main {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.main-container #home .main .menu {
+  display: flex;
+  text-align: center;
+}
+
+.main-container #home .main .menu .login-menu {
+  width: 50%;
+}
+
+.main-container #home .main .menu .typing-menu {
+  width: 50%;
+}
+
+.main-container #home .main .history .history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.main-container #home .main .history .history-table thead th {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.main-container #home .main .history .history-table thead th:nth-child(1) {
+  width: 20%;
+}
+
+.main-container #home .main .history .history-table thead th:nth-child(2) {
+  width: 15%;
+}
+
+.main-container #home .main .history .history-table thead th:nth-child(3) {
+  width: 15%;
+}
+
+.main-container #home .main .history .history-table thead th:nth-child(4) {
+  width: 20%;
+}
+
+.main-container #home .main .history .history-table thead th:nth-child(5) {
+  width: 30%;
+}
+
+.main-container #home .main .history .history-table tbody td {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.main-container #home .main .history .history-table tbody tr:nth-child(odd) {
+  background-color: #eee;
+}
+
+.main-container #home .main .history .pagination {
+  display: flex;
+}
+
+.main-container #home .main .history .pagination li {
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.main-container #home .main .history .pagination li + li {
+  border-left: none;
+}
+
+.main-container #home .main .history .pagination .active {
+  background-color: #3490dc;
+}
+
+.main-container #home .main .history .pagination .disabled {
+  cursor: not-allowed;
 }
 
 .main-container #auth {

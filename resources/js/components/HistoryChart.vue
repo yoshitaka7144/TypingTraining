@@ -5,39 +5,11 @@ const { reactiveProp } = mixins;
 export default {
   extends: Bar,
   mixins: [reactiveProp],
-  props:{
-    options:null,
+  props: {
+    options: null,
   },
   data() {
-    return {
-      // options: {
-      //   maintainAspectRatio: false,
-      //   responsive: true,
-      //   scales: {
-      //     xAxes: [{}],
-      //     yAxes: [
-      //       {
-      //         id: "y-axis-1",
-      //         position: "left",
-      //         ticks: {
-      //           max: 500,
-      //           min: 0,
-      //           stepSize: 50,
-      //         },
-      //       },
-      //       {
-      //         id: "y-axis-2",
-      //         position: "right",
-      //         ticks: {
-      //           max: 100,
-      //           min: 0,
-      //           stepSize: 10,
-      //         },
-      //       },
-      //     ],
-      //   },
-      // },
-    };
+    return {};
   },
   mounted() {
     this.renderChart(this.chartData, this.options);
