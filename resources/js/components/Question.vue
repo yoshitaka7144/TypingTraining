@@ -1,29 +1,46 @@
 <template>
   <div id="question" class="contents">
-    <p class="title">問題一覧</p>
-    <div v-if="userRole !== 2">
-      <input
-        type="checkbox"
-        class="form-checkbox"
-        id="onlyEditor"
-        v-model="isOnlyEditor"
-      />
-      <label for="onlyEditor" class="">編集可能データのみ表示</label>
+    <div class="title-area">
+      <p class="title">タイピング問題一覧</p>
+      <div class="btn-wrapper">
+        <button class="btn btn-green" @click="modalShow(1)">問題作成</button>
+      </div>
     </div>
-    <div class="search-area">
-      <select class="form-select" v-model="searchColumn">
-        <option disabled value="">選択して下さい</option>
-        <option
-          v-for="option in selectOptions"
-          :key="option.value"
-          :value="option.value"
+
+    <div class="setting">
+      <div class="search-area">
+        <select id="select-column" class="form-select" v-model="searchColumn">
+          <option disabled value="">対象列を選択して下さい</option>
+          <option
+            v-for="option in selectOptions"
+            :key="option.value"
+            :value="option.value"
+          >
+            {{ option.name }}
+          </option>
+        </select>
+        <input
+          type="text"
+          id="search-text"
+          v-model="searchText"
+          placeholder="検索文字列を入力"
+        />
+        <button class="btn btn-blue" @click="searchQuestion">
+          <font-awesome-icon :icon="['fas', 'search']" />
+        </button>
+        <button class="btn btn-gray" @click="searchClear">解除</button>
+      </div>
+      <div class="setting-area" v-if="userRole !== 2">
+        <input
+          type="checkbox"
+          class="form-checkbox"
+          id="onlyEditor"
+          v-model="isOnlyEditor"
+        />
+        <label for="onlyEditor"
+          >編集可能データのみ表示</label
         >
-          {{ option.name }}
-        </option>
-      </select>
-      <input type="text" v-model="searchText" />
-      <button class="btn btn-blue" @click="searchQuestion">検索</button>
-      <button class="btn btn-blue" @click="searchClear">検索解除</button>
+      </div>
     </div>
     <table>
       <thead>
@@ -170,7 +187,7 @@
         <font-awesome-icon :icon="['fas', 'angle-double-right']" />
       </li>
     </ul>
-    <button class="btn btn-blue" @click="modalShow(1)">問題作成</button>
+
     <QuestionEditModal :options="modalOptions" />
   </div>
 </template>

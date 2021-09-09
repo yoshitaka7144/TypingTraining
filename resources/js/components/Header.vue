@@ -23,6 +23,11 @@
       </nav>
       <nav id="sp-nav" v-show="isShownSpNav">
         <ul>
+          <li @click="toggleSpNav">
+            <router-link v-bind:to="{ name: 'index' }">
+              トップページ
+            </router-link>
+          </li>
           <li v-if="isLogin" @click="toggleSpNav">
             <router-link v-bind:to="{ name: 'question' }">
               問題編集

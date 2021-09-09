@@ -12109,6 +12109,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12870,6 +12875,23 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -88037,6 +88059,17 @@ var render = function() {
         },
         [
           _c("ul", [
+            _c(
+              "li",
+              { on: { click: _vm.toggleSpNav } },
+              [
+                _c("router-link", { attrs: { to: { name: "index" } } }, [
+                  _vm._v("\n            トップページ\n          ")
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
             _vm.isLogin
               ? _c(
                   "li",
@@ -88818,132 +88851,157 @@ var render = function() {
     "div",
     { staticClass: "contents", attrs: { id: "question" } },
     [
-      _c("p", { staticClass: "title" }, [_vm._v("問題一覧")]),
+      _c("div", { staticClass: "title-area" }, [
+        _c("p", { staticClass: "title" }, [_vm._v("タイピング問題一覧")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "btn-wrapper" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-green",
+              on: {
+                click: function($event) {
+                  return _vm.modalShow(1)
+                }
+              }
+            },
+            [_vm._v("問題作成")]
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _vm.userRole !== 2
-        ? _c("div", [
-            _c("input", {
+      _c("div", { staticClass: "setting" }, [
+        _c("div", { staticClass: "search-area" }, [
+          _c(
+            "select",
+            {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.isOnlyEditor,
-                  expression: "isOnlyEditor"
+                  value: _vm.searchColumn,
+                  expression: "searchColumn"
                 }
               ],
-              staticClass: "form-checkbox",
-              attrs: { type: "checkbox", id: "onlyEditor" },
-              domProps: {
-                checked: Array.isArray(_vm.isOnlyEditor)
-                  ? _vm._i(_vm.isOnlyEditor, null) > -1
-                  : _vm.isOnlyEditor
-              },
+              staticClass: "form-select",
+              attrs: { id: "select-column" },
               on: {
                 change: function($event) {
-                  var $$a = _vm.isOnlyEditor,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.isOnlyEditor = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.isOnlyEditor = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.isOnlyEditor = $$c
-                  }
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.searchColumn = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "onlyEditor" } }, [
-              _vm._v("編集可能データのみ表示")
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "search-area" }, [
-        _c(
-          "select",
-          {
+            },
+            [
+              _c("option", { attrs: { disabled: "", value: "" } }, [
+                _vm._v("対象列を選択して下さい")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.selectOptions, function(option) {
+                return _c(
+                  "option",
+                  { key: option.value, domProps: { value: option.value } },
+                  [_vm._v("\n          " + _vm._s(option.name) + "\n        ")]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.searchColumn,
-                expression: "searchColumn"
+                value: _vm.searchText,
+                expression: "searchText"
               }
             ],
-            staticClass: "form-select",
+            attrs: {
+              type: "text",
+              id: "search-text",
+              placeholder: "検索文字列を入力"
+            },
+            domProps: { value: _vm.searchText },
             on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.searchColumn = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.searchText = $event.target.value
               }
             }
-          },
-          [
-            _c("option", { attrs: { disabled: "", value: "" } }, [
-              _vm._v("選択して下さい")
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.selectOptions, function(option) {
-              return _c(
-                "option",
-                { key: option.value, domProps: { value: option.value } },
-                [_vm._v("\n        " + _vm._s(option.name) + "\n      ")]
-              )
-            })
-          ],
-          2
-        ),
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-blue", on: { click: _vm.searchQuestion } },
+            [_c("font-awesome-icon", { attrs: { icon: ["fas", "search"] } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-gray", on: { click: _vm.searchClear } },
+            [_vm._v("解除")]
+          )
+        ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.searchText,
-              expression: "searchText"
-            }
-          ],
-          attrs: { type: "text" },
-          domProps: { value: _vm.searchText },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.searchText = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-blue", on: { click: _vm.searchQuestion } },
-          [_vm._v("検索")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-blue", on: { click: _vm.searchClear } },
-          [_vm._v("検索解除")]
-        )
+        _vm.userRole !== 2
+          ? _c("div", { staticClass: "setting-area" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.isOnlyEditor,
+                    expression: "isOnlyEditor"
+                  }
+                ],
+                staticClass: "form-checkbox",
+                attrs: { type: "checkbox", id: "onlyEditor" },
+                domProps: {
+                  checked: Array.isArray(_vm.isOnlyEditor)
+                    ? _vm._i(_vm.isOnlyEditor, null) > -1
+                    : _vm.isOnlyEditor
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.isOnlyEditor,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.isOnlyEditor = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.isOnlyEditor = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.isOnlyEditor = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "onlyEditor" } }, [
+                _vm._v("編集可能データのみ表示")
+              ])
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("table", [
@@ -89284,19 +89342,6 @@ var render = function() {
           )
         ],
         2
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-blue",
-          on: {
-            click: function($event) {
-              return _vm.modalShow(1)
-            }
-          }
-        },
-        [_vm._v("問題作成")]
       ),
       _vm._v(" "),
       _c("QuestionEditModal", { attrs: { options: _vm.modalOptions } })
@@ -107429,7 +107474,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_2___default.a);
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretDown"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleLeft"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleRight"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimes"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretDown"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleLeft"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleRight"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimes"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faSearch"]);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_8__["FontAwesomeIcon"]);
 
 function createApp() {
