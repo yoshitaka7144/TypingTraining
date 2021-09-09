@@ -9,17 +9,20 @@
     @before-open="beforeOpen"
   >
     <div class="header">
-      <button class="btn btn-red" @click="hide">
-        <font-awesome-icon :icon="['fas', 'times']" />
-      </button>
+      <font-awesome-icon
+        :icon="['fas', 'times']"
+        size="2x"
+        @click="hide"
+        class="icon"
+      />
     </div>
     <div class="main">
       <div
-        id="question-edit"
-        class="contents"
+        class="question-edit"
         v-if="options.mode === 1 || options.mode === 2"
       >
-        <p class="title">問題作成</p>
+        <p class="title" v-if="options.mode === 1">問題データ作成</p>
+        <p class="title" v-if="options.mode === 2">問題データ更新</p>
         <form>
           <div v-if="registerErrorMessages" class="errors-area">
             <ul v-if="registerErrorMessages.categoryId">
@@ -114,8 +117,14 @@
       </div>
 
       <div class="question-delete" v-if="options.mode === 3">
-        <button class="btn btn-red" @click="deleteQuestion">削除</button>
-        <button class="btn btn-gray" @click="hide">戻る</button>
+        <p class="title">削除確認</p>
+        <p>
+          ID：{{ options.questionId }} のデータを削除します。よろしいですか？
+        </p>
+        <div class="btn-wrapper">
+          <button class="btn btn-red" @click="deleteQuestion">削除</button>
+          <button class="btn btn-gray" @click="hide">戻る</button>
+        </div>
       </div>
     </div>
   </modal>

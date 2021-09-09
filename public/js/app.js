@@ -13414,6 +13414,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -89385,334 +89394,352 @@ var render = function() {
       on: { "before-open": _vm.beforeOpen }
     },
     [
-      _c("div", { staticClass: "header" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-red", on: { click: _vm.hide } },
-          [_c("font-awesome-icon", { attrs: { icon: ["fas", "times"] } })],
-          1
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "header" },
+        [
+          _c("font-awesome-icon", {
+            staticClass: "icon",
+            attrs: { icon: ["fas", "times"], size: "2x" },
+            on: { click: _vm.hide }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "main" }, [
         _vm.options.mode === 1 || _vm.options.mode === 2
-          ? _c(
-              "div",
-              { staticClass: "contents", attrs: { id: "question-edit" } },
-              [
-                _c("p", { staticClass: "title" }, [_vm._v("問題作成")]),
+          ? _c("div", { staticClass: "question-edit" }, [
+              _vm.options.mode === 1
+                ? _c("p", { staticClass: "title" }, [_vm._v("問題データ作成")])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.options.mode === 2
+                ? _c("p", { staticClass: "title" }, [_vm._v("問題データ更新")])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("form", [
+                _vm.registerErrorMessages
+                  ? _c("div", { staticClass: "errors-area" }, [
+                      _vm.registerErrorMessages.categoryId
+                        ? _c(
+                            "ul",
+                            _vm._l(
+                              _vm.registerErrorMessages.categoryId,
+                              function(msg) {
+                                return _c("li", { key: msg }, [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(msg) +
+                                      "\n            "
+                                  )
+                                ])
+                              }
+                            ),
+                            0
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.registerErrorMessages.text
+                        ? _c(
+                            "ul",
+                            _vm._l(_vm.registerErrorMessages.text, function(
+                              msg
+                            ) {
+                              return _c("li", { key: msg }, [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(msg) +
+                                    "\n            "
+                                )
+                              ])
+                            }),
+                            0
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.registerErrorMessages.kana
+                        ? _c(
+                            "ul",
+                            _vm._l(_vm.registerErrorMessages.kana, function(
+                              msg
+                            ) {
+                              return _c("li", { key: msg }, [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(msg) +
+                                    "\n            "
+                                )
+                              ])
+                            }),
+                            0
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.registerErrorMessages.roman
+                        ? _c(
+                            "ul",
+                            _vm._l(_vm.registerErrorMessages.roman, function(
+                              msg
+                            ) {
+                              return _c("li", { key: msg }, [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(msg) +
+                                    "\n            "
+                                )
+                              ])
+                            }),
+                            0
+                          )
+                        : _vm._e()
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("form", [
-                  _vm.registerErrorMessages
-                    ? _c("div", { staticClass: "errors-area" }, [
-                        _vm.registerErrorMessages.categoryId
-                          ? _c(
-                              "ul",
-                              _vm._l(
-                                _vm.registerErrorMessages.categoryId,
-                                function(msg) {
-                                  return _c("li", { key: msg }, [
-                                    _vm._v(
-                                      "\n              " +
-                                        _vm._s(msg) +
-                                        "\n            "
-                                    )
-                                  ])
-                                }
-                              ),
-                              0
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.registerErrorMessages.text
-                          ? _c(
-                              "ul",
-                              _vm._l(_vm.registerErrorMessages.text, function(
-                                msg
-                              ) {
-                                return _c("li", { key: msg }, [
-                                  _vm._v(
-                                    "\n              " +
-                                      _vm._s(msg) +
-                                      "\n            "
-                                  )
-                                ])
-                              }),
-                              0
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.registerErrorMessages.kana
-                          ? _c(
-                              "ul",
-                              _vm._l(_vm.registerErrorMessages.kana, function(
-                                msg
-                              ) {
-                                return _c("li", { key: msg }, [
-                                  _vm._v(
-                                    "\n              " +
-                                      _vm._s(msg) +
-                                      "\n            "
-                                  )
-                                ])
-                              }),
-                              0
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.registerErrorMessages.roman
-                          ? _c(
-                              "ul",
-                              _vm._l(_vm.registerErrorMessages.roman, function(
-                                msg
-                              ) {
-                                return _c("li", { key: msg }, [
-                                  _vm._v(
-                                    "\n              " +
-                                      _vm._s(msg) +
-                                      "\n            "
-                                  )
-                                ])
-                              }),
-                              0
-                            )
-                          : _vm._e()
-                      ])
+                _vm.options.mode === 2
+                  ? _c("label", [
+                      _vm._v("ID：" + _vm._s(_vm.options.questionId))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "question-category" } }, [
+                  _vm._v("カテゴリー")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.registerForm.categoryId,
+                        expression: "registerForm.categoryId"
+                      }
+                    ],
+                    staticClass: "form-select",
+                    attrs: { id: "question-category" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.registerForm,
+                          "categoryId",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { disabled: "", value: "" } }, [
+                      _vm._v("選択して下さい")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.selectOptions, function(option) {
+                      return _c(
+                        "option",
+                        { key: option.id, domProps: { value: option.id } },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(option.name) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "question-text" } }, [
+                  _vm._v("問題")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.registerForm.text,
+                      expression: "registerForm.text"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    id: "question-text",
+                    autocomplete: "off",
+                    placeholder: _vm.textPlaceholder
+                  },
+                  domProps: { value: _vm.registerForm.text },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.registerForm, "text", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.textError
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v(_vm._s(_vm.textError))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "question-kana" } }, [
+                  _vm._v("かな")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.registerForm.kana,
+                      expression: "registerForm.kana"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    id: "question-kana",
+                    autocomplete: "off",
+                    placeholder: _vm.kanaPlaceholder
+                  },
+                  domProps: { value: _vm.registerForm.kana },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.registerForm, "kana", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.kanaError
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v(_vm._s(_vm.kanaError))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "question-roman" } }, [
+                  _vm._v("タイピング文字")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.registerForm.roman,
+                      expression: "registerForm.roman"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    id: "question-roman",
+                    autocomplete: "off",
+                    placeholder: _vm.romanPlaceholder
+                  },
+                  domProps: { value: _vm.registerForm.roman },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.registerForm, "roman", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.romanError
+                  ? _c("p", { staticClass: "error" }, [
+                      _vm._v(_vm._s(_vm.romanError))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "btn-wrapper" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-green",
+                      attrs: { type: "button" },
+                      on: { click: _vm.getRoman }
+                    },
+                    [
+                      _vm._v(
+                        "\n            かな、タイピング文字生成\n          "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.options.mode === 1
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-blue",
+                          attrs: { type: "button" },
+                          on: { click: _vm.register }
+                        },
+                        [_vm._v("\n            登録\n          ")]
+                      )
                     : _vm._e(),
                   _vm._v(" "),
                   _vm.options.mode === 2
-                    ? _c("label", [
-                        _vm._v("ID：" + _vm._s(_vm.options.questionId))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "question-category" } }, [
-                    _vm._v("カテゴリー")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
+                    ? _c(
+                        "button",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.registerForm.categoryId,
-                          expression: "registerForm.categoryId"
-                        }
-                      ],
-                      staticClass: "form-select",
-                      attrs: { id: "question-category" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.registerForm,
-                            "categoryId",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { disabled: "", value: "" } }, [
-                        _vm._v("選択して下さい")
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(_vm.selectOptions, function(option) {
-                        return _c(
-                          "option",
-                          { key: option.id, domProps: { value: option.id } },
-                          [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(option.name) +
-                                "\n          "
-                            )
-                          ]
-                        )
-                      })
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "question-text" } }, [
-                    _vm._v("問題")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.registerForm.text,
-                        expression: "registerForm.text"
-                      }
-                    ],
-                    attrs: {
-                      type: "text",
-                      id: "question-text",
-                      autocomplete: "off",
-                      placeholder: _vm.textPlaceholder
-                    },
-                    domProps: { value: _vm.registerForm.text },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.registerForm, "text", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.textError
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v(_vm._s(_vm.textError))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "question-kana" } }, [
-                    _vm._v("かな")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.registerForm.kana,
-                        expression: "registerForm.kana"
-                      }
-                    ],
-                    attrs: {
-                      type: "text",
-                      id: "question-kana",
-                      autocomplete: "off",
-                      placeholder: _vm.kanaPlaceholder
-                    },
-                    domProps: { value: _vm.registerForm.kana },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.registerForm, "kana", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.kanaError
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v(_vm._s(_vm.kanaError))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "question-roman" } }, [
-                    _vm._v("タイピング文字")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.registerForm.roman,
-                        expression: "registerForm.roman"
-                      }
-                    ],
-                    attrs: {
-                      type: "text",
-                      id: "question-roman",
-                      autocomplete: "off",
-                      placeholder: _vm.romanPlaceholder
-                    },
-                    domProps: { value: _vm.registerForm.roman },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.registerForm, "roman", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.romanError
-                    ? _c("p", { staticClass: "error" }, [
-                        _vm._v(_vm._s(_vm.romanError))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "btn-wrapper" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-green",
-                        attrs: { type: "button" },
-                        on: { click: _vm.getRoman }
-                      },
-                      [
-                        _vm._v(
-                          "\n            かな、タイピング文字生成\n          "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm.options.mode === 1
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-blue",
-                            attrs: { type: "button" },
-                            on: { click: _vm.register }
-                          },
-                          [_vm._v("\n            登録\n          ")]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.options.mode === 2
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-blue",
-                            attrs: { type: "button" },
-                            on: { click: _vm.update }
-                          },
-                          [_vm._v("\n            更新\n          ")]
-                        )
-                      : _vm._e()
-                  ])
+                          staticClass: "btn btn-blue",
+                          attrs: { type: "button" },
+                          on: { click: _vm.update }
+                        },
+                        [_vm._v("\n            更新\n          ")]
+                      )
+                    : _vm._e()
                 ])
-              ]
-            )
+              ])
+            ])
           : _vm._e(),
         _vm._v(" "),
         _vm.options.mode === 3
           ? _c("div", { staticClass: "question-delete" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-red",
-                  on: { click: _vm.deleteQuestion }
-                },
-                [_vm._v("削除")]
-              ),
+              _c("p", { staticClass: "title" }, [_vm._v("削除確認")]),
               _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-gray", on: { click: _vm.hide } },
-                [_vm._v("戻る")]
-              )
+              _c("p", [
+                _vm._v(
+                  "\n        ID：" +
+                    _vm._s(_vm.options.questionId) +
+                    " のデータを削除します。よろしいですか？\n      "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "btn-wrapper" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-red",
+                    on: { click: _vm.deleteQuestion }
+                  },
+                  [_vm._v("削除")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-gray", on: { click: _vm.hide } },
+                  [_vm._v("戻る")]
+                )
+              ])
             ])
           : _vm._e()
       ])
@@ -107474,7 +107501,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_2___default.a);
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretDown"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleLeft"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleRight"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimes"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faSearch"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretDown"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleLeft"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleRight"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimes"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faSearch"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimesCircle"]);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_8__["FontAwesomeIcon"]);
 
 function createApp() {

@@ -796,10 +796,21 @@ a {
   .modal-question-edit {
     .header {
       text-align: right;
+      .icon {
+        margin: 10px;
+      }
     }
     .main {
-      #question-edit {
+      .question-edit {
         width: 60%;
+        margin: 0 auto;
+        padding: 10px;
+        .title {
+          font-size: 26px;
+          padding-bottom: 10px;
+          margin-bottom: 15px;
+          border-bottom: 2px solid #f1f3f5;
+        }
         .errors-area {
           border: dashed 2px #668ad8;
           background-color: #f1f8ff;
@@ -847,6 +858,26 @@ a {
           display: flex;
           align-items: center;
           justify-content: flex-end;
+          margin: 15px 0;
+          button + button {
+            margin-left: 20px;
+          }
+        }
+      }
+      .question-delete {
+        width: 60%;
+        margin: 0 auto;
+        padding: 10px;
+        .title {
+          font-size: 26px;
+          padding-bottom: 10px;
+          margin-bottom: 15px;
+          border-bottom: 2px solid #f1f3f5;
+        }
+        .btn-wrapper{
+          display: flex;
+          justify-content:space-around;
+          align-items: center;
           margin: 15px 0;
         }
       }
