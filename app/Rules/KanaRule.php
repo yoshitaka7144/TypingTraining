@@ -36,6 +36,6 @@ class KanaRule implements Rule
      */
     public function message()
     {
-        return ":attribute はひらがなで入力してください";
+        return ":attribute はひらがな or 数字 or 記号（,.、。）で入力してください";
     }
 }

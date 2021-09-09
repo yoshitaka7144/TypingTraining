@@ -36,6 +36,6 @@ class RomanRule implements Rule
      */
     public function message()
     {
-        return ":attribute は半角英数字で入力してください";
+        return ":attribute は半角英数字 or 記号（,.）で入力してください";
     }
 }

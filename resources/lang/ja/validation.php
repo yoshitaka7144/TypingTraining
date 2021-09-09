@@ -148,6 +148,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "categoryId" => "カテゴリー",
+        "text" => "問題",
+        "kana" => "かな",
+        "roman" => "タイピング文字",
+    ],
 
 ];
