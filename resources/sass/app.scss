@@ -255,9 +255,8 @@ i {
   }
 
   #home {
+    width: 100%;
     .top-image {
-      max-width: 1200px;
-      width: 100%;
       margin: 0 auto;
       text-align: center;
 
@@ -639,6 +638,77 @@ i {
 
   #question {
     width: 100%;
+    .form-checkbox {
+      display: none;
+
+      + label {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        padding-left: 25px;
+        padding-right: 10px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          display: block;
+          box-sizing: border-box;
+          width: 20px;
+          height: 20px;
+          margin-top: -10px;
+          left: 0;
+          top: 50%;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+      }
+
+      &:checked + label::after {
+        content: "";
+        position: absolute;
+        display: block;
+        box-sizing: border-box;
+        width: 18px;
+        height: 9px;
+        margin-top: -9px;
+        top: 50%;
+        left: 3px;
+        transform: rotate(-45deg);
+        border-bottom: 3px solid;
+        border-left: 3px solid;
+        border-color: dodgerBlue;
+      }
+    }
+    .search-area {
+      .form-select {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        &:focus {
+          outline: none;
+          border-color: dodgerBlue;
+          box-shadow: 0 0 5px 0 dodgerBlue;
+        }
+      }
+      input[type="text"] {
+        display: block;
+        width: 100%;
+        height: 30px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+
+        &:focus {
+          outline: none;
+          border-color: dodgerBlue;
+          box-shadow: 0 0 5px 0 dodgerBlue;
+        }
+
+        &::placeholder {
+          font-size: 12px;
+        }
+      }
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -667,6 +737,10 @@ i {
           }
           &:nth-child(7) {
             width: 10%;
+          }
+          .icon {
+            margin-left: 5px;
+            
           }
         }
       }

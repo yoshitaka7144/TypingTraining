@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="home" class="contents">
     <div class="top-image">
       <img :src="'./image/top.jpg'" alt="" />
     </div>
@@ -57,7 +57,7 @@
             :class="currentPage === 1 ? 'disabled' : ''"
             @click="changeHistoryPage(currentPage - 1)"
           >
-            <i class="fas fa-angle-double-left"></i>
+            <font-awesome-icon :icon="['fas', 'angle-double-left']" />
           </li>
           <li
             v-for="page in startPageRange"
@@ -89,7 +89,7 @@
             :class="currentPage >= lastPage ? 'disabled' : ''"
             @click="changeHistoryPage(currentPage + 1)"
           >
-            <i class="fas fa-angle-double-right"></i>
+            <font-awesome-icon :icon="['fas', 'angle-double-right']" />
           </li>
         </ul>
         <div class="history-graph">

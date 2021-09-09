@@ -12,7 +12,17 @@ class QuestionController extends Controller
 {
     public function index(Request $request)
     {
-        $questions = Question::select("questions.id as id", "categories.name as category", "text", "kana", "roman", "editor_user_id")->join("categories", "categories.id", "=", "questions.category_id")->paginate($request->perPage);
+        $questions = Question::select("questions.id as id", "categories.name as category", "text", "kana", "roman", "editor_user_id")->join("categories", "categories.id", "=", "questions.category_id")->orderBy($request->orderColumn, $request->orderType);
+
+        if (isset($request->editorUserId)) {
+            $questions = $questions->where("editor_user_id", $request->editorUserId);
+        }
+
+        if (isset($request->searchColumn) && isset($request->searchText)) {
+            $questions = $questions->where($request->searchColumn, "like", "%" . $request->searchText . "%");
+        }
+
+        $questions = $questions->paginate($request->perPage);
         return $questions;
     }
 

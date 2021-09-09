@@ -43,7 +43,7 @@
             <a>ログアウト</a>
           </li>
           <li @click="toggleSpNav">
-            <span><i class="fas fa-times"></i>閉じる</span>
+            <span><font-awesome-icon :icon="['fas', 'times']" />閉じる</span>
           </li>
         </ul>
       </nav>

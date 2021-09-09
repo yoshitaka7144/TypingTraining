@@ -265,9 +265,11 @@ i {
   border-radius: 10px;
 }
 
-.main-container #home .top-image {
-  max-width: 1200px;
+.main-container #home {
   width: 100%;
+}
+
+.main-container #home .top-image {
   margin: 0 auto;
   text-align: center;
 }
@@ -706,6 +708,87 @@ i {
   width: 100%;
 }
 
+.main-container #question .form-checkbox {
+  display: none;
+}
+
+.main-container #question .form-checkbox + label {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  padding-left: 25px;
+  padding-right: 10px;
+}
+
+.main-container #question .form-checkbox + label::before {
+  content: "";
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  left: 0;
+  top: 50%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.main-container #question .form-checkbox:checked + label::after {
+  content: "";
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  width: 18px;
+  height: 9px;
+  margin-top: -9px;
+  top: 50%;
+  left: 3px;
+  transform: rotate(-45deg);
+  border-bottom: 3px solid;
+  border-left: 3px solid;
+  border-color: dodgerBlue;
+}
+
+.main-container #question .search-area .form-select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.main-container #question .search-area .form-select:focus {
+  outline: none;
+  border-color: dodgerBlue;
+  box-shadow: 0 0 5px 0 dodgerBlue;
+}
+
+.main-container #question .search-area input[type=text] {
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.main-container #question .search-area input[type=text]:focus {
+  outline: none;
+  border-color: dodgerBlue;
+  box-shadow: 0 0 5px 0 dodgerBlue;
+}
+
+.main-container #question .search-area input[type=text]::-moz-placeholder {
+  font-size: 12px;
+}
+
+.main-container #question .search-area input[type=text]:-ms-input-placeholder {
+  font-size: 12px;
+}
+
+.main-container #question .search-area input[type=text]::placeholder {
+  font-size: 12px;
+}
+
 .main-container #question table {
   width: 100%;
   border-collapse: collapse;
@@ -743,6 +826,10 @@ i {
 
 .main-container #question table thead th:nth-child(7) {
   width: 10%;
+}
+
+.main-container #question table thead th .icon {
+  margin-left: 5px;
 }
 
 .main-container #question table tbody td {

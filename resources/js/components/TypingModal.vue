@@ -9,7 +9,7 @@
   >
     <div class="modal-header">
       <button class="btn btn-red" @click="hide">
-        <i class="fas fa-times"></i>
+        <font-awesome-icon :icon="['fas', 'times']" />
       </button>
     </div>
     <div class="modal-main">
@@ -604,7 +604,7 @@
               :class="currentPage === 1 ? 'disabled' : ''"
               @click="changeHistoryPage(currentPage - 1)"
             >
-              <i class="fas fa-angle-double-left"></i>
+              <font-awesome-icon :icon="['fas', 'angle-double-left']" />
             </li>
             <li
               v-for="page in startPageRange"
@@ -636,7 +636,7 @@
               :class="currentPage >= lastPage ? 'disabled' : ''"
               @click="changeHistoryPage(currentPage + 1)"
             >
-              <i class="fas fa-angle-double-right"></i>
+              <font-awesome-icon :icon="['fas', 'angle-double-right']" />
             </li>
           </ul>
         </div>
@@ -701,7 +701,7 @@ export default {
       chartData: {},
       chartOptions: {},
       audio: new Audio("/audio/beep.wav"),
-      audioCheaked:false,
+      audioCheaked: false,
     };
   },
   mounted() {

@@ -1,14 +1,103 @@
 <template>
   <div id="question" class="contents">
     <p class="title">問題一覧</p>
+    <div v-if="userRole !== 2">
+      <input
+        type="checkbox"
+        class="form-checkbox"
+        id="onlyEditor"
+        v-model="isOnlyEditor"
+      />
+      <label for="onlyEditor" class="">編集可能データのみ表示</label>
+    </div>
+    <div class="search-area">
+      <select class="form-select" v-model="searchColumn">
+        <option disabled value="">選択して下さい</option>
+        <option
+          v-for="option in selectOptions"
+          :key="option.value"
+          :value="option.value"
+        >
+          {{ option.name }}
+        </option>
+      </select>
+      <input type="text" v-model="searchText" />
+      <button class="btn btn-blue" @click="searchQuestion">検索</button>
+      <button class="btn btn-blue" @click="searchClear">検索解除</button>
+    </div>
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>カテゴリー</th>
-          <th>問題</th>
-          <th>かな</th>
-          <th>タイピング文字</th>
+          <th @click="orderChange('id')">
+            ID<span v-if="orderColumn === 'id'">
+              <font-awesome-icon
+                v-if="orderType === 'desc'"
+                :icon="['fas', 'caret-up']"
+                class="icon"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="['fas', 'caret-down']"
+                class="icon"
+              />
+            </span>
+          </th>
+          <th @click="orderChange('category')">
+            カテゴリー<span v-if="orderColumn === 'category'">
+              <font-awesome-icon
+                v-if="orderType === 'desc'"
+                :icon="['fas', 'caret-up']"
+                class="icon"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="['fas', 'caret-down']"
+                class="icon"
+              />
+            </span>
+          </th>
+          <th @click="orderChange('text')">
+            問題<span v-if="orderColumn === 'text'">
+              <font-awesome-icon
+                v-if="orderType === 'desc'"
+                :icon="['fas', 'caret-up']"
+                class="icon"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="['fas', 'caret-down']"
+                class="icon"
+              />
+            </span>
+          </th>
+          <th @click="orderChange('kana')">
+            かな<span v-if="orderColumn === 'kana'">
+              <font-awesome-icon
+                v-if="orderType === 'desc'"
+                :icon="['fas', 'caret-up']"
+                class="icon"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="['fas', 'caret-down']"
+                class="icon"
+              />
+            </span>
+          </th>
+          <th @click="orderChange('roman')">
+            タイピング文字<span v-if="orderColumn === 'roman'">
+              <font-awesome-icon
+                v-if="orderType === 'desc'"
+                :icon="['fas', 'caret-up']"
+                class="icon"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="['fas', 'caret-down']"
+                class="icon"
+              />
+            </span>
+          </th>
           <th></th>
           <th></th>
         </tr>
@@ -46,7 +135,7 @@
         :class="currentPage === 1 ? 'disabled' : ''"
         @click="changeQuestionPage(currentPage - 1)"
       >
-        <i class="fas fa-angle-double-left"></i>
+        <font-awesome-icon :icon="['fas', 'angle-double-left']" />
       </li>
       <li
         v-for="page in startPageRange"
@@ -78,7 +167,7 @@
         :class="currentPage >= lastPage ? 'disabled' : ''"
         @click="changeQuestionPage(currentPage + 1)"
       >
-        <i class="fas fa-angle-double-right"></i>
+        <font-awesome-icon :icon="['fas', 'angle-double-right']" />
       </li>
     </ul>
     <button class="btn btn-blue" @click="modalShow(1)">問題作成</button>
@@ -98,12 +187,25 @@ export default {
         questionId: "",
         updateParentPage: this.getQuestions,
       },
+      isOnlyEditor: false,
+      orderColumn: "id",
+      orderType: "asc",
       perPage: 5,
       currentPage: 1,
       lastPage: "",
       range: 5, // 奇数
       startDot: false,
       endDot: false,
+      selectOptions: [
+        { value: "questions.id", name: "ID" },
+        { value: "categories.name", name: "カテゴリー" },
+        { value: "text", name: "問題" },
+        { value: "kana", name: "かな" },
+        { value: "roman", name: "タイピング文字" },
+      ],
+      searchColumn: "",
+      searchText: "",
+      isSearched: false,
     };
   },
   components: {
@@ -114,6 +216,11 @@ export default {
       const params = {
         perPage: this.perPage,
         page: topPage === 0 ? this.currentPage : 1,
+        orderColumn: this.orderColumn,
+        orderType: this.orderType,
+        editorUserId: this.isOnlyEditor ? this.userId : null,
+        searchColumn: this.isSearched ? this.searchColumn : null,
+        searchText: this.isSearched ? this.searchText : null,
       };
       const response = await axios
         .get("/api/question", { params })
@@ -148,6 +255,30 @@ export default {
     },
     isActive(page) {
       return this.currentPage === page;
+    },
+    orderChange(columnName) {
+      if (this.orderColumn !== columnName) {
+        this.orderColumn = columnName;
+        this.orderType = "asc";
+      } else {
+        this.orderType = this.orderType === "desc" ? "asc" : "desc";
+      }
+      this.getQuestions(1);
+    },
+    searchQuestion() {
+      if (this.searchColumn === "" || this.searchText.length <= 0) {
+        // エラーメッセージ表示
+
+        return;
+      }
+      this.isSearched = true;
+      this.getQuestions(1);
+    },
+    searchClear() {
+      this.searchColumn = "";
+      this.searchText = "";
+      this.isSearched = false;
+      this.getQuestions(1);
     },
   },
   computed: {
@@ -201,6 +332,11 @@ export default {
   },
   created() {
     this.getQuestions();
+  },
+  watch: {
+    isOnlyEditor() {
+      this.getQuestions(1);
+    },
   },
 };
 </script>

@@ -10,7 +10,7 @@
   >
     <div class="header">
       <button class="btn btn-red" @click="hide">
-        <i class="fas fa-times"></i>
+        <font-awesome-icon :icon="['fas', 'times']" />
       </button>
     </div>
     <div class="main">
@@ -47,7 +47,11 @@
           <label v-if="options.mode === 2">ID：{{ options.questionId }}</label>
 
           <label for="question-category">カテゴリー</label>
-          <select id="question-category" class="form-select" v-model="registerForm.categoryId">
+          <select
+            id="question-category"
+            class="form-select"
+            v-model="registerForm.categoryId"
+          >
             <option disabled value="">選択して下さい</option>
             <option
               v-for="option in selectOptions"
