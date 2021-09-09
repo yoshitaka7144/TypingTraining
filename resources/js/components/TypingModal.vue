@@ -669,6 +669,7 @@ export default {
   props: {
     categoryId: "",
     updateParentPage: null,
+    initCategoryId: Function,
   },
   data() {
     return {
@@ -805,6 +806,7 @@ export default {
   methods: {
     hide() {
       this.clear();
+      this.initCategoryId();
       this.$modal.hide("modal-typing");
     },
     start() {
@@ -1071,6 +1073,7 @@ export default {
           case 3:
             //タイプミス時
 
+            // ミス音声再生
             if (this.canPlayAudio) {
               this.audio.play();
             }
@@ -1078,7 +1081,7 @@ export default {
             // ミス回数カウント
             this.missTypeCount++;
 
-            //
+            // ミスキーをセット
             this.missTypeKey = this.roman[this.romanIndex];
 
             // ミスタイプキーカウント
@@ -1097,7 +1100,9 @@ export default {
   },
   watch: {
     categoryId(val) {
-      this.getQuestions();
+      if (val !== "") {
+        this.getQuestions();
+      }
     },
   },
 };

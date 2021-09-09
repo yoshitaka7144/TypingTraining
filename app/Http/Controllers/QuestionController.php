@@ -65,6 +65,6 @@ class QuestionController extends Controller
 
     public function category($categoryId)
     {
-        return Question::where("category_id", $categoryId)->get();
+        return Question::where("category_id", $categoryId)->inRandomOrder()->get();
     }
 }

@@ -12562,6 +12562,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     showTypingModal: function showTypingModal(categoryId) {
       this.categoryId = categoryId;
       this.$modal.show("modal-typing");
+    },
+    initCategoryId: function initCategoryId() {
+      this.categoryId = "";
     }
   }
 });
@@ -14406,7 +14409,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: {
     categoryId: "",
-    updateParentPage: null
+    updateParentPage: null,
+    initCategoryId: Function
   },
   data: function data() {
     return {
@@ -14546,6 +14550,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     hide: function hide() {
       this.clear();
+      this.initCategoryId();
       this.$modal.hide("modal-typing");
     },
     start: function start() {
@@ -14882,12 +14887,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           case 0:
           case 3:
             //タイプミス時
+            // ミス音声再生
             if (this.canPlayAudio) {
               this.audio.play();
             } // ミス回数カウント
 
 
-            this.missTypeCount++; //
+            this.missTypeCount++; // ミスキーをセット
 
             this.missTypeKey = this.roman[this.romanIndex]; // ミスタイプキーカウント
 
@@ -14907,7 +14913,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {
     categoryId: function categoryId(val) {
-      this.getQuestions();
+      if (val !== "") {
+        this.getQuestions();
+      }
     }
   }
 });
@@ -88348,7 +88356,11 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("TypingModal", {
-        attrs: { categoryId: _vm.categoryId, updateParentPage: _vm.getHistory }
+        attrs: {
+          categoryId: _vm.categoryId,
+          updateParentPage: _vm.getHistory,
+          initCategoryId: _vm.initCategoryId
+        }
       })
     ],
     1

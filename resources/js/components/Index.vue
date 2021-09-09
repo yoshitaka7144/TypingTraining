@@ -101,7 +101,7 @@
         </div>
       </div>
     </div>
-    <TypingModal :categoryId="categoryId" :updateParentPage="getHistory" />
+    <TypingModal :categoryId="categoryId" :updateParentPage="getHistory" :initCategoryId="initCategoryId" />
   </div>
 </template>
 
@@ -312,6 +312,9 @@ export default {
       this.categoryId = categoryId;
       this.$modal.show("modal-typing");
     },
+    initCategoryId(){
+      this.categoryId = "";
+    }
   },
 };
 </script>
