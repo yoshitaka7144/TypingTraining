@@ -12344,6 +12344,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -12434,9 +12436,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getCategories();
 
     if (this.isLogin) {
-      this.getHistory();
-      this.getUserInfo();
-      this.getUserAverageWpm();
+      this.loadMemberInfo();
     }
   },
   methods: {
@@ -12669,6 +12669,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     initCategoryId: function initCategoryId() {
       this.categoryId = "";
+    },
+    loadMemberInfo: function loadMemberInfo() {
+      this.getHistory();
+      this.getUserInfo();
+      this.getUserAverageWpm();
     }
   }
 });
@@ -88267,96 +88272,90 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "contents", attrs: { id: "home" } },
+    { attrs: { id: "home" } },
     [
       _c("div", { staticClass: "top-image" }, [
         _c("img", { attrs: { src: "./image/top.jpg", alt: "" } })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "main" }, [
-        _c("div", { staticClass: "menu" }, [
-          _c("div", { staticClass: "member-menu" }, [
-            _c("p", { staticClass: "title" }, [_vm._v("会員メニュー")]),
-            _vm._v(" "),
-            !_vm.isLogin
-              ? _c(
-                  "div",
-                  [
-                    _c("router-link", { attrs: { to: { name: "login" } } }, [
-                      _c("button", { staticClass: "btn btn-green" }, [
-                        _vm._v("ログイン")
-                      ])
-                    ])
-                  ],
-                  1
-                )
-              : _c(
-                  "div",
-                  [
-                    _c("router-link", { attrs: { to: { name: "question" } } }, [
-                      _c("button", { staticClass: "btn btn-green" }, [
-                        _vm._v("問題編集")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("ユーザー情報")]),
-                    _vm._v(" "),
-                    _c("table", [
-                      _c("tr", [
-                        _c("th", [_vm._v("ユーザー名")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(_vm.userName))])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("th", [_vm._v("総タイプ数")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(_vm.userTypeCount))])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("th", [_vm._v("平均WPM")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(_vm.averageWpm))])
-                      ])
-                    ])
-                  ],
-                  1
-                )
-          ]),
+        _c("div", { staticClass: "member-menu menu" }, [
+          _c("p", { staticClass: "title" }, [_vm._v("会員メニュー")]),
           _vm._v(" "),
-          _c("div", { staticClass: "typing-menu" }, [
-            _c("p", { staticClass: "title" }, [_vm._v("タイピングメニュー")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "btn-wrapper" },
-              _vm._l(_vm.categories, function(category) {
-                return _c(
-                  "button",
-                  {
-                    key: category.id,
-                    staticClass: "btn btn-blue",
-                    on: {
-                      click: function($event) {
-                        return _vm.showTypingModal(category.id)
-                      }
+          !_vm.isLogin
+            ? _c(
+                "div",
+                [
+                  _c("router-link", { attrs: { to: { name: "login" } } }, [
+                    _c("button", { staticClass: "btn btn-green" }, [
+                      _vm._v("ログイン")
+                    ])
+                  ])
+                ],
+                1
+              )
+            : _c(
+                "div",
+                [
+                  _c("router-link", { attrs: { to: { name: "question" } } }, [
+                    _c("button", { staticClass: "btn btn-green" }, [
+                      _vm._v("問題編集")
+                    ])
+                  ])
+                ],
+                1
+              ),
+          _vm._v(" "),
+          _vm.isLogin
+            ? _c("table", { staticClass: "user-info-table" }, [
+                _c("tr", [
+                  _c("th", [_vm._v("ユーザー名")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.userName))])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v("総タイプ数")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.userTypeCount))])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v("平均WPM")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.averageWpm))])
+                ])
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "typing-menu menu" }, [
+          _c("p", { staticClass: "title" }, [_vm._v("タイピングメニュー")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "btn-wrapper" },
+            _vm._l(_vm.categories, function(category) {
+              return _c(
+                "button",
+                {
+                  key: category.id,
+                  staticClass: "btn btn-blue",
+                  on: {
+                    click: function($event) {
+                      return _vm.showTypingModal(category.id)
                     }
-                  },
-                  [
-                    _vm._v(
-                      "\n            " + _vm._s(category.name) + "\n          "
-                    )
-                  ]
-                )
-              }),
-              0
-            )
-          ])
+                  }
+                },
+                [_vm._v("\n          " + _vm._s(category.name) + "\n        ")]
+              )
+            }),
+            0
+          )
         ]),
         _vm._v(" "),
         _vm.isLogin && _vm.existsHistory
-          ? _c("div", { staticClass: "history" }, [
+          ? _c("div", { staticClass: "history menu" }, [
               _c("p", { staticClass: "title" }, [_vm._v("履歴データ")]),
               _vm._v(" "),
               _c(
@@ -88521,13 +88520,23 @@ var render = function() {
                 )
               ])
             ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isLogin && !_vm.existsHistory
+          ? _c("div", { staticClass: "history menu" }, [
+              _c("p", { staticClass: "title" }, [_vm._v("履歴データ")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "message" }, [
+                _vm._v("まだ履歴データがありません。")
+              ])
+            ])
           : _vm._e()
       ]),
       _vm._v(" "),
       _c("TypingModal", {
         attrs: {
           categoryId: _vm.categoryId,
-          updateParentPage: _vm.getHistory,
+          updateParentPage: _vm.loadMemberInfo,
           initCategoryId: _vm.initCategoryId
         }
       })
@@ -107628,7 +107637,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_2___default.a);
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretDown"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleLeft"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleRight"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimes"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faSearch"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimesCircle"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_6__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretUp"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCaretDown"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleLeft"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faAngleDoubleRight"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimes"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faSearch"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faTimesCircle"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_7__["faCheckCircle"]);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_8__["FontAwesomeIcon"]);
 
 function createApp() {

@@ -1,55 +1,53 @@
 <template>
-  <div id="home" class="contents">
+  <div id="home">
     <div class="top-image">
       <img :src="'./image/top.jpg'" alt="" />
     </div>
 
     <div class="main">
-      <div class="menu">
-        <div class="member-menu">
-          <p class="title">会員メニュー</p>
-          <div v-if="!isLogin">
-            <router-link :to="{ name: 'login' }">
-              <button class="btn btn-green">ログイン</button>
-            </router-link>
-          </div>
-          <div v-else>
-            <router-link :to="{ name: 'question' }">
-              <button class="btn btn-green">問題編集</button>
-            </router-link>
-            <p>ユーザー情報</p>
-            <table>
-              <tr>
-                <th>ユーザー名</th>
-                <td>{{ userName }}</td>
-              </tr>
-              <tr>
-                <th>総タイプ数</th>
-                <td>{{ userTypeCount }}</td>
-              </tr>
-              <tr>
-                <th>平均WPM</th>
-                <td>{{ averageWpm }}</td>
-              </tr>
-            </table>
-          </div>
+      <div class="member-menu menu">
+        <p class="title">会員メニュー</p>
+        <div v-if="!isLogin">
+          <router-link :to="{ name: 'login' }">
+            <button class="btn btn-green">ログイン</button>
+          </router-link>
         </div>
-        <div class="typing-menu">
-          <p class="title">タイピングメニュー</p>
-          <div class="btn-wrapper">
-            <button
-              class="btn btn-blue"
-              v-for="category in categories"
-              :key="category.id"
-              @click="showTypingModal(category.id)"
-            >
-              {{ category.name }}
-            </button>
-          </div>
+        <div v-else>
+          <router-link :to="{ name: 'question' }">
+            <button class="btn btn-green">問題編集</button>
+          </router-link>
+        </div>
+        <table v-if="isLogin" class="user-info-table">
+          <tr>
+            <th>ユーザー名</th>
+            <td>{{ userName }}</td>
+          </tr>
+          <tr>
+            <th>総タイプ数</th>
+            <td>{{ userTypeCount }}</td>
+          </tr>
+          <tr>
+            <th>平均WPM</th>
+            <td>{{ averageWpm }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="typing-menu menu">
+        <p class="title">タイピングメニュー</p>
+        <div class="btn-wrapper">
+          <button
+            class="btn btn-blue"
+            v-for="category in categories"
+            :key="category.id"
+            @click="showTypingModal(category.id)"
+          >
+            {{ category.name }}
+          </button>
         </div>
       </div>
 
-      <div class="history" v-if="isLogin && existsHistory">
+      <div class="history menu" v-if="isLogin && existsHistory">
         <p class="title">履歴データ</p>
         <ul class="pagination">
           <li
@@ -121,10 +119,14 @@
           </div>
         </div>
       </div>
+      <div class="history menu" v-if="isLogin && !existsHistory">
+        <p class="title">履歴データ</p>
+        <p class="message">まだ履歴データがありません。</p>
+      </div>
     </div>
     <TypingModal
       :categoryId="categoryId"
-      :updateParentPage="getHistory"
+      :updateParentPage="loadMemberInfo"
       :initCategoryId="initCategoryId"
     />
   </div>
@@ -219,9 +221,7 @@ export default {
   mounted() {
     this.getCategories();
     if (this.isLogin) {
-      this.getHistory();
-      this.getUserInfo();
-      this.getUserAverageWpm();
+      this.loadMemberInfo();
     }
   },
   methods: {
@@ -373,6 +373,11 @@ export default {
     },
     initCategoryId() {
       this.categoryId = "";
+    },
+    loadMemberInfo() {
+      this.getHistory();
+      this.getUserInfo();
+      this.getUserAverageWpm();
     },
   },
 };
