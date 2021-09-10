@@ -54,6 +54,9 @@ Route::group(["middleware" => "auth"], function () {
   // 問題削除
   Route::delete('/question/{question}', 'QuestionController@destroy')->name('question.destroy');
 
+  // ユーザー情報取得
+  Route::get('/user/{user}', 'UserController@show')->name('user.show');
+
   // ユーザー情報更新
   Route::put('/user/{user}', 'UserController@update')->name('user.update');
 
@@ -62,4 +65,7 @@ Route::group(["middleware" => "auth"], function () {
 
   // 履歴登録
   Route::post('/history', 'HistoryController@store')->name('history.create');
+
+  // 履歴から平均WPM取得
+  Route::get('/history/averageWpm', 'HistoryController@calcAverageWpm')->name('history.averageWpm');
 });

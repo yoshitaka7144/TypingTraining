@@ -276,12 +276,19 @@ a:hover {
   flex-direction: column;
 }
 
+.main-container #home .main .title {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+}
+
 .main-container #home .main .menu {
   display: flex;
   text-align: center;
 }
 
-.main-container #home .main .menu .login-menu {
+.main-container #home .main .menu .member-menu {
   width: 50%;
 }
 
@@ -289,49 +296,71 @@ a:hover {
   width: 50%;
 }
 
-.main-container #home .main .history .history-table {
-  width: 100%;
+.main-container #home .main .menu .typing-menu .btn-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.main-container #home .main .menu .typing-menu .btn-wrapper button {
+  width: calc(50% - 30px);
+  margin: 15px;
+}
+
+.main-container #home .main .history .history-data {
+  display: flex;
+  justify-content: center;
+}
+
+.main-container #home .main .history .history-data .history-table {
+  margin-right: 15px;
+  width: 47%;
   border-collapse: collapse;
 }
 
-.main-container #home .main .history .history-table thead th {
+.main-container #home .main .history .history-data .history-table thead th {
   text-align: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }
 
-.main-container #home .main .history .history-table thead th:nth-child(1) {
+.main-container #home .main .history .history-data .history-table thead th:nth-child(1) {
   width: 20%;
 }
 
-.main-container #home .main .history .history-table thead th:nth-child(2) {
+.main-container #home .main .history .history-data .history-table thead th:nth-child(2) {
   width: 15%;
 }
 
-.main-container #home .main .history .history-table thead th:nth-child(3) {
+.main-container #home .main .history .history-data .history-table thead th:nth-child(3) {
   width: 15%;
 }
 
-.main-container #home .main .history .history-table thead th:nth-child(4) {
+.main-container #home .main .history .history-data .history-table thead th:nth-child(4) {
   width: 20%;
 }
 
-.main-container #home .main .history .history-table thead th:nth-child(5) {
+.main-container #home .main .history .history-data .history-table thead th:nth-child(5) {
   width: 30%;
 }
 
-.main-container #home .main .history .history-table tbody td {
+.main-container #home .main .history .history-data .history-table tbody td {
   text-align: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }
 
-.main-container #home .main .history .history-table tbody tr:nth-child(odd) {
+.main-container #home .main .history .history-data .history-table tbody tr:nth-child(odd) {
   background-color: #eee;
+}
+
+.main-container #home .main .history .history-data .history-graph {
+  width: 47%;
 }
 
 .main-container #home .main .history .pagination {
   display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }
 
 .main-container #home .main .history .pagination li {
@@ -346,7 +375,7 @@ a:hover {
 }
 
 .main-container #home .main .history .pagination .active {
-  background-color: #3490dc;
+  background-color: #6cb2eb;
 }
 
 .main-container #home .main .history .pagination .disabled {
@@ -817,7 +846,7 @@ a:hover {
   text-align: center;
   padding: 10px;
   border-bottom: 3px solid #ccc;
-  background-color: bisque;
+  background-color: lavender;
 }
 
 .main-container #question table thead th:nth-child(1) {
@@ -1009,6 +1038,22 @@ a:hover {
 
 ----------------------------------------------*/
 
+@media screen and (max-width: 999px) {
+  .main-container #home .main .history .history-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .main-container #home .main .history .history-data .history-table {
+    width: 100%;
+  }
+
+  .main-container #home .main .history .history-data .history-graph {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .header-container .header #pc-nav {
     display: none;
@@ -1016,6 +1061,24 @@ a:hover {
 
   .header-container .header #hamburger {
     display: block;
+  }
+
+  .main-container #home .top-image img {
+    width: 70%;
+    margin-top: 15px;
+  }
+
+  .main-container #home .main .menu {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .main-container #home .main .menu .member-menu {
+    width: 100%;
+  }
+
+  .main-container #home .main .menu .typing-menu {
+    width: 100%;
   }
 
   .main-container #auth {

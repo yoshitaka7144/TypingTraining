@@ -959,7 +959,7 @@ export default {
     },
     async updateUserInfo() {
       const response = await axios
-        .put("/api/user/" + this.userId, { typeCount: this.typeCount })
+        .put("/api/user/" + this.userId, { typeCount: this.correctTypeCount })
         .catch((error) => error.response || error);
 
       if (response.status === OK) {

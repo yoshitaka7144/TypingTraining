@@ -6,52 +6,51 @@
 
     <div class="main">
       <div class="menu">
-        <div class="login-menu">
+        <div class="member-menu">
+          <p class="title">会員メニュー</p>
           <div v-if="!isLogin">
             <router-link :to="{ name: 'login' }">
               <button class="btn btn-green">ログイン</button>
             </router-link>
           </div>
-          <div v-if="isLogin">
-            <p>{{ userName }}でログインしています</p>
+          <div v-else>
             <router-link :to="{ name: 'question' }">
               <button class="btn btn-green">問題編集</button>
             </router-link>
+            <p>ユーザー情報</p>
+            <table>
+              <tr>
+                <th>ユーザー名</th>
+                <td>{{ userName }}</td>
+              </tr>
+              <tr>
+                <th>総タイプ数</th>
+                <td>{{ userTypeCount }}</td>
+              </tr>
+              <tr>
+                <th>平均WPM</th>
+                <td>{{ averageWpm }}</td>
+              </tr>
+            </table>
           </div>
         </div>
         <div class="typing-menu">
-          <button
-            class="btn btn-blue"
-            v-for="category in categories"
-            :key="category.id"
-            @click="showTypingModal(category.id)"
-          >
-            {{ category.name }}
-          </button>
+          <p class="title">タイピングメニュー</p>
+          <div class="btn-wrapper">
+            <button
+              class="btn btn-blue"
+              v-for="category in categories"
+              :key="category.id"
+              @click="showTypingModal(category.id)"
+            >
+              {{ category.name }}
+            </button>
+          </div>
         </div>
       </div>
 
       <div class="history" v-if="isLogin && existsHistory">
-        <table class="history-table">
-          <thead>
-            <tr>
-              <th>カテゴリー</th>
-              <th>WPM</th>
-              <th>正答率</th>
-              <th>ミスしたキー</th>
-              <th>日付</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="history in histories" :key="history.id">
-              <td>{{ history.category }}</td>
-              <td>{{ history.wpm }}</td>
-              <td>{{ history.correct_percentage }}</td>
-              <td>{{ history.miss_key }}</td>
-              <td>{{ history.created_at }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <p class="title">履歴データ</p>
         <ul class="pagination">
           <li
             :class="currentPage === 1 ? 'disabled' : ''"
@@ -92,16 +91,42 @@
             <font-awesome-icon :icon="['fas', 'angle-double-right']" />
           </li>
         </ul>
-        <div class="history-graph">
-          <HistoryChart
-            :chartData="chartData"
-            :options="chartOptions"
-            :height="350"
-          />
+        <div class="history-data">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>カテゴリー</th>
+                <th>WPM</th>
+                <th>正答率</th>
+                <th>ミスしたキー</th>
+                <th>日付</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="history in histories" :key="history.id">
+                <td>{{ history.category }}</td>
+                <td>{{ history.wpm }}</td>
+                <td>{{ history.correct_percentage }}</td>
+                <td>{{ history.miss_key }}</td>
+                <td>{{ history.created_at }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="history-graph">
+            <HistoryChart
+              :chartData="chartData"
+              :options="chartOptions"
+              :height="350"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <TypingModal :categoryId="categoryId" :updateParentPage="getHistory" :initCategoryId="initCategoryId" />
+    <TypingModal
+      :categoryId="categoryId"
+      :updateParentPage="getHistory"
+      :initCategoryId="initCategoryId"
+    />
   </div>
 </template>
 
@@ -127,6 +152,8 @@ export default {
       chartData: {},
       chartOptions: {},
       categoryId: "",
+      userTypeCount: "",
+      userAverageWpm: "",
     };
   },
   computed: {
@@ -183,14 +210,46 @@ export default {
     existsHistory() {
       return Object.keys(this.histories).length > 0;
     },
+    averageWpm() {
+      return this.userAverageWpm !== ""
+        ? Math.floor(this.userAverageWpm)
+        : "---";
+    },
   },
   mounted() {
     this.getCategories();
     if (this.isLogin) {
       this.getHistory();
+      this.getUserInfo();
+      this.getUserAverageWpm();
     }
   },
   methods: {
+    async getUserInfo() {
+      const response = await axios
+        .get("/api/user/" + this.userId)
+        .catch((error) => error.response || error);
+
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
+      } else {
+        this.userTypeCount = response.data.type_count;
+      }
+    },
+    async getUserAverageWpm() {
+      const params = {
+        userId: this.userId,
+      };
+      const response = await axios
+        .get("/api/history/averageWpm", { params })
+        .catch((error) => error.response || error);
+
+      if (response.status === INTERNAL_SERVER_ERROR) {
+        this.$store.commit("error/setCode", response.status);
+      } else {
+        this.userAverageWpm = response.data;
+      }
+    },
     async getCategories() {
       const response = await axios
         .get("/api/category")
@@ -312,9 +371,9 @@ export default {
       this.categoryId = categoryId;
       this.$modal.show("modal-typing");
     },
-    initCategoryId(){
+    initCategoryId() {
       this.categoryId = "";
-    }
+    },
   },
 };
 </script>

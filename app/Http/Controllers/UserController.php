@@ -14,4 +14,10 @@ class UserController extends Controller
 
         return $user;
     }
+
+    public function show(User $user)
+    {
+        return $user;
+    }
+
 }

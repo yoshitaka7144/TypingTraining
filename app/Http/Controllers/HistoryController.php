@@ -32,4 +32,14 @@ class HistoryController extends Controller
 
         return $history;
     }
+
+    public function calcAverageWpm(Request $request)
+    {
+        $user_id = $request->userId;
+        if (isset($user_id)) {
+            return History::where("user_id", $user_id)->avg("wpm");
+        } else {
+            return false;
+        }
+    }
 }

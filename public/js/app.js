@@ -12319,6 +12319,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12340,7 +12365,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       endDot: false,
       chartData: {},
       chartOptions: {},
-      categoryId: ""
+      categoryId: "",
+      userTypeCount: "",
+      userAverageWpm: ""
     };
   },
   computed: {
@@ -12398,6 +12425,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     existsHistory: function existsHistory() {
       return Object.keys(this.histories).length > 0;
+    },
+    averageWpm: function averageWpm() {
+      return this.userAverageWpm !== "" ? Math.floor(this.userAverageWpm) : "---";
     }
   },
   mounted: function mounted() {
@@ -12405,10 +12435,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     if (this.isLogin) {
       this.getHistory();
+      this.getUserInfo();
+      this.getUserAverageWpm();
     }
   },
   methods: {
-    getCategories: function getCategories() {
+    getUserInfo: function getUserInfo() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -12418,7 +12450,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/category")["catch"](function (error) {
+                return axios.get("/api/user/" + _this.userId)["catch"](function (error) {
                   return error.response || error;
                 });
 
@@ -12428,7 +12460,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
                   _this.$store.commit("error/setCode", response.status);
                 } else {
-                  _this.categories = response.data;
+                  _this.userTypeCount = response.data.type_count;
                 }
 
               case 4:
@@ -12439,23 +12471,90 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    getHistory: function getHistory() {
-      var _arguments = arguments,
-          _this2 = this;
+    getUserAverageWpm: function getUserAverageWpm() {
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var topPage, params, response, histories;
+        var params, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                params = {
+                  userId: _this2.userId
+                };
+                _context2.next = 3;
+                return axios.get("/api/history/averageWpm", {
+                  params: params
+                })["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 3:
+                response = _context2.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
+                  _this2.$store.commit("error/setCode", response.status);
+                } else {
+                  _this2.userAverageWpm = response.data;
+                }
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    getCategories: function getCategories() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.get("/api/category")["catch"](function (error) {
+                  return error.response || error;
+                });
+
+              case 2:
+                response = _context3.sent;
+
+                if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
+                  _this3.$store.commit("error/setCode", response.status);
+                } else {
+                  _this3.categories = response.data;
+                }
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    getHistory: function getHistory() {
+      var _arguments = arguments,
+          _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var topPage, params, response, histories;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
                 topPage = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 0;
                 params = {
-                  userId: _this2.userId,
-                  perPage: _this2.perPage,
-                  page: topPage === 0 ? _this2.currentPage : 1
+                  userId: _this4.userId,
+                  perPage: _this4.perPage,
+                  page: topPage === 0 ? _this4.currentPage : 1
                 };
-                _context2.next = 4;
+                _context4.next = 4;
                 return axios.get("/api/history", {
                   params: params
                 })["catch"](function (error) {
@@ -12463,25 +12562,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 4:
-                response = _context2.sent;
+                response = _context4.sent;
 
                 if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
-                  _this2.$store.commit("error/setCode", response.status);
+                  _this4.$store.commit("error/setCode", response.status);
                 } else {
                   histories = response.data;
-                  _this2.currentPage = histories.current_page;
-                  _this2.lastPage = histories.last_page;
-                  _this2.histories = histories.data;
+                  _this4.currentPage = histories.current_page;
+                  _this4.lastPage = histories.last_page;
+                  _this4.histories = histories.data;
 
-                  _this2.createHistoryChartData();
+                  _this4.createHistoryChartData();
                 }
 
               case 6:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2);
+        }, _callee4);
       }))();
     },
     createRange: function createRange(start, end) {
@@ -14723,7 +14822,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return axios.put("/api/user/" + _this.userId, {
-                  typeCount: _this.typeCount
+                  typeCount: _this.correctTypeCount
                 })["catch"](function (error) {
                   return error.response || error;
                 });
@@ -88176,7 +88275,9 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "main" }, [
         _c("div", { staticClass: "menu" }, [
-          _c("div", { staticClass: "login-menu" }, [
+          _c("div", { staticClass: "member-menu" }, [
+            _c("p", { staticClass: "title" }, [_vm._v("会員メニュー")]),
+            _vm._v(" "),
             !_vm.isLogin
               ? _c(
                   "div",
@@ -88189,72 +88290,74 @@ var render = function() {
                   ],
                   1
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.isLogin
-              ? _c(
+              : _c(
                   "div",
                   [
-                    _c("p", [
-                      _vm._v(_vm._s(_vm.userName) + "でログインしています")
-                    ]),
-                    _vm._v(" "),
                     _c("router-link", { attrs: { to: { name: "question" } } }, [
                       _c("button", { staticClass: "btn btn-green" }, [
                         _vm._v("問題編集")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("ユーザー情報")]),
+                    _vm._v(" "),
+                    _c("table", [
+                      _c("tr", [
+                        _c("th", [_vm._v("ユーザー名")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.userName))])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("th", [_vm._v("総タイプ数")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.userTypeCount))])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("th", [_vm._v("平均WPM")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.averageWpm))])
                       ])
                     ])
                   ],
                   1
                 )
-              : _vm._e()
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "typing-menu" },
-            _vm._l(_vm.categories, function(category) {
-              return _c(
-                "button",
-                {
-                  key: category.id,
-                  staticClass: "btn btn-blue",
-                  on: {
-                    click: function($event) {
-                      return _vm.showTypingModal(category.id)
+          _c("div", { staticClass: "typing-menu" }, [
+            _c("p", { staticClass: "title" }, [_vm._v("タイピングメニュー")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "btn-wrapper" },
+              _vm._l(_vm.categories, function(category) {
+                return _c(
+                  "button",
+                  {
+                    key: category.id,
+                    staticClass: "btn btn-blue",
+                    on: {
+                      click: function($event) {
+                        return _vm.showTypingModal(category.id)
+                      }
                     }
-                  }
-                },
-                [_vm._v("\n          " + _vm._s(category.name) + "\n        ")]
-              )
-            }),
-            0
-          )
+                  },
+                  [
+                    _vm._v(
+                      "\n            " + _vm._s(category.name) + "\n          "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ])
         ]),
         _vm._v(" "),
         _vm.isLogin && _vm.existsHistory
           ? _c("div", { staticClass: "history" }, [
-              _c("table", { staticClass: "history-table" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.histories, function(history) {
-                    return _c("tr", { key: history.id }, [
-                      _c("td", [_vm._v(_vm._s(history.category))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(history.wpm))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(history.correct_percentage))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(history.miss_key))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(history.created_at))])
-                    ])
-                  }),
-                  0
-                )
-              ]),
+              _c("p", { staticClass: "title" }, [_vm._v("履歴データ")]),
               _vm._v(" "),
               _c(
                 "ul",
@@ -88379,20 +88482,44 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "history-graph" },
-                [
-                  _c("HistoryChart", {
-                    attrs: {
-                      chartData: _vm.chartData,
-                      options: _vm.chartOptions,
-                      height: 350
-                    }
-                  })
-                ],
-                1
-              )
+              _c("div", { staticClass: "history-data" }, [
+                _c("table", { staticClass: "history-table" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.histories, function(history) {
+                      return _c("tr", { key: history.id }, [
+                        _c("td", [_vm._v(_vm._s(history.category))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(history.wpm))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(history.correct_percentage))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(history.miss_key))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(history.created_at))])
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "history-graph" },
+                  [
+                    _c("HistoryChart", {
+                      attrs: {
+                        chartData: _vm.chartData,
+                        options: _vm.chartOptions,
+                        height: 350
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
             ])
           : _vm._e()
       ]),
