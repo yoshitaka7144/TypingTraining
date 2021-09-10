@@ -5,28 +5,44 @@
     :resizable="true"
     :clickToClose="false"
     :width="'80%'"
-    :height="'70%'"
+    :height="'auto'"
   >
     <div class="modal-header">
-      <button class="btn btn-red" @click="hide">
-        <font-awesome-icon :icon="['fas', 'times']" />
-      </button>
+      <font-awesome-icon
+        :icon="['fas', 'times']"
+        size="2x"
+        class="icon"
+        @click="hide"
+      />
     </div>
     <div class="modal-main">
       <div class="" v-if="phase === 1">
-        <select id="" class="form-select" v-model="questionCount">
-          <option :value="n" v-for="n in questions.length" :key="n">
-            {{ n }}
-          </option>
-        </select>
-        <input
-          type="checkbox"
-          class="form-checkbox"
-          id="audio"
-          v-model="audioCheaked"
-        />
-        <label for="audio" class="">音声の有無</label>
-        <p>スペースキーを押すとスタートします。</p>
+        <div class="question-setting">
+          <div>
+            <label for="questionCount">問題数：</label>
+            <select
+              id="questionCount"
+              class="form-select"
+              v-model="questionCount"
+            >
+              <option :value="n" v-for="n in questions.length" :key="n">
+                {{ n }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              class="form-checkbox"
+              id="audio"
+              v-model="audioCheaked"
+            />
+            <label for="audio" class="">音声の有無</label>
+          </div>
+        </div>
+        <p v-if="questionCount > 0" class="message">スペースキーを押すとスタートします。</p>
+        <p v-else class="message error">問題が登録されていません。
+        </p>
       </div>
 
       <div class="" v-if="phase === 2">
@@ -1043,7 +1059,7 @@ export default {
     keyAction(e) {
       if (this.phase === 1) {
         e.preventDefault();
-        if (e.code === "Space") {
+        if (e.code === "Space" && this.questionCount > 0) {
           this.start();
         }
       } else if (this.phase === 2) {

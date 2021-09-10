@@ -2,9 +2,7 @@
   <div id="question" class="contents">
     <div class="title-area">
       <p class="title">タイピング問題一覧</p>
-      <div class="btn-wrapper">
-        <button class="btn btn-green" @click="modalShow(1)">問題作成</button>
-      </div>
+      <button class="btn btn-green" @click="modalShow(1)">問題作成</button>
     </div>
 
     <div class="setting">
@@ -37,9 +35,7 @@
           id="onlyEditor"
           v-model="isOnlyEditor"
         />
-        <label for="onlyEditor"
-          >編集可能データのみ表示</label
-        >
+        <label for="onlyEditor">編集可能データのみ表示</label>
       </div>
     </div>
     <table>

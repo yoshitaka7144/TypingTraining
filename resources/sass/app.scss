@@ -262,8 +262,7 @@ a {
       display: flex;
       flex-wrap: wrap;
       .title {
-        font-size: 26px;
-        font-weight: bold;
+        font-size: $font-size-headline;
         text-align: center;
         margin: 10px 0;
       }
@@ -283,7 +282,7 @@ a {
           border-collapse: collapse;
           th,
           td {
-            font-size: 18px;
+            font-size: $font-size-large;
             width: 50%;
             padding: 15px 10px;
             text-align: right;
@@ -379,9 +378,34 @@ a {
     .modal-typing {
       .modal-header {
         text-align: right;
+        .icon {
+          margin: 10px;
+          &:hover{
+            opacity: 0.7;
+            cursor: pointer;
+          }
+        }
       }
 
       .modal-main {
+
+        .question-setting{
+          width: 50%;
+          margin: 15px auto;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        }
+
+        .message{
+          text-align: center;
+          font-size: $font-size-large;
+        }
+
+        .error{
+          color: red;
+        }
+        
         .inputed {
           color: orange;
         }
@@ -683,7 +707,7 @@ a {
       display: flex;
       justify-content: space-between;
       .title {
-        font-size: 30px;
+        font-size: $font-size-headline;
         text-align: left;
       }
     }
@@ -855,7 +879,7 @@ a {
         margin: 0 auto;
         padding: 10px;
         .title {
-          font-size: 26px;
+          font-size: $font-size-large;
           padding-bottom: 10px;
           margin-bottom: 15px;
           border-bottom: 2px solid #f1f3f5;
@@ -888,7 +912,7 @@ a {
         input[type="text"] {
           display: block;
           width: 100%;
-          height: 30px;
+          height: 35px;
           padding: 10px;
           border-radius: 5px;
           border: 1px solid #ccc;
@@ -918,7 +942,7 @@ a {
         margin: 0 auto;
         padding: 10px;
         .title {
-          font-size: 26px;
+          font-size: $font-size-large;
           padding-bottom: 10px;
           margin-bottom: 15px;
           border-bottom: 2px solid #f1f3f5;

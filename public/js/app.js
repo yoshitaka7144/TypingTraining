@@ -12346,6 +12346,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -12430,6 +12431,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     averageWpm: function averageWpm() {
       return this.userAverageWpm !== "" ? Math.floor(this.userAverageWpm) : "---";
+    },
+    apiStatus: function apiStatus() {
+      return this.$store.state.auth.apiStatus;
     }
   },
   mounted: function mounted() {
@@ -12674,6 +12678,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.getHistory();
       this.getUserInfo();
       this.getUserAverageWpm();
+    },
+    logout: function logout() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return _this5.$store.dispatch("auth/logout");
+
+              case 2:
+                if (_this5.apiStatus) {
+                  _this5.$router.push("/", function () {});
+                }
+
+              case 3:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
   }
 });
@@ -12979,10 +13007,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
 //
 //
 //
@@ -14535,6 +14559,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14987,7 +15027,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.phase === 1) {
         e.preventDefault();
 
-        if (e.code === "Space") {
+        if (e.code === "Space" && this.questionCount > 0) {
           this.start();
         }
       } else if (this.phase === 2) {
@@ -88301,7 +88341,13 @@ var render = function() {
                     _c("button", { staticClass: "btn btn-green" }, [
                       _vm._v("問題編集")
                     ])
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn btn-red", on: { click: _vm.logout } },
+                    [_vm._v("ログアウト")]
+                  )
                 ],
                 1
               ),
@@ -88512,7 +88558,7 @@ var render = function() {
                       attrs: {
                         chartData: _vm.chartData,
                         options: _vm.chartOptions,
-                        height: 350
+                        height: 400
                       }
                     })
                   ],
@@ -88557,7 +88603,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("正答率")]),
         _vm._v(" "),
-        _c("th", [_vm._v("ミスしたキー")]),
+        _c("th", [_vm._v("ミスキー")]),
         _vm._v(" "),
         _c("th", [_vm._v("日付")])
       ])
@@ -88999,20 +89045,18 @@ var render = function() {
       _c("div", { staticClass: "title-area" }, [
         _c("p", { staticClass: "title" }, [_vm._v("タイピング問題一覧")]),
         _vm._v(" "),
-        _c("div", { staticClass: "btn-wrapper" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-green",
-              on: {
-                click: function($event) {
-                  return _vm.modalShow(1)
-                }
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-green",
+            on: {
+              click: function($event) {
+                return _vm.modalShow(1)
               }
-            },
-            [_vm._v("問題作成")]
-          )
-        ])
+            }
+          },
+          [_vm._v("問題作成")]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "setting" }, [
@@ -89937,101 +89981,125 @@ var render = function() {
         resizable: true,
         clickToClose: false,
         width: "80%",
-        height: "70%"
+        height: "auto"
       }
     },
     [
-      _c("div", { staticClass: "modal-header" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-red", on: { click: _vm.hide } },
-          [_c("font-awesome-icon", { attrs: { icon: ["fas", "times"] } })],
-          1
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "modal-header" },
+        [
+          _c("font-awesome-icon", {
+            staticClass: "icon",
+            attrs: { icon: ["fas", "times"], size: "2x" },
+            on: { click: _vm.hide }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "modal-main" }, [
         _vm.phase === 1
           ? _c("div", {}, [
-              _c(
-                "select",
-                {
-                  directives: [
+              _c("div", { staticClass: "question-setting" }, [
+                _c("div", [
+                  _c("label", { attrs: { for: "questionCount" } }, [
+                    _vm._v("問題数：")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.questionCount,
-                      expression: "questionCount"
-                    }
-                  ],
-                  staticClass: "form-select",
-                  attrs: { id: "" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.questionCount = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                _vm._l(_vm.questions.length, function(n) {
-                  return _c("option", { key: n, domProps: { value: n } }, [
-                    _vm._v("\n          " + _vm._s(n) + "\n        ")
-                  ])
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.audioCheaked,
-                    expression: "audioCheaked"
-                  }
-                ],
-                staticClass: "form-checkbox",
-                attrs: { type: "checkbox", id: "audio" },
-                domProps: {
-                  checked: Array.isArray(_vm.audioCheaked)
-                    ? _vm._i(_vm.audioCheaked, null) > -1
-                    : _vm.audioCheaked
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.audioCheaked,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.audioCheaked = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.audioCheaked = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.questionCount,
+                          expression: "questionCount"
+                        }
+                      ],
+                      staticClass: "form-select",
+                      attrs: { id: "questionCount" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.questionCount = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
                       }
-                    } else {
-                      _vm.audioCheaked = $$c
+                    },
+                    _vm._l(_vm.questions.length, function(n) {
+                      return _c("option", { key: n, domProps: { value: n } }, [
+                        _vm._v(
+                          "\n              " + _vm._s(n) + "\n            "
+                        )
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.audioCheaked,
+                        expression: "audioCheaked"
+                      }
+                    ],
+                    staticClass: "form-checkbox",
+                    attrs: { type: "checkbox", id: "audio" },
+                    domProps: {
+                      checked: Array.isArray(_vm.audioCheaked)
+                        ? _vm._i(_vm.audioCheaked, null) > -1
+                        : _vm.audioCheaked
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.audioCheaked,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.audioCheaked = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.audioCheaked = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.audioCheaked = $$c
+                        }
+                      }
                     }
-                  }
-                }
-              }),
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "audio" } }, [
+                    _vm._v("音声の有無")
+                  ])
+                ])
+              ]),
               _vm._v(" "),
-              _c("label", { attrs: { for: "audio" } }, [_vm._v("音声の有無")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("スペースキーを押すとスタートします。")])
+              _vm.questionCount > 0
+                ? _c("p", { staticClass: "message" }, [
+                    _vm._v("スペースキーを押すとスタートします。")
+                  ])
+                : _c("p", { staticClass: "message error" }, [
+                    _vm._v("問題が登録されていません。\n      ")
+                  ])
             ])
           : _vm._e(),
         _vm._v(" "),

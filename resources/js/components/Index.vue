@@ -16,6 +16,7 @@
           <router-link :to="{ name: 'question' }">
             <button class="btn btn-green">問題編集</button>
           </router-link>
+          <button class="btn btn-red" @click="logout">ログアウト</button>
         </div>
         <table v-if="isLogin" class="user-info-table">
           <tr>
@@ -96,7 +97,7 @@
                 <th>カテゴリー</th>
                 <th>WPM</th>
                 <th>正答率</th>
-                <th>ミスしたキー</th>
+                <th>ミスキー</th>
                 <th>日付</th>
               </tr>
             </thead>
@@ -114,7 +115,7 @@
             <HistoryChart
               :chartData="chartData"
               :options="chartOptions"
-              :height="350"
+              :height="400"
             />
           </div>
         </div>
@@ -216,6 +217,9 @@ export default {
       return this.userAverageWpm !== ""
         ? Math.floor(this.userAverageWpm)
         : "---";
+    },
+    apiStatus() {
+      return this.$store.state.auth.apiStatus;
     },
   },
   mounted() {
@@ -378,6 +382,13 @@ export default {
       this.getHistory();
       this.getUserInfo();
       this.getUserAverageWpm();
+    },
+    async logout() {
+      await this.$store.dispatch("auth/logout");
+
+      if (this.apiStatus) {
+        this.$router.push("/", function () {});
+      }
     },
   },
 };
