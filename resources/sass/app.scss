@@ -571,11 +571,12 @@ a {
     .tab {
       list-style: none;
       display: flex;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       .tab-item {
+        cursor: pointer;
         opacity: 0.3;
         padding: 10px;
-        border-bottom: 3px solid rgb(41, 41, 41);
+        border-bottom: 3px solid #38c172;
         & + .tab-item {
           margin-left: 15px;
         }
@@ -728,7 +729,8 @@ a {
         th {
           text-align: center;
           padding: 10px;
-          border-bottom: 1px solid #ccc;
+          border-bottom: 3px solid #ccc;
+          background-color: bisque;
           &:nth-child(1) {
             width: 5%;
           }

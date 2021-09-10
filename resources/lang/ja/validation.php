@@ -149,6 +149,8 @@ return [
     */
 
     'attributes' => [
+        "name" => "ユーザー名",
+        "password" => "パスワード",
         "categoryId" => "カテゴリー",
         "text" => "問題",
         "kana" => "かな",
