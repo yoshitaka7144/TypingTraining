@@ -7,12 +7,12 @@
     <div class="main">
       <div class="member-menu menu">
         <p class="title">会員メニュー</p>
-        <div v-if="!isLogin">
+        <div v-if="!isLogin" class="menu-btn">
           <router-link :to="{ name: 'login' }">
             <button class="btn btn-green">ログイン</button>
           </router-link>
         </div>
-        <div v-else>
+        <div v-else class="menu-btn">
           <router-link :to="{ name: 'question' }">
             <button class="btn btn-green">問題編集</button>
           </router-link>

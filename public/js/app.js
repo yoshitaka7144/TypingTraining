@@ -13551,6 +13551,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -14575,6 +14576,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14609,7 +14631,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       missTypeKeyHash: {},
       missTypeKeyStyle: {},
       histories: {},
-      perPage: 5,
+      perPage: 4,
       currentPage: 1,
       lastPage: "",
       range: 5,
@@ -14619,7 +14641,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartData: {},
       chartOptions: {},
       audio: new Audio("/audio/beep.wav"),
-      audioCheaked: false
+      audioCheaked: false,
+      canShowHistory: false
     };
   },
   mounted: function mounted() {
@@ -14720,6 +14743,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         return this.createRange(start, end);
       }
+    },
+    missKeyResult: function missKeyResult() {
+      var _this = this;
+
+      var result = "";
+      Object.keys(this.missTypeKeyHash).forEach(function (key) {
+        return result += key + "：" + _this.missTypeKeyHash[key] + "　";
+      });
+      return result;
     }
   },
   methods: {
@@ -14739,6 +14771,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else {
         this.showResult();
       }
+    },
+    retry: function retry() {
+      this.getQuestions();
+      this.clear();
     },
     showResult: function showResult() {
       // 時間測定終了
@@ -14778,6 +14814,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.endDot = false;
       this.chartData = {};
       this.chartOptions = {};
+      this.canShowHistory = false;
     },
     initQuestion: function initQuestion() {
       this.roman = [];
@@ -14857,7 +14894,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     },
     updateUserInfo: function updateUserInfo() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
@@ -14866,8 +14903,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.put("/api/user/" + _this.userId, {
-                  typeCount: _this.correctTypeCount
+                return axios.put("/api/user/" + _this2.userId, {
+                  typeCount: _this2.correctTypeCount
                 })["catch"](function (error) {
                   return error.response || error;
                 });
@@ -14876,7 +14913,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["OK"]) {} else if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
-                  _this.$store.commit("error/setCode", response.status);
+                  _this2.$store.commit("error/setCode", response.status);
                 }
 
               case 4:
@@ -14888,7 +14925,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     createHistory: function createHistory() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var missKey, paramsCreate, responseCreate;
@@ -14896,12 +14933,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                missKey = Object.keys(_this2.missTypeKeyHash).length > 0 ? Object.keys(_this2.missTypeKeyHash).join(",") : "";
+                missKey = Object.keys(_this3.missTypeKeyHash).length > 0 ? Object.keys(_this3.missTypeKeyHash).join(",") : "";
                 paramsCreate = {
-                  userId: _this2.userId,
-                  categoryId: _this2.categoryId,
-                  wpm: _this2.wpm,
-                  correctPercentage: _this2.correctPercentage,
+                  userId: _this3.userId,
+                  categoryId: _this3.categoryId,
+                  wpm: _this3.wpm,
+                  correctPercentage: _this3.correctPercentage,
                   missKey: missKey
                 };
                 _context2.next = 4;
@@ -14913,7 +14950,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 responseCreate = _context2.sent;
 
                 if (responseCreate.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
-                  _this2.$store.commit("error/setCode", responseCreate.status);
+                  _this3.$store.commit("error/setCode", responseCreate.status);
                 }
 
               case 6:
@@ -14925,7 +14962,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getHistory: function getHistory() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var params, response, histories;
@@ -14934,10 +14971,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 params = {
-                  userId: _this3.userId,
-                  categoryId: _this3.categoryId,
-                  perPage: _this3.perPage,
-                  page: _this3.currentPage
+                  userId: _this4.userId,
+                  categoryId: _this4.categoryId,
+                  perPage: _this4.perPage,
+                  page: _this4.currentPage
                 };
                 _context3.next = 3;
                 return axios.get("/api/history", {
@@ -14950,14 +14987,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context3.sent;
 
                 if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
-                  _this3.$store.commit("error/setCode", response.status);
+                  _this4.$store.commit("error/setCode", response.status);
                 } else {
                   histories = response.data;
-                  _this3.currentPage = histories.current_page;
-                  _this3.lastPage = histories.last_page;
-                  _this3.histories = histories.data;
+                  _this4.currentPage = histories.current_page;
+                  _this4.lastPage = histories.last_page;
+                  _this4.histories = histories.data;
 
-                  _this3.createHistoryChartData();
+                  _this4.createHistoryChartData();
                 }
 
               case 5:
@@ -14969,7 +15006,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getQuestions: function getQuestions() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var response;
@@ -14978,7 +15015,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios.get("/api/question/category/" + _this4.categoryId)["catch"](function (error) {
+                return axios.get("/api/question/category/" + _this5.categoryId)["catch"](function (error) {
                   return error.response || error;
                 });
 
@@ -14986,14 +15023,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context4.sent;
 
                 if (response.status === _util_js__WEBPACK_IMPORTED_MODULE_1__["INTERNAL_SERVER_ERROR"]) {
-                  _this4.$store.commit("error/setCode", response.status);
+                  _this5.$store.commit("error/setCode", response.status);
                 } else {
-                  _this4.questions = response.data;
+                  _this5.questions = response.data;
 
-                  if (Object.keys(_this4.questions).length < _util_js__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_QUESTION_COUNT"]) {
-                    _this4.questionCount = Object.keys(_this4.questions).length;
+                  if (Object.keys(_this5.questions).length < _util_js__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_QUESTION_COUNT"]) {
+                    _this5.questionCount = Object.keys(_this5.questions).length;
                   } else {
-                    _this4.questionCount = _util_js__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_QUESTION_COUNT"];
+                    _this5.questionCount = _util_js__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_QUESTION_COUNT"];
                   }
                 }
 
@@ -15025,8 +15062,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     keyAction: function keyAction(e) {
       if (this.phase === 1) {
-        e.preventDefault();
-
         if (e.code === "Space" && this.questionCount > 0) {
           this.start();
         }
@@ -88325,6 +88360,7 @@ var render = function() {
           !_vm.isLogin
             ? _c(
                 "div",
+                { staticClass: "menu-btn" },
                 [
                   _c("router-link", { attrs: { to: { name: "login" } } }, [
                     _c("button", { staticClass: "btn btn-green" }, [
@@ -88336,6 +88372,7 @@ var render = function() {
               )
             : _c(
                 "div",
+                { staticClass: "menu-btn" },
                 [
                   _c("router-link", { attrs: { to: { name: "question" } } }, [
                     _c("button", { staticClass: "btn btn-green" }, [
@@ -89568,8 +89605,10 @@ var render = function() {
         name: "modal-question-edit",
         resizable: false,
         clickToClose: false,
-        width: "60%",
-        height: "auto"
+        maxWidth: 700,
+        width: "95%",
+        height: "auto",
+        adaptive: true
       },
       on: { "before-open": _vm.beforeOpen }
     },
@@ -89580,7 +89619,7 @@ var render = function() {
         [
           _c("font-awesome-icon", {
             staticClass: "icon",
-            attrs: { icon: ["fas", "times"], size: "2x" },
+            attrs: { icon: ["fas", "times"] },
             on: { click: _vm.hide }
           })
         ],
@@ -89978,10 +90017,13 @@ var render = function() {
       staticClass: "modal-typing",
       attrs: {
         name: "modal-typing",
-        resizable: true,
+        resizable: false,
         clickToClose: false,
-        width: "80%",
-        height: "auto"
+        maxWidth: 1000,
+        width: "95%",
+        height: "auto",
+        scrollable: true,
+        adaptive: true
       }
     },
     [
@@ -89991,7 +90033,7 @@ var render = function() {
         [
           _c("font-awesome-icon", {
             staticClass: "icon",
-            attrs: { icon: ["fas", "times"], size: "2x" },
+            attrs: { icon: ["fas", "times"] },
             on: { click: _vm.hide }
           })
         ],
@@ -90000,7 +90042,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "modal-main" }, [
         _vm.phase === 1
-          ? _c("div", {}, [
+          ? _c("div", [
               _c("div", { staticClass: "question-setting" }, [
                 _c("div", [
                   _c("label", { attrs: { for: "questionCount" } }, [
@@ -90094,22 +90136,28 @@ var render = function() {
               ]),
               _vm._v(" "),
               _vm.questionCount > 0
-                ? _c("p", { staticClass: "message" }, [
-                    _vm._v("スペースキーを押すとスタートします。")
+                ? _c("p", { staticClass: "message missed" }, [
+                    _vm._v(
+                      "\n        スペースキーを押すとスタートします。\n      "
+                    )
                   ])
                 : _c("p", { staticClass: "message error" }, [
-                    _vm._v("問題が登録されていません。\n      ")
+                    _vm._v("問題が登録されていません。")
                   ])
             ])
           : _vm._e(),
         _vm._v(" "),
         _vm.phase === 2
-          ? _c("div", {}, [
-              _c("p", [_vm._v(_vm._s(_vm.displayText))]),
+          ? _c("div", { staticClass: "display-question" }, [
+              _c("p", { staticClass: "display-text" }, [
+                _vm._v(_vm._s(_vm.displayText))
+              ]),
               _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(_vm.displayKana))]),
+              _c("p", { staticClass: "display-kana" }, [
+                _vm._v(_vm._s(_vm.displayKana))
+              ]),
               _vm._v(" "),
-              _c("p", [
+              _c("p", { staticClass: "display-roman" }, [
                 _c("span", { staticClass: "inputed" }, [
                   _vm._v(_vm._s(_vm.displayInputedRoman))
                 ]),
@@ -90118,27 +90166,35 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("div", { attrs: { id: "keyboard-container" } }, [
-          _vm.phase === 3
-            ? _c("div", {}, [
-                _c("p", [_vm._v("結果画面")]),
-                _vm._v(" "),
-                _c("p", [
-                  _vm._v("正しいタイプ数：" + _vm._s(_vm.correctTypeCount))
+        _vm.phase === 3
+          ? _c("div", { staticClass: "result" }, [
+              _c("p", { staticClass: "title" }, [_vm._v("タイピング結果")]),
+              _vm._v(" "),
+              _c("table", { staticClass: "result-table" }, [
+                _c("tr", [
+                  _c("th", [_vm._v("WPM")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("ミスタイプ数")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("正答率（%）")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("ミスキー（キー：回数）")])
                 ]),
                 _vm._v(" "),
-                _c("p", [_vm._v("ミスタイプ数：" + _vm._s(_vm.missTypeCount))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("時間：" + _vm._s(_vm.typeTime))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("WPM：" + _vm._s(_vm.wpm))]),
-                _vm._v(" "),
-                _c("p", [_vm._v("正答率：" + _vm._s(_vm.correctPercentage))]),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(_vm.missTypeKeyHash))])
+                _c("tr", [
+                  _c("td", [_vm._v(_vm._s(_vm.wpm))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.missTypeCount))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.correctPercentage))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.missKeyResult))])
+                ])
               ])
-            : _vm._e(),
-          _vm._v(" "),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "keyboard-container" } }, [
           _c("div", { attrs: { id: "keyboard" } }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "key" }),
@@ -90834,9 +90890,28 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.isLogin && _vm.phase === 3
-          ? _c("div", { attrs: { id: "history-container" } }, [
-              _c("div", { staticClass: "table-area" }, [
+        _vm.isLogin && _vm.phase === 3 && !_vm.canShowHistory
+          ? _c("div", { staticClass: "history-btn" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-blue",
+                  on: {
+                    click: function($event) {
+                      _vm.canShowHistory = true
+                    }
+                  }
+                },
+                [_vm._v("\n        履歴データ表示\n      ")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isLogin && _vm.phase === 3 && _vm.canShowHistory
+          ? _c("div", { staticClass: "history-container" }, [
+              _c("p", { staticClass: "title" }, [_vm._v("履歴データ")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "history-data" }, [
                 _c("table", { staticClass: "history-table" }, [
                   _c("thead", [
                     _c("tr", [
@@ -90844,7 +90919,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("th", [_vm._v("正答率")]),
                       _vm._v(" "),
-                      _c("th", [_vm._v("ミスしたキー")]),
+                      _c("th", [_vm._v("ミスキー")]),
                       _vm._v(" "),
                       _c("th", [_vm._v("日付")])
                     ])
@@ -90868,156 +90943,158 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c(
-                  "ul",
-                  { staticClass: "pagination" },
+                  "div",
+                  { staticClass: "history-graph" },
                   [
-                    _c(
-                      "li",
-                      {
-                        class: _vm.currentPage === 1 ? "disabled" : "",
-                        on: {
-                          click: function($event) {
-                            return _vm.changeHistoryPage(_vm.currentPage - 1)
-                          }
-                        }
-                      },
-                      [
-                        _c("font-awesome-icon", {
-                          attrs: { icon: ["fas", "angle-double-left"] }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.startPageRange, function(page) {
-                      return _c(
-                        "li",
-                        {
-                          key: page,
-                          class: _vm.isActive(page) ? "active" : "",
-                          on: {
-                            click: function($event) {
-                              return _vm.changeHistoryPage(page)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n            " + _vm._s(page) + "\n          "
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.startDot,
-                            expression: "startDot"
-                          }
-                        ],
-                        staticClass: "disabled"
-                      },
-                      [_vm._v("...")]
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.centerPageRange, function(page) {
-                      return _c(
-                        "li",
-                        {
-                          key: page,
-                          class: _vm.isActive(page) ? "active" : "",
-                          on: {
-                            click: function($event) {
-                              return _vm.changeHistoryPage(page)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n            " + _vm._s(page) + "\n          "
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.endDot,
-                            expression: "endDot"
-                          }
-                        ],
-                        staticClass: "disabled"
-                      },
-                      [_vm._v("...")]
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.endPageRange, function(page) {
-                      return _c(
-                        "li",
-                        {
-                          key: page,
-                          class: _vm.isActive(page) ? "active" : "",
-                          on: {
-                            click: function($event) {
-                              return _vm.changeHistoryPage(page)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n            " + _vm._s(page) + "\n          "
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      {
-                        class:
-                          _vm.currentPage >= _vm.lastPage ? "disabled" : "",
-                        on: {
-                          click: function($event) {
-                            return _vm.changeHistoryPage(_vm.currentPage + 1)
-                          }
-                        }
-                      },
-                      [
-                        _c("font-awesome-icon", {
-                          attrs: { icon: ["fas", "angle-double-right"] }
-                        })
-                      ],
-                      1
-                    )
+                    _c("HistoryChart", {
+                      attrs: {
+                        chartData: _vm.chartData,
+                        options: _vm.chartOptions,
+                        height: 300
+                      }
+                    })
                   ],
-                  2
+                  1
                 )
               ]),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "history-graph" },
+                "ul",
+                { staticClass: "pagination" },
                 [
-                  _c("HistoryChart", {
-                    attrs: {
-                      chartData: _vm.chartData,
-                      options: _vm.chartOptions,
-                      height: 400,
-                      width: 500
-                    }
-                  })
+                  _c(
+                    "li",
+                    {
+                      class: _vm.currentPage === 1 ? "disabled" : "",
+                      on: {
+                        click: function($event) {
+                          return _vm.changeHistoryPage(_vm.currentPage - 1)
+                        }
+                      }
+                    },
+                    [
+                      _c("font-awesome-icon", {
+                        attrs: { icon: ["fas", "angle-double-left"] }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.startPageRange, function(page) {
+                    return _c(
+                      "li",
+                      {
+                        key: page,
+                        class: _vm.isActive(page) ? "active" : "",
+                        on: {
+                          click: function($event) {
+                            return _vm.changeHistoryPage(page)
+                          }
+                        }
+                      },
+                      [_vm._v("\n          " + _vm._s(page) + "\n        ")]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.startDot,
+                          expression: "startDot"
+                        }
+                      ],
+                      staticClass: "disabled"
+                    },
+                    [_vm._v("...")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.centerPageRange, function(page) {
+                    return _c(
+                      "li",
+                      {
+                        key: page,
+                        class: _vm.isActive(page) ? "active" : "",
+                        on: {
+                          click: function($event) {
+                            return _vm.changeHistoryPage(page)
+                          }
+                        }
+                      },
+                      [_vm._v("\n          " + _vm._s(page) + "\n        ")]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.endDot,
+                          expression: "endDot"
+                        }
+                      ],
+                      staticClass: "disabled"
+                    },
+                    [_vm._v("...")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.endPageRange, function(page) {
+                    return _c(
+                      "li",
+                      {
+                        key: page,
+                        class: _vm.isActive(page) ? "active" : "",
+                        on: {
+                          click: function($event) {
+                            return _vm.changeHistoryPage(page)
+                          }
+                        }
+                      },
+                      [_vm._v("\n          " + _vm._s(page) + "\n        ")]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      class: _vm.currentPage >= _vm.lastPage ? "disabled" : "",
+                      on: {
+                        click: function($event) {
+                          return _vm.changeHistoryPage(_vm.currentPage + 1)
+                        }
+                      }
+                    },
+                    [
+                      _c("font-awesome-icon", {
+                        attrs: { icon: ["fas", "angle-double-right"] }
+                      })
+                    ],
+                    1
+                  )
                 ],
-                1
+                2
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.phase === 3
+          ? _c("div", { staticClass: "btn-wrapper" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-green", on: { click: _vm.retry } },
+                [_vm._v("もう一度")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-gray", on: { click: _vm.hide } },
+                [_vm._v("戻る")]
               )
             ])
           : _vm._e()

@@ -14,6 +14,10 @@
   color: $base-font-color;
 }
 
+table th {
+  font-weight: normal;
+}
+
 ul {
   list-style: none;
 }
@@ -277,6 +281,13 @@ a {
       .member-menu {
         width: calc(50% - 20px);
         text-align: center;
+        .menu-btn {
+          display: flex;
+          justify-content: center;
+          & > button {
+            margin-left: 20px;
+          }
+        }
         .user-info-table {
           margin: 20px auto;
           border-collapse: collapse;
@@ -304,12 +315,13 @@ a {
 
       .history {
         width: 100%;
-        .message{
+        .message {
           text-align: center;
         }
         .history-data {
           display: flex;
           justify-content: center;
+          align-items: flex-start;
           .history-table {
             margin: 10px;
             width: calc(50% - 20px);
@@ -379,8 +391,9 @@ a {
       .modal-header {
         text-align: right;
         .icon {
-          margin: 10px;
-          &:hover{
+          margin-top: 10px;
+          margin-right: 10px;
+          &:hover {
             opacity: 0.7;
             cursor: pointer;
           }
@@ -388,8 +401,31 @@ a {
       }
 
       .modal-main {
+        padding: 15px;
+        .display-question {
+          width: 65%;
+          margin: 10px auto;
+          padding: 10px 15px;
+          border-radius: 5px;
+          border: 2px solid #668ad8;
+          .display-text {
+            font-size: $font-size-headline;
+            margin-bottom: 10px;
+          }
+          .display-kana {
+            font-size: $font-size-large;
+            margin-bottom: 10px;
+          }
+          .display-roman {
+            font-size: $font-size-large2;
+          }
+          .inputed {
+            font-size: $font-size-large2;
+            color: orange;
+          }
+        }
 
-        .question-setting{
+        .question-setting {
           width: 50%;
           margin: 15px auto;
           display: flex;
@@ -397,17 +433,65 @@ a {
           align-items: center;
         }
 
-        .message{
-          text-align: center;
-          font-size: $font-size-large;
+        .result {
+          width: 85%;
+          margin: 10px auto;
+          .title {
+            font-size: $font-size-large2;
+            text-align: center;
+            margin: 15px 0;
+          }
+          .result-table {
+            width: 100%;
+            margin-bottom: 15px;
+            border-collapse: collapse;
+            th,
+            td {
+              text-align: center;
+              padding: 10px;
+              &:nth-child(1) {
+                width: 20%;
+              }
+              &:nth-child(2) {
+                width: 20%;
+              }
+              &:nth-child(3) {
+                width: 20%;
+              }
+              &:nth-child(4) {
+                width: 40%;
+              }
+            }
+            th {
+              border-bottom: 1px solid #ccc;
+            }
+            td {
+              background-color: #eee;
+            }
+          }
         }
 
-        .error{
-          color: red;
+        .message {
+          text-align: center;
+          font-size: $font-size-large;
+          margin: 15px 0;
         }
-        
-        .inputed {
-          color: orange;
+        .missed {
+          animation: flash 0.8s linear infinite;
+        }
+        @keyframes flash {
+          0%,
+          100% {
+            opacity: 1;
+          }
+
+          50% {
+            opacity: 0;
+          }
+        }
+
+        .error {
+          color: red;
         }
 
         .form-select {
@@ -569,6 +653,7 @@ a {
         #hand-container {
           display: flex;
           justify-content: center;
+          margin-bottom: 15px;
           #hand {
             display: flex;
             #hand-left,
@@ -609,9 +694,27 @@ a {
           }
         }
 
-        #history-container {
+        .history-btn {
+          width: 100%;
+          margin: 15px 0;
           display: flex;
           justify-content: center;
+          button {
+            text-align: center;
+          }
+        }
+
+        .history-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 85%;
+          margin: 10px auto;
+
+          .title {
+            text-align: center;
+          }
 
           .pagination {
             display: flex;
@@ -625,11 +728,70 @@ a {
               }
             }
             .active {
-              background-color: $blue;
+              background-color: $cyan;
             }
             .disabled {
               cursor: not-allowed;
             }
+          }
+
+          .history-data {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+
+            .history-table {
+              width: calc(50% - 20px);
+              margin: 10px;
+              border-collapse: collapse;
+              thead {
+                th {
+                  font-size: 0.8em;
+                  font-weight: normal;
+                  text-align: center;
+                  padding: 10px;
+                  border-bottom: 1px solid #ccc;
+                  &:nth-child(1) {
+                    width: 20%;
+                  }
+                  &:nth-child(2) {
+                    width: 20%;
+                  }
+                  &:nth-child(3) {
+                    width: 25%;
+                  }
+                  &:nth-child(4) {
+                    width: 35%;
+                  }
+                }
+              }
+              tbody {
+                td {
+                  font-size: 0.8em;
+                  text-align: center;
+                  padding: 10px;
+                  border-bottom: 1px solid #ccc;
+                }
+                tr:nth-child(odd) {
+                  background-color: #eee;
+                }
+              }
+            }
+
+            .history-graph {
+              width: calc(50% - 20px);
+              margin: 10px;
+            }
+          }
+        }
+
+        .btn-wrapper{
+          display: flex;
+          justify-content: center;
+          margin: 15px 0;
+          button + button{
+            margin-left: 20px;
           }
         }
       }
@@ -870,7 +1032,12 @@ a {
     .header {
       text-align: right;
       .icon {
-        margin: 10px;
+        margin-top: 10px;
+        margin-right: 10px;
+        &:hover {
+          opacity: 0.7;
+          cursor: pointer;
+        }
       }
     }
     .main {

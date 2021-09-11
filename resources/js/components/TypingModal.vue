@@ -2,21 +2,19 @@
   <modal
     class="modal-typing"
     name="modal-typing"
-    :resizable="true"
+    :resizable="false"
     :clickToClose="false"
-    :width="'80%'"
+    :maxWidth="1000"
+    :width="'95%'"
     :height="'auto'"
+    :scrollable="true"
+    :adaptive="true"
   >
     <div class="modal-header">
-      <font-awesome-icon
-        :icon="['fas', 'times']"
-        size="2x"
-        class="icon"
-        @click="hide"
-      />
+      <font-awesome-icon :icon="['fas', 'times']" class="icon" @click="hide" />
     </div>
     <div class="modal-main">
-      <div class="" v-if="phase === 1">
+      <div v-if="phase === 1">
         <div class="question-setting">
           <div>
             <label for="questionCount">問題数：</label>
@@ -40,30 +38,40 @@
             <label for="audio" class="">音声の有無</label>
           </div>
         </div>
-        <p v-if="questionCount > 0" class="message">スペースキーを押すとスタートします。</p>
-        <p v-else class="message error">問題が登録されていません。
+        <p v-if="questionCount > 0" class="message missed">
+          スペースキーを押すとスタートします。
         </p>
+        <p v-else class="message error">問題が登録されていません。</p>
       </div>
 
-      <div class="" v-if="phase === 2">
-        <p>{{ displayText }}</p>
-        <p>{{ displayKana }}</p>
-        <p>
+      <div class="display-question" v-if="phase === 2">
+        <p class="display-text">{{ displayText }}</p>
+        <p class="display-kana">{{ displayKana }}</p>
+        <p class="display-roman">
           <span class="inputed">{{ displayInputedRoman }}</span
           >{{ displayRoman }}
         </p>
       </div>
 
+      <div class="result" v-if="phase === 3">
+        <p class="title">タイピング結果</p>
+        <table class="result-table">
+          <tr>
+            <th>WPM</th>
+            <th>ミスタイプ数</th>
+            <th>正答率（%）</th>
+            <th>ミスキー（キー：回数）</th>
+          </tr>
+          <tr>
+            <td>{{ wpm }}</td>
+            <td>{{ missTypeCount }}</td>
+            <td>{{ correctPercentage }}</td>
+            <td>{{ missKeyResult }}</td>
+          </tr>
+        </table>
+      </div>
+
       <div id="keyboard-container">
-        <div class="" v-if="phase === 3">
-          <p>結果画面</p>
-          <p>正しいタイプ数：{{ correctTypeCount }}</p>
-          <p>ミスタイプ数：{{ missTypeCount }}</p>
-          <p>時間：{{ typeTime }}</p>
-          <p>WPM：{{ wpm }}</p>
-          <p>正答率：{{ correctPercentage }}</p>
-          <p>{{ missTypeKeyHash }}</p>
-        </div>
         <div id="keyboard">
           <div class="row">
             <div class="key"></div>
@@ -595,14 +603,23 @@
         </div>
       </div>
 
-      <div id="history-container" v-if="isLogin && phase === 3">
-        <div class="table-area">
+      <div v-if="isLogin && phase === 3 && !canShowHistory" class="history-btn">
+        <button class="btn btn-blue" @click="canShowHistory = true">
+          履歴データ表示
+        </button>
+      </div>
+      <div
+        class="history-container"
+        v-if="isLogin && phase === 3 && canShowHistory"
+      >
+        <p class="title">履歴データ</p>
+        <div class="history-data">
           <table class="history-table">
             <thead>
               <tr>
                 <th>WPM</th>
                 <th>正答率</th>
-                <th>ミスしたキー</th>
+                <th>ミスキー</th>
                 <th>日付</th>
               </tr>
             </thead>
@@ -615,55 +632,59 @@
               </tr>
             </tbody>
           </table>
-          <ul class="pagination">
-            <li
-              :class="currentPage === 1 ? 'disabled' : ''"
-              @click="changeHistoryPage(currentPage - 1)"
-            >
-              <font-awesome-icon :icon="['fas', 'angle-double-left']" />
-            </li>
-            <li
-              v-for="page in startPageRange"
-              :key="page"
-              @click="changeHistoryPage(page)"
-              :class="isActive(page) ? 'active' : ''"
-            >
-              {{ page }}
-            </li>
-            <li v-show="startDot" class="disabled">...</li>
-            <li
-              v-for="page in centerPageRange"
-              :key="page"
-              @click="changeHistoryPage(page)"
-              :class="isActive(page) ? 'active' : ''"
-            >
-              {{ page }}
-            </li>
-            <li v-show="endDot" class="disabled">...</li>
-            <li
-              v-for="page in endPageRange"
-              :key="page"
-              @click="changeHistoryPage(page)"
-              :class="isActive(page) ? 'active' : ''"
-            >
-              {{ page }}
-            </li>
-            <li
-              :class="currentPage >= lastPage ? 'disabled' : ''"
-              @click="changeHistoryPage(currentPage + 1)"
-            >
-              <font-awesome-icon :icon="['fas', 'angle-double-right']" />
-            </li>
-          </ul>
+          <div class="history-graph">
+            <HistoryChart
+              :chartData="chartData"
+              :options="chartOptions"
+              :height="300"
+            />
+          </div>
         </div>
-        <div class="history-graph">
-          <HistoryChart
-            :chartData="chartData"
-            :options="chartOptions"
-            :height="400"
-            :width="500"
-          />
-        </div>
+        <ul class="pagination">
+          <li
+            :class="currentPage === 1 ? 'disabled' : ''"
+            @click="changeHistoryPage(currentPage - 1)"
+          >
+            <font-awesome-icon :icon="['fas', 'angle-double-left']" />
+          </li>
+          <li
+            v-for="page in startPageRange"
+            :key="page"
+            @click="changeHistoryPage(page)"
+            :class="isActive(page) ? 'active' : ''"
+          >
+            {{ page }}
+          </li>
+          <li v-show="startDot" class="disabled">...</li>
+          <li
+            v-for="page in centerPageRange"
+            :key="page"
+            @click="changeHistoryPage(page)"
+            :class="isActive(page) ? 'active' : ''"
+          >
+            {{ page }}
+          </li>
+          <li v-show="endDot" class="disabled">...</li>
+          <li
+            v-for="page in endPageRange"
+            :key="page"
+            @click="changeHistoryPage(page)"
+            :class="isActive(page) ? 'active' : ''"
+          >
+            {{ page }}
+          </li>
+          <li
+            :class="currentPage >= lastPage ? 'disabled' : ''"
+            @click="changeHistoryPage(currentPage + 1)"
+          >
+            <font-awesome-icon :icon="['fas', 'angle-double-right']" />
+          </li>
+        </ul>
+      </div>
+
+      <div v-if="phase === 3" class="btn-wrapper">
+        <button class="btn btn-green" @click="retry">もう一度</button>
+        <button class="btn btn-gray" @click="hide">戻る</button>
       </div>
     </div>
   </modal>
@@ -709,7 +730,7 @@ export default {
       missTypeKeyHash: {},
       missTypeKeyStyle: {},
       histories: {},
-      perPage: 5,
+      perPage: 4,
       currentPage: 1,
       lastPage: "",
       range: 5, // 奇数
@@ -719,6 +740,7 @@ export default {
       chartOptions: {},
       audio: new Audio("/audio/beep.wav"),
       audioCheaked: false,
+      canShowHistory: false,
     };
   },
   mounted() {
@@ -818,6 +840,13 @@ export default {
         return this.createRange(start, end);
       }
     },
+    missKeyResult() {
+      let result = "";
+      Object.keys(this.missTypeKeyHash).forEach(
+        (key) => (result += key + "：" + this.missTypeKeyHash[key] + "　")
+      );
+      return result;
+    },
   },
   methods: {
     hide() {
@@ -836,6 +865,10 @@ export default {
       } else {
         this.showResult();
       }
+    },
+    retry(){
+      this.getQuestions();
+      this.clear();
     },
     showResult() {
       // 時間測定終了
@@ -884,6 +917,7 @@ export default {
       this.endDot = false;
       this.chartData = {};
       this.chartOptions = {};
+      this.canShowHistory = false;
     },
     initQuestion() {
       this.roman = [];
@@ -1058,7 +1092,6 @@ export default {
     },
     keyAction(e) {
       if (this.phase === 1) {
-        e.preventDefault();
         if (e.code === "Space" && this.questionCount > 0) {
           this.start();
         }

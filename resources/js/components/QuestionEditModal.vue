@@ -4,14 +4,15 @@
     name="modal-question-edit"
     :resizable="false"
     :clickToClose="false"
-    :width="'60%'"
+    :maxWidth="700"
+    :width="'95%'"
     :height="'auto'"
+    :adaptive="true"
     @before-open="beforeOpen"
   >
     <div class="header">
       <font-awesome-icon
         :icon="['fas', 'times']"
-        size="2x"
         @click="hide"
         class="icon"
       />

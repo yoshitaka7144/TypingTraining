@@ -10,6 +10,10 @@
   color: rgba(0, 0, 0, 0.8);
 }
 
+table th {
+  font-weight: normal;
+}
+
 ul {
   list-style: none;
 }
@@ -277,7 +281,7 @@ a:hover {
 }
 
 .main-container #home .main .title {
-  font-size: 2.2rem;
+  font-size: 2rem;
   text-align: center;
   margin: 10px 0;
 }
@@ -294,6 +298,15 @@ a:hover {
   text-align: center;
 }
 
+.main-container #home .main .member-menu .menu-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.main-container #home .main .member-menu .menu-btn > button {
+  margin-left: 20px;
+}
+
 .main-container #home .main .member-menu .user-info-table {
   margin: 20px auto;
   border-collapse: collapse;
@@ -301,7 +314,7 @@ a:hover {
 
 .main-container #home .main .member-menu .user-info-table th,
 .main-container #home .main .member-menu .user-info-table td {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   width: 50%;
   padding: 15px 10px;
   text-align: right;
@@ -332,6 +345,7 @@ a:hover {
 .main-container #home .main .history .history-data {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .main-container #home .main .history .history-data .history-table {
@@ -411,12 +425,44 @@ a:hover {
 }
 
 .main-container #home .modal-typing .modal-header .icon {
-  margin: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 .main-container #home .modal-typing .modal-header .icon:hover {
   opacity: 0.7;
   cursor: pointer;
+}
+
+.main-container #home .modal-typing .modal-main {
+  padding: 15px;
+}
+
+.main-container #home .modal-typing .modal-main .display-question {
+  width: 65%;
+  margin: 10px auto;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 2px solid #668ad8;
+}
+
+.main-container #home .modal-typing .modal-main .display-question .display-text {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.main-container #home .modal-typing .modal-main .display-question .display-kana {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.main-container #home .modal-typing .modal-main .display-question .display-roman {
+  font-size: 1.8rem;
+}
+
+.main-container #home .modal-typing .modal-main .display-question .inputed {
+  font-size: 1.8rem;
+  color: orange;
 }
 
 .main-container #home .modal-typing .modal-main .question-setting {
@@ -427,17 +473,90 @@ a:hover {
   align-items: center;
 }
 
+.main-container #home .modal-typing .modal-main .result {
+  width: 85%;
+  margin: 10px auto;
+}
+
+.main-container #home .modal-typing .modal-main .result .title {
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table {
+  width: 100%;
+  margin-bottom: 15px;
+  border-collapse: collapse;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table th,
+.main-container #home .modal-typing .modal-main .result .result-table td {
+  text-align: center;
+  padding: 10px;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table th:nth-child(1),
+.main-container #home .modal-typing .modal-main .result .result-table td:nth-child(1) {
+  width: 20%;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table th:nth-child(2),
+.main-container #home .modal-typing .modal-main .result .result-table td:nth-child(2) {
+  width: 20%;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table th:nth-child(3),
+.main-container #home .modal-typing .modal-main .result .result-table td:nth-child(3) {
+  width: 20%;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table th:nth-child(4),
+.main-container #home .modal-typing .modal-main .result .result-table td:nth-child(4) {
+  width: 40%;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table th {
+  border-bottom: 1px solid #ccc;
+}
+
+.main-container #home .modal-typing .modal-main .result .result-table td {
+  background-color: #eee;
+}
+
 .main-container #home .modal-typing .modal-main .message {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  margin: 15px 0;
+}
+
+.main-container #home .modal-typing .modal-main .missed {
+  -webkit-animation: flash 0.8s linear infinite;
+          animation: flash 0.8s linear infinite;
+}
+
+@-webkit-keyframes flash {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes flash {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 .main-container #home .modal-typing .modal-main .error {
   color: red;
-}
-
-.main-container #home .modal-typing .modal-main .inputed {
-  color: orange;
 }
 
 .main-container #home .modal-typing .modal-main .form-select {
@@ -530,16 +649,6 @@ a:hover {
           animation: flash 0.3s linear infinite;
 }
 
-@-webkit-keyframes flash {
-  0%, 100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-}
-
 @keyframes flash {
   0%, 100% {
     opacity: 1;
@@ -617,6 +726,7 @@ a:hover {
 .main-container #home .modal-typing .modal-main #hand-container {
   display: flex;
   justify-content: center;
+  margin-bottom: 15px;
 }
 
 .main-container #home .modal-typing .modal-main #hand-container #hand {
@@ -667,32 +777,114 @@ a:hover {
   height: 40px;
 }
 
-.main-container #home .modal-typing .modal-main #history-container {
+.main-container #home .modal-typing .modal-main .history-btn {
+  width: 100%;
+  margin: 15px 0;
   display: flex;
   justify-content: center;
 }
 
-.main-container #home .modal-typing .modal-main #history-container .pagination {
+.main-container #home .modal-typing .modal-main .history-btn button {
+  text-align: center;
+}
+
+.main-container #home .modal-typing .modal-main .history-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  margin: 10px auto;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .title {
+  text-align: center;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .pagination {
   display: flex;
 }
 
-.main-container #home .modal-typing .modal-main #history-container .pagination li {
+.main-container #home .modal-typing .modal-main .history-container .pagination li {
   border: 1px solid #ddd;
   padding: 6px 12px;
   text-align: center;
   cursor: pointer;
 }
 
-.main-container #home .modal-typing .modal-main #history-container .pagination li + li {
+.main-container #home .modal-typing .modal-main .history-container .pagination li + li {
   border-left: none;
 }
 
-.main-container #home .modal-typing .modal-main #history-container .pagination .active {
-  background-color: #3490dc;
+.main-container #home .modal-typing .modal-main .history-container .pagination .active {
+  background-color: #6cb2eb;
 }
 
-.main-container #home .modal-typing .modal-main #history-container .pagination .disabled {
+.main-container #home .modal-typing .modal-main .history-container .pagination .disabled {
   cursor: not-allowed;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table {
+  width: calc(50% - 20px);
+  margin: 10px;
+  border-collapse: collapse;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table thead th {
+  font-size: 0.8em;
+  font-weight: normal;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table thead th:nth-child(1) {
+  width: 20%;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table thead th:nth-child(2) {
+  width: 20%;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table thead th:nth-child(3) {
+  width: 25%;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table thead th:nth-child(4) {
+  width: 35%;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table tbody td {
+  font-size: 0.8em;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-table tbody tr:nth-child(odd) {
+  background-color: #eee;
+}
+
+.main-container #home .modal-typing .modal-main .history-container .history-data .history-graph {
+  width: calc(50% - 20px);
+  margin: 10px;
+}
+
+.main-container #home .modal-typing .modal-main .btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.main-container #home .modal-typing .modal-main .btn-wrapper button + button {
+  margin-left: 20px;
 }
 
 .main-container #auth {
@@ -788,7 +980,7 @@ a:hover {
 }
 
 .main-container #question .title-area .title {
-  font-size: 2.2rem;
+  font-size: 2rem;
   text-align: left;
 }
 
@@ -978,7 +1170,13 @@ a:hover {
 }
 
 .main-container .modal-question-edit .header .icon {
-  margin: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.main-container .modal-question-edit .header .icon:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 .main-container .modal-question-edit .main .question-edit {
@@ -988,7 +1186,7 @@ a:hover {
 }
 
 .main-container .modal-question-edit .main .question-edit .title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   padding-bottom: 10px;
   margin-bottom: 15px;
   border-bottom: 2px solid #f1f3f5;
@@ -1070,7 +1268,7 @@ a:hover {
 }
 
 .main-container .modal-question-edit .main .question-delete .title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   padding-bottom: 10px;
   margin-bottom: 15px;
   border-bottom: 2px solid #f1f3f5;
