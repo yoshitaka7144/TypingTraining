@@ -4,8 +4,8 @@ const { reactiveProp } = mixins;
 
 export default {
   extends: Bar,
-  mixins: [reactiveProp],
   props: {
+    chartData: null,
     options: null,
   },
   data() {
@@ -13,6 +13,11 @@ export default {
   },
   mounted() {
     this.renderChart(this.chartData, this.options);
+  },
+  watch: {
+    options() {
+      this.renderChart(this.chartData, this.options);
+    },
   },
 };
 </script>

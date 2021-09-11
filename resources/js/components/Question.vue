@@ -2,7 +2,9 @@
   <div id="question" class="contents">
     <div class="title-area">
       <p class="title">タイピング問題一覧</p>
-      <button class="btn btn-green" @click="modalShow(1)">問題作成</button>
+      <router-link v-bind:to="{ name: 'index' }">
+        <button class="btn btn-gray">トップページへ戻る</button>
+      </router-link>
     </div>
 
     <div class="setting">
@@ -36,6 +38,9 @@
           v-model="isOnlyEditor"
         />
         <label for="onlyEditor">編集可能データのみ表示</label>
+      </div>
+      <div class="btn-wrapper">
+        <button class="btn btn-green" @click="modalShow(1)">問題作成</button>
       </div>
     </div>
     <table>
@@ -306,6 +311,8 @@ export default {
     },
     startPageRange() {
       if (this.isShortSize) {
+        this.endDot = false;
+        this.startDot = false;
         return this.createRange(1, this.lastPage);
       } else {
         return this.createRange(1, 2);

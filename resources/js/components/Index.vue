@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="top-image">
-      <img :src="'./image/top.jpg'" alt="" />
+      <img :src="'./image/top.png'" alt="" />
     </div>
 
     <div class="main">
@@ -176,6 +176,7 @@ export default {
     return {
       categories: [],
       histories: [],
+      wpmStepSize: 50,
       perPage: 5,
       currentPage: 1,
       lastPage: "",
@@ -348,12 +349,21 @@ export default {
         wpmData.push(history.wpm);
         correctPercentageData.push(history.correct_percentage);
       });
-      const maxWpm = wpmData.reduce((a, b) => {
-        a > b ? a : b;
+      let maxWpm = wpmData.reduce((a, b) => {
+        return a > b ? a : b;
       });
-      const minWpm = wpmData.reduce((a, b) => {
-        a < b ? a : b;
+      let minWpm = wpmData.reduce((a, b) => {
+        return a < b ? a : b;
       });
+      const maxWpmScale =
+        Math.ceil(maxWpm / this.wpmStepSize) * this.wpmStepSize;
+      const minWpmScale =
+        (Math.ceil(minWpm / this.wpmStepSize) - 1) * this.wpmStepSize;
+      for (let i = labels.length; i < this.perPage; i++) {
+        labels.push("");
+        wpmData.push(null);
+        correctPercentageData.push(null);
+      }
 
       this.chartData = {
         labels: labels,
@@ -387,9 +397,9 @@ export default {
               id: "y-axis-1",
               position: "left",
               ticks: {
-                max: maxWpm > 400 ? maxWpm : 400,
-                min: minWpm,
-                stepSize: 50,
+                max: maxWpmScale,
+                min: minWpmScale,
+                stepSize: this.wpmStepSize,
               },
             },
             {

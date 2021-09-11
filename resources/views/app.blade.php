@@ -8,10 +8,12 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'abcdefg') }}</title>
+  <title>{{ config('app.name') }}</title>
 
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
+
+  <link rel="icon" href="./image/favicon.ico">
 
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">

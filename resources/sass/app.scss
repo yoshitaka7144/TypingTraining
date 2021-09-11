@@ -257,7 +257,7 @@ a {
       text-align: center;
 
       img {
-        width: 40%;
+        width: 60%;
         margin-top: 15px;
       }
     }
@@ -344,6 +344,7 @@ a {
                 text-align: center;
                 padding: 10px;
                 border-bottom: 1px solid #ccc;
+                background-color: lavender;
                 &:nth-child(1) {
                   width: 20%;
                 }
@@ -431,6 +432,7 @@ a {
           }
           .display-roman {
             font-size: $font-size-large2;
+            opacity: 0.6;
           }
           .inputed {
             font-size: $font-size-large2;
@@ -453,6 +455,8 @@ a {
             font-size: $font-size-large2;
             text-align: center;
             margin: 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f3f5;
           }
           .result-table {
             width: 100%;
@@ -477,6 +481,7 @@ a {
             }
             th {
               border-bottom: 1px solid #ccc;
+              background-color: lavender;
             }
             td {
               background-color: #eee;
@@ -765,6 +770,7 @@ a {
                   text-align: center;
                   padding: 10px;
                   border-bottom: 1px solid #ccc;
+                  background-color: lavender;
                   &:nth-child(1) {
                     width: 20%;
                   }
@@ -965,6 +971,10 @@ a {
             border-color: dodgerBlue;
           }
         }
+      }
+      .btn-wrapper{
+        text-align: right;
+        margin: 10px 0;
       }
     }
 

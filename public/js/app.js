@@ -12178,8 +12178,8 @@ __webpack_require__.r(__webpack_exports__);
 var reactiveProp = vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["mixins"].reactiveProp;
 /* harmony default export */ __webpack_exports__["default"] = ({
   "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["Bar"],
-  mixins: [reactiveProp],
   props: {
+    chartData: null,
     options: null
   },
   data: function data() {
@@ -12187,6 +12187,11 @@ var reactiveProp = vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["mixins"].reactivePr
   },
   mounted: function mounted() {
     this.renderChart(this.chartData, this.options);
+  },
+  watch: {
+    options: function options() {
+      this.renderChart(this.chartData, this.options);
+    }
   }
 });
 
@@ -12389,6 +12394,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       categories: [],
       histories: [],
+      wpmStepSize: 50,
       perPage: 5,
       currentPage: 1,
       lastPage: "",
@@ -12653,11 +12659,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         correctPercentageData.push(history.correct_percentage);
       });
       var maxWpm = wpmData.reduce(function (a, b) {
-        a > b ? a : b;
+        return a > b ? a : b;
       });
       var minWpm = wpmData.reduce(function (a, b) {
-        a < b ? a : b;
+        return a < b ? a : b;
       });
+      var maxWpmScale = Math.ceil(maxWpm / this.wpmStepSize) * this.wpmStepSize;
+      var minWpmScale = (Math.ceil(minWpm / this.wpmStepSize) - 1) * this.wpmStepSize;
+
+      for (var i = labels.length; i < this.perPage; i++) {
+        labels.push("");
+        wpmData.push(null);
+        correctPercentageData.push(null);
+      }
+
       this.chartData = {
         labels: labels,
         datasets: [{
@@ -12685,9 +12700,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             id: "y-axis-1",
             position: "left",
             ticks: {
-              max: maxWpm > 400 ? maxWpm : 400,
-              min: minWpm,
-              stepSize: 50
+              max: maxWpmScale,
+              min: minWpmScale,
+              stepSize: this.wpmStepSize
             }
           }, {
             id: "y-axis-2",
@@ -13236,6 +13251,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -13390,6 +13410,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     startPageRange: function startPageRange() {
       if (this.isShortSize) {
+        this.endDot = false;
+        this.startDot = false;
         return this.createRange(1, this.lastPage);
       } else {
         return this.createRange(1, 2);
@@ -14670,6 +14692,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       missTypeKeyHash: {},
       missTypeKeyStyle: {},
       histories: {},
+      wpmStepSize: 50,
       perPage: 4,
       currentPage: 1,
       lastPage: "",
@@ -14745,6 +14768,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     startPageRange: function startPageRange() {
       if (this.isShortSize) {
+        this.endDot = false;
+        this.startDot = false;
         return this.createRange(1, this.lastPage);
       } else {
         return this.createRange(1, 2);
@@ -14884,11 +14909,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         correctPercentageData.push(history.correct_percentage);
       });
       var maxWpm = wpmData.reduce(function (a, b) {
-        a > b ? a : b;
+        return a > b ? a : b;
       });
       var minWpm = wpmData.reduce(function (a, b) {
-        a < b ? a : b;
+        return a < b ? a : b;
       });
+      var maxWpmScale = Math.ceil(maxWpm / this.wpmStepSize) * this.wpmStepSize;
+      var minWpmScale = (Math.ceil(minWpm / this.wpmStepSize) - 1) * this.wpmStepSize;
+
+      for (var i = labels.length; i < this.perPage; i++) {
+        labels.push("");
+        wpmData.push(null);
+        correctPercentageData.push(null);
+      }
+
       this.chartData = {
         labels: labels,
         datasets: [{
@@ -14916,9 +14950,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             id: "y-axis-1",
             position: "left",
             ticks: {
-              max: maxWpm > 400 ? maxWpm : 400,
-              min: minWpm,
-              stepSize: 50
+              max: maxWpmScale,
+              min: minWpmScale,
+              stepSize: this.wpmStepSize
             }
           }, {
             id: "y-axis-2",
@@ -88389,7 +88423,7 @@ var render = function() {
     { attrs: { id: "home" } },
     [
       _c("div", { staticClass: "top-image" }, [
-        _c("img", { attrs: { src: "./image/top.jpg", alt: "" } })
+        _c("img", { attrs: { src: "./image/top.png", alt: "" } })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "main" }, [
@@ -89217,22 +89251,20 @@ var render = function() {
     "div",
     { staticClass: "contents", attrs: { id: "question" } },
     [
-      _c("div", { staticClass: "title-area" }, [
-        _c("p", { staticClass: "title" }, [_vm._v("タイピング問題一覧")]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-green",
-            on: {
-              click: function($event) {
-                return _vm.modalShow(1)
-              }
-            }
-          },
-          [_vm._v("問題作成")]
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "title-area" },
+        [
+          _c("p", { staticClass: "title" }, [_vm._v("タイピング問題一覧")]),
+          _vm._v(" "),
+          _c("router-link", { attrs: { to: { name: "index" } } }, [
+            _c("button", { staticClass: "btn btn-gray" }, [
+              _vm._v("トップページへ戻る")
+            ])
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "setting" }, [
         _c("div", { staticClass: "search-area" }, [
@@ -89365,7 +89397,22 @@ var render = function() {
                 _vm._v("編集可能データのみ表示")
               ])
             ])
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "btn-wrapper" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-green",
+              on: {
+                click: function($event) {
+                  return _vm.modalShow(1)
+                }
+              }
+            },
+            [_vm._v("問題作成")]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("table", [

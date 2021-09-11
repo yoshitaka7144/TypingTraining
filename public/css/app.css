@@ -271,7 +271,7 @@ a:hover {
 }
 
 .main-container #home .top-image img {
-  width: 40%;
+  width: 60%;
   margin-top: 15px;
 }
 
@@ -374,6 +374,7 @@ a:hover {
   text-align: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  background-color: lavender;
 }
 
 .main-container #home .main .history .history-data .history-table thead th:nth-child(1) {
@@ -474,6 +475,7 @@ a:hover {
 
 .main-container #home .modal-typing .modal-main .display-question .display-roman {
   font-size: 1.8rem;
+  opacity: 0.6;
 }
 
 .main-container #home .modal-typing .modal-main .display-question .inputed {
@@ -498,6 +500,8 @@ a:hover {
   font-size: 1.8rem;
   text-align: center;
   margin: 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f1f3f5;
 }
 
 .main-container #home .modal-typing .modal-main .result .result-table {
@@ -534,6 +538,7 @@ a:hover {
 
 .main-container #home .modal-typing .modal-main .result .result-table th {
   border-bottom: 1px solid #ccc;
+  background-color: lavender;
 }
 
 .main-container #home .modal-typing .modal-main .result .result-table td {
@@ -859,6 +864,7 @@ a:hover {
   text-align: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  background-color: lavender;
 }
 
 .main-container #home .modal-typing .modal-main .history-container .history-data .history-table thead th:nth-child(1) {
@@ -1094,6 +1100,11 @@ a:hover {
   border-bottom: 3px solid;
   border-left: 3px solid;
   border-color: dodgerBlue;
+}
+
+.main-container #question .setting .btn-wrapper {
+  text-align: right;
+  margin: 10px 0;
 }
 
 .main-container #question table {
