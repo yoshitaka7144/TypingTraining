@@ -338,8 +338,24 @@ a:hover {
   width: 100%;
 }
 
+.main-container #home .main .history label {
+  margin-left: 15px;
+}
+
 .main-container #home .main .history .message {
   text-align: center;
+}
+
+.main-container #home .main .history .history-category-select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.main-container #home .main .history .history-category-select:focus {
+  outline: none;
+  border-color: dodgerBlue;
+  box-shadow: 0 0 5px 0 dodgerBlue;
 }
 
 .main-container #home .main .history .history-data {

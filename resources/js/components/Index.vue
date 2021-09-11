@@ -50,6 +50,21 @@
 
       <div class="history menu" v-if="isLogin && existsHistory">
         <p class="title">履歴データ</p>
+        <label for="category-select">対象カテゴリー：</label>
+        <select
+          id="category-select"
+          class="history-category-select"
+          v-model="selectCategoryId"
+        >
+          <option value="">全て</option>
+          <option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+          >
+            {{ category.name }}
+          </option>
+        </select>
         <ul class="pagination">
           <li
             :class="currentPage === 1 ? 'disabled' : ''"
@@ -94,7 +109,7 @@
           <table class="history-table">
             <thead>
               <tr>
-                <th>カテゴリー</th>
+                <th v-if="selectCategoryId === ''">カテゴリー</th>
                 <th>WPM</th>
                 <th>正答率</th>
                 <th>ミスキー</th>
@@ -103,7 +118,7 @@
             </thead>
             <tbody>
               <tr v-for="history in histories" :key="history.id">
-                <td>{{ history.category }}</td>
+                <td v-if="selectCategoryId === ''">{{ history.category }}</td>
                 <td>{{ history.wpm }}</td>
                 <td>{{ history.correct_percentage }}</td>
                 <td>{{ history.miss_key }}</td>
@@ -123,6 +138,21 @@
       <div class="history menu" v-if="isLogin && !existsHistory">
         <p class="title">履歴データ</p>
         <p class="message">まだ履歴データがありません。</p>
+        <label for="category-select">対象カテゴリー：</label>
+        <select
+          id="category-select"
+          class="history-category-select"
+          v-model="selectCategoryId"
+        >
+          <option value="">全て</option>
+          <option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+          >
+            {{ category.name }}
+          </option>
+        </select>
       </div>
     </div>
     <TypingModal
@@ -157,6 +187,7 @@ export default {
       categoryId: "",
       userTypeCount: "",
       userAverageWpm: "",
+      selectCategoryId: "",
     };
   },
   computed: {
@@ -174,6 +205,8 @@ export default {
     },
     startPageRange() {
       if (this.isShortSize) {
+        this.endDot = false;
+        this.startDot = false;
         return this.createRange(1, this.lastPage);
       } else {
         return this.createRange(1, 2);
@@ -267,6 +300,7 @@ export default {
     },
     async getHistory(topPage = 0) {
       const params = {
+        categoryId: this.selectCategoryId,
         userId: this.userId,
         perPage: this.perPage,
         page: topPage === 0 ? this.currentPage : 1,
@@ -389,6 +423,11 @@ export default {
       if (this.apiStatus) {
         this.$router.push("/", function () {});
       }
+    },
+  },
+  watch: {
+    selectCategoryId() {
+      this.getHistory(1);
     },
   },
 };

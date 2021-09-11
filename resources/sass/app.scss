@@ -315,8 +315,21 @@ a {
 
       .history {
         width: 100%;
+        label{
+          margin-left: 15px;
+        }
         .message {
           text-align: center;
+        }
+        .history-category-select {
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          &:focus {
+            outline: none;
+            border-color: dodgerBlue;
+            box-shadow: 0 0 5px 0 dodgerBlue;
+          }
         }
         .history-data {
           display: flex;
@@ -786,11 +799,11 @@ a {
           }
         }
 
-        .btn-wrapper{
+        .btn-wrapper {
           display: flex;
           justify-content: center;
           margin: 15px 0;
-          button + button{
+          button + button {
             margin-left: 20px;
           }
         }

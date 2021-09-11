@@ -12347,6 +12347,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12370,7 +12400,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: {},
       categoryId: "",
       userTypeCount: "",
-      userAverageWpm: ""
+      userAverageWpm: "",
+      selectCategoryId: ""
     };
   },
   computed: {
@@ -12388,6 +12419,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     startPageRange: function startPageRange() {
       if (this.isShortSize) {
+        this.endDot = false;
+        this.startDot = false;
         return this.createRange(1, this.lastPage);
       } else {
         return this.createRange(1, 2);
@@ -12554,6 +12587,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 topPage = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 0;
                 params = {
+                  categoryId: _this4.selectCategoryId,
                   userId: _this4.userId,
                   perPage: _this4.perPage,
                   page: topPage === 0 ? _this4.currentPage : 1
@@ -12702,6 +12736,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee5);
       }))();
+    }
+  },
+  watch: {
+    selectCategoryId: function selectCategoryId() {
+      this.getHistory(1);
     }
   }
 });
@@ -88441,6 +88480,57 @@ var render = function() {
           ? _c("div", { staticClass: "history menu" }, [
               _c("p", { staticClass: "title" }, [_vm._v("履歴データ")]),
               _vm._v(" "),
+              _c("label", { attrs: { for: "category-select" } }, [
+                _vm._v("対象カテゴリー：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectCategoryId,
+                      expression: "selectCategoryId"
+                    }
+                  ],
+                  staticClass: "history-category-select",
+                  attrs: { id: "category-select" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectCategoryId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [_vm._v("全て")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.categories, function(category) {
+                    return _c(
+                      "option",
+                      { key: category.id, domProps: { value: category.id } },
+                      [
+                        _vm._v(
+                          "\n          " + _vm._s(category.name) + "\n        "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
               _c(
                 "ul",
                 { staticClass: "pagination" },
@@ -88566,13 +88656,29 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "history-data" }, [
                 _c("table", { staticClass: "history-table" }, [
-                  _vm._m(0),
+                  _c("thead", [
+                    _c("tr", [
+                      _vm.selectCategoryId === ""
+                        ? _c("th", [_vm._v("カテゴリー")])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("WPM")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("正答率")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("ミスキー")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("日付")])
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c(
                     "tbody",
                     _vm._l(_vm.histories, function(history) {
                       return _c("tr", { key: history.id }, [
-                        _c("td", [_vm._v(_vm._s(history.category))]),
+                        _vm.selectCategoryId === ""
+                          ? _c("td", [_vm._v(_vm._s(history.category))])
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(history.wpm))]),
                         _vm._v(" "),
@@ -88611,7 +88717,58 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "message" }, [
                 _vm._v("まだ履歴データがありません。")
-              ])
+              ]),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "category-select" } }, [
+                _vm._v("対象カテゴリー：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectCategoryId,
+                      expression: "selectCategoryId"
+                    }
+                  ],
+                  staticClass: "history-category-select",
+                  attrs: { id: "category-select" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectCategoryId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [_vm._v("全て")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.categories, function(category) {
+                    return _c(
+                      "option",
+                      { key: category.id, domProps: { value: category.id } },
+                      [
+                        _vm._v(
+                          "\n          " + _vm._s(category.name) + "\n        "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
             ])
           : _vm._e()
       ]),
@@ -88627,26 +88784,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("カテゴリー")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("WPM")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("正答率")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("ミスキー")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("日付")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
