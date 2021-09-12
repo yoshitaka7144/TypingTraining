@@ -261,6 +261,24 @@ a:hover {
   border-radius: 10px;
 }
 
+.main-container #not-found,
+.main-container #system-error {
+  width: 100%;
+}
+
+.main-container #not-found .title,
+.main-container #system-error .title {
+  font-size: 1.4rem;
+  margin-bottom: 25px;
+}
+
+.main-container #not-found .btn-wrapper,
+.main-container #system-error .btn-wrapper {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
 .main-container #home {
   width: 100%;
 }

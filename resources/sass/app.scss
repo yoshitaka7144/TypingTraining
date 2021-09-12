@@ -250,6 +250,20 @@ a {
     border-radius: 10px;
   }
 
+  #not-found,
+  #system-error {
+    width: 100%;
+    .title {
+      font-size: $font-size-large;
+      margin-bottom: 25px;
+    }
+    .btn-wrapper {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
   #home {
     width: 100%;
     .top-image {
@@ -315,7 +329,7 @@ a {
 
       .history {
         width: 100%;
-        label{
+        label {
           margin-left: 15px;
         }
         .message {
@@ -972,7 +986,7 @@ a {
           }
         }
       }
-      .btn-wrapper{
+      .btn-wrapper {
         text-align: right;
         margin: 10px 0;
       }
