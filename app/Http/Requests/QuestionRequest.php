@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use App\Rules\CategoryRule;
 use App\Rules\QuestionTextRule;
 use App\Rules\RomanRule;
@@ -33,7 +34,9 @@ class QuestionRequest extends FormRequest
         return [
             "categoryId" => ["required", new CategoryRule],
             "text" => ["required", new QuestionTextRule, "max:100"],
-            "kana" => ["required", new KanaRule, "max:100"],
+            "kana" => ["required", new KanaRule, "max:100", Rule::unique('questions')->ignore($this->id)->where(function ($query) {
+                $query->where('text', $this->text);
+            }),],
             "roman" => ["required", new RomanRule, "max:100"],
         ];
     }

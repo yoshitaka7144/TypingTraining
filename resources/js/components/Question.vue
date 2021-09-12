@@ -253,7 +253,7 @@ export default {
         this.questions = questions.data;
       }
     },
-    modalShow(mode, id) {
+    modalShow(mode, id = "") {
       this.modalOptions.mode = mode;
       this.modalOptions.questionId = id;
       this.$modal.show("modal-question-edit");

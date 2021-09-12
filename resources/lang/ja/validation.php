@@ -132,8 +132,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'kana' => [
+            'unique' => '既に同じ問題、かなのデータが登録されています',
         ],
     ],
 

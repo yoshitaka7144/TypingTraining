@@ -161,6 +161,7 @@ export default {
     return {
       registerErrorMessages: "",
       registerForm: {
+        id:"",
         categoryId: "",
         text: "",
         kana: "",
@@ -223,6 +224,7 @@ export default {
       }
     },
     async update() {
+      this.registerForm.id = this.options.questionId;
       const response = await axios
         .put("/api/question/" + this.options.questionId, this.registerForm)
         .catch((error) => error.response || error);

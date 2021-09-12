@@ -13349,7 +13349,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    modalShow: function modalShow(mode, id) {
+    modalShow: function modalShow(mode) {
+      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
       this.modalOptions.mode = mode;
       this.modalOptions.questionId = id;
       this.$modal.show("modal-question-edit");
@@ -13626,6 +13627,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       registerErrorMessages: "",
       registerForm: {
+        id: "",
         categoryId: "",
         text: "",
         kana: "",
@@ -13756,12 +13758,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
+                _this4.registerForm.id = _this4.options.questionId;
+                _context4.next = 3;
                 return axios.put("/api/question/" + _this4.options.questionId, _this4.registerForm)["catch"](function (error) {
                   return error.response || error;
                 });
 
-              case 2:
+              case 3:
                 response = _context4.sent;
 
                 if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"]) {
@@ -13775,7 +13778,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this4.$store.commit("error/setCode", response.status);
                 }
 
-              case 4:
+              case 5:
               case "end":
                 return _context4.stop();
             }
