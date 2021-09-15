@@ -30,8 +30,9 @@
         "@fortawesome/free-regular-svg-icons": "^5.15.4",
         "@fortawesome/free-solid-svg-icons": "^5.15.4",
         "@fortawesome/vue-fontawesome": "^2.0.2",
-        "chart.js": "^2.8.0",
-        "vue-chartjs": "^3.4.2",
+        "chart.js": "^2.9.3",
+        "chartjs-plugin-datalabels": "^1.0.0",
+        "vue-chartjs": "^3.5.1",
         "vue-js-modal": "^2.0.1",
         "vue-router": "^3.5.2"
     }

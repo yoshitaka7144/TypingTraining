@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->string("roman", 100);
             $table->integer("editor_user_id")->nullable();
             $table->timestamps();
+            $table->unique(['text', 'kana']);
             $table->foreign("category_id")->references("id")->on("categories")->onDelete("cascade");
         });
     }

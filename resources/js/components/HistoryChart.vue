@@ -1,6 +1,6 @@
 <script>
-import { Bar, mixins } from "vue-chartjs";
-const { reactiveProp } = mixins;
+import { Bar } from "vue-chartjs";
+import chartjsPluginDatalabels from 'chartjs-plugin-datalabels';
 
 export default {
   extends: Bar,
@@ -12,10 +12,12 @@ export default {
     return {};
   },
   mounted() {
+    this.addPlugin(chartjsPluginDatalabels);
     this.renderChart(this.chartData, this.options);
   },
   watch: {
     options() {
+      this.addPlugin(chartjsPluginDatalabels);
       this.renderChart(this.chartData, this.options);
     },
   },

@@ -9,7 +9,7 @@
         <p class="title">会員メニュー</p>
         <div v-if="!isLogin" class="menu-btn">
           <router-link :to="{ name: 'login' }">
-            <button class="btn btn-green">ログイン</button>
+            <button class="btn btn-green">ログイン/新規登録</button>
           </router-link>
         </div>
         <div v-else class="menu-btn">
@@ -18,6 +18,7 @@
           </router-link>
           <button class="btn btn-red" @click="logout">ログアウト</button>
         </div>
+        <p class="message" v-if="!isLogin">ログインユーザーは問題編集、履歴機能が利用可能です。</p>
         <table v-if="isLogin" class="user-info-table">
           <tr>
             <th>ユーザー名</th>
@@ -369,19 +370,39 @@ export default {
         labels: labels,
         datasets: [
           {
-            type: "bar",
-            label: "wpm",
-            data: wpmData,
-            backgroundColor: "lightblue",
+            type: "line",
+            label: "正答率(%)",
+            datalabels: {
+              display: false,
+            },
+            data: correctPercentageData,
+            backgroundColor: "#7dd093",
+            borderColor: "#7dd093",
+            borderWidth: 2,
+            pointStyle: "circle",
+            pointRadius: 4,
+            backgroundColor: "#e0f7c7",
+            fill: false,
+            lineTension: 0.3,
             yAxisID: "y-axis-1",
           },
           {
-            type: "line",
-            label: "正答率(%)",
-            data: correctPercentageData,
-            borderColor: "#CFD8DC",
-            fill: false,
-            lineTension: 0.3,
+            type: "bar",
+            label: "wpm",
+            datalabels: {
+              display: true,
+              anchor: "end",
+              align: "end",
+              offset: 0,
+              padding: 0,
+              color: "#a5a1a1",
+              font: {
+                size: 16,
+              },
+            },
+            data: wpmData,
+            backgroundColor: "#60d0e4",
+            borderColor: "#60d0e4",
             yAxisID: "y-axis-2",
           },
         ],
@@ -391,24 +412,40 @@ export default {
         maintainAspectRatio: false,
         responsive: true,
         scales: {
-          xAxes: [{}],
+          xAxes: [
+            {
+              gridLines: {
+                display: false,
+              },
+            },
+          ],
           yAxes: [
             {
               id: "y-axis-1",
+              position: "right",
+              ticks: {
+                max: 100,
+                min: 0,
+                stepSize: 20,
+                fontColor: "#1a7940",
+                fontSize: 14,
+              },
+              gridLines: {
+                display: false,
+              },
+            },
+            {
+              id: "y-axis-2",
               position: "left",
               ticks: {
                 max: maxWpmScale,
                 min: minWpmScale,
                 stepSize: this.wpmStepSize,
+                fontColor: "#4883da",
+                fontSize: 14,
               },
-            },
-            {
-              id: "y-axis-2",
-              position: "right",
-              ticks: {
-                max: 100,
-                min: 0,
-                stepSize: 10,
+              gridLines: {
+                borderDash: [5, 5],
               },
             },
           ],

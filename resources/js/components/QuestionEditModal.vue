@@ -2,12 +2,12 @@
   <modal
     class="modal-question-edit"
     name="modal-question-edit"
-    :resizable="false"
     :clickToClose="false"
     :maxWidth="700"
     :width="'95%'"
     :height="'auto'"
     :adaptive="true"
+    :scrollable="true"
     @before-open="beforeOpen"
   >
     <div class="header">
