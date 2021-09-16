@@ -18,10 +18,12 @@ class CategoriesTableSeeder extends Seeder
 
         $categories = [
             [
-                "name" => "aaa",
+                "name" => "50音",
+                "description" => "あいうえお...わをん、濁音、拗音が出題されます。日本語入力の基礎練習が行えます。",
             ],
             [
                 "name" => "bbb",
+                "description" => "",
             ],
             [
                 "name" => "ccc",

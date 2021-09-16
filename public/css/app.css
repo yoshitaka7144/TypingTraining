@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@charset "UTF-8";
 
 * {
   margin: 0;
@@ -6,8 +6,8 @@
   box-sizing: border-box;
   font-size: 1rem;
   line-height: 1.6;
-  font-family: "Nunito", sans-serif;
-  color: rgba(0, 0, 0, 0.8);
+  font-family: "\6E38\30B4\30B7\30C3\30AF", "Hiragino Kaku Gothic ProN", sans-serif;
+  color: rgba(0, 0, 0, 0.9);
 }
 
 table th {
@@ -42,7 +42,7 @@ a:hover {
 ----------------------------------------------*/
 
 .btn {
-  padding: 10px 15px;
+  padding: 8px 13px;
   color: white;
   display: inline-block;
   border-radius: 5px;
@@ -81,6 +81,16 @@ a:hover {
   box-shadow: 2px 2px #504e4e;
 }
 
+.btn-search {
+  padding: 4px 10px;
+  background-color: #afe2ec;
+  box-shadow: 2px 2px #2a8494;
+}
+
+.btn-clear {
+  padding: 4px 10px;
+}
+
 /*----------------------------------------------
 
 ヘッダー
@@ -88,7 +98,7 @@ a:hover {
 ----------------------------------------------*/
 
 .header-container {
-  background-color: #9eb9ff;
+  background-color: #b9f1d1;
   position: fixed;
   top: 0;
   width: 100%;
@@ -268,7 +278,7 @@ a:hover {
 
 .main-container #not-found .title,
 .main-container #system-error .title {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin-bottom: 25px;
 }
 
@@ -289,17 +299,18 @@ a:hover {
 }
 
 .main-container #home .top-image img {
-  width: 60%;
+  width: 50%;
   margin-top: 15px;
 }
 
 .main-container #home .main {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .main-container #home .main .title {
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   text-align: center;
   margin: 10px 0;
 }
@@ -323,6 +334,7 @@ a:hover {
 .main-container #home .main .member-menu .menu-btn {
   display: flex;
   justify-content: center;
+  margin-top: 25px;
 }
 
 .main-container #home .main .member-menu .menu-btn > button {
@@ -336,7 +348,7 @@ a:hover {
 
 .main-container #home .main .member-menu .user-info-table th,
 .main-container #home .main .member-menu .user-info-table td {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   width: 50%;
   padding: 15px 10px;
   text-align: right;
@@ -346,14 +358,38 @@ a:hover {
   width: calc(50% - 20px);
 }
 
-.main-container #home .main .typing-menu .btn-wrapper {
+.main-container #home .main .typing-menu .item-wrapper {
   display: flex;
   flex-wrap: wrap;
 }
 
-.main-container #home .main .typing-menu .btn-wrapper button {
+.main-container #home .main .typing-menu .item-wrapper .item {
   width: calc(50% - 30px);
   margin: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  position: relative;
+  top: 0;
+  transition: top 0.3s, box-shadow 0.3s;
+}
+
+.main-container #home .main .typing-menu .item-wrapper .item:hover {
+  cursor: pointer;
+  top: -8px;
+  box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.08);
+  background-color: #eff1f7;
+}
+
+.main-container #home .main .typing-menu .item-wrapper .item p:nth-child(1) {
+  color: #2776b9;
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
 .main-container #home .main .history {
@@ -401,7 +437,7 @@ a:hover {
 }
 
 .main-container #home .main .history .history-data .history-table thead th:nth-child(1) {
-  width: 20%;
+  width: 25%;
 }
 
 .main-container #home .main .history .history-data .history-table thead th:nth-child(2) {
@@ -417,7 +453,7 @@ a:hover {
 }
 
 .main-container #home .main .history .history-data .history-table thead th:nth-child(5) {
-  width: 30%;
+  width: 25%;
 }
 
 .main-container #home .main .history .history-data .history-table tbody td {
@@ -483,35 +519,61 @@ a:hover {
 }
 
 .main-container #home .modal-typing .modal-main .display-question {
-  width: 65%;
+  width: 70%;
   margin: 10px auto;
-  padding: 10px 15px;
-  border-radius: 5px;
-  border: 2px solid #668ad8;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 3px solid #668ad8;
+  word-break: break-all;
+  background-color: #f2f7fd;
 }
 
 .main-container #home .modal-typing .modal-main .display-question .display-text {
-  font-size: 1.9rem;
+  font-size: 1.8rem;
+  font-weight: bold;
   margin-bottom: 10px;
+  color: #707070;
 }
 
 .main-container #home .modal-typing .modal-main .display-question .display-kana {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  color: #707070;
 }
 
 .main-container #home .modal-typing .modal-main .display-question .display-roman {
-  font-size: 1.8rem;
-  opacity: 0.6;
+  font-size: 1.6rem;
+  color: #a6a6a6;
 }
 
 .main-container #home .modal-typing .modal-main .display-question .inputed {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: orange;
 }
 
+.main-container #home .modal-typing .modal-main .display-question .progress {
+  display: inline-block;
+  width: 100%;
+  border-radius: 15px;
+  height: 10px;
+  background-color: #e9edf1;
+  position: relative;
+}
+
+.main-container #home .modal-typing .modal-main .display-question .progress .progress-bar {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 15px;
+  width: 0%;
+  height: 100%;
+  background-color: #00e664;
+  transition: all 1ms linear;
+}
+
 .main-container #home .modal-typing .modal-main .question-setting {
-  width: 50%;
+  width: 85%;
   margin: 15px auto;
   display: flex;
   justify-content: space-around;
@@ -524,7 +586,7 @@ a:hover {
 }
 
 .main-container #home .modal-typing .modal-main .result .title {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   text-align: center;
   margin: 15px 0;
   padding-bottom: 10px;
@@ -572,15 +634,20 @@ a:hover {
   background-color: #eee;
 }
 
+.main-container #home .modal-typing .modal-main .result .result-table td:nth-child(4) {
+  color: #e3342f;
+  font-weight: bold;
+}
+
 .main-container #home .modal-typing .modal-main .message {
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin: 15px 0;
 }
 
 .main-container #home .modal-typing .modal-main .missed {
-  -webkit-animation: flash 0.8s linear infinite;
-          animation: flash 0.8s linear infinite;
+  -webkit-animation: flash 0.9s linear infinite;
+          animation: flash 0.9s linear infinite;
 }
 
 @-webkit-keyframes flash {
@@ -608,7 +675,7 @@ a:hover {
 }
 
 .main-container #home .modal-typing .modal-main .form-select {
-  width: 60px;
+  width: 67px;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -686,10 +753,12 @@ a:hover {
   margin: 3px 3px 3px 3px;
   width: 35px;
   height: 35px;
+  color: #9c9c9c;
 }
 
 .main-container #home .modal-typing .modal-main #keyboard-container #keyboard .row .target-key {
   background-color: #f6993f;
+  color: #525151;
 }
 
 .main-container #home .modal-typing .modal-main #keyboard-container #keyboard .row .missed {
@@ -886,7 +955,7 @@ a:hover {
 }
 
 .main-container #home .modal-typing .modal-main .history-container .history-data .history-table thead th {
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: normal;
   text-align: center;
   padding: 10px;
@@ -911,7 +980,7 @@ a:hover {
 }
 
 .main-container #home .modal-typing .modal-main .history-container .history-data .history-table tbody td {
-  font-size: 0.8em;
+  font-size: 0.9em;
   text-align: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
@@ -1029,7 +1098,7 @@ a:hover {
 }
 
 .main-container #question .title-area .title {
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   text-align: left;
 }
 
@@ -1060,7 +1129,6 @@ a:hover {
   display: inline-block;
   height: 35px;
   padding: 10px;
-  margin-right: 15px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
@@ -1179,6 +1247,7 @@ a:hover {
 }
 
 .main-container #question table tbody td {
+  word-break: break-all;
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }
@@ -1244,7 +1313,7 @@ a:hover {
 }
 
 .main-container .modal-question-edit .main .question-edit .title {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   padding-bottom: 10px;
   margin-bottom: 15px;
   border-bottom: 2px solid #f1f3f5;
@@ -1326,7 +1395,7 @@ a:hover {
 }
 
 .main-container .modal-question-edit .main .question-delete .title {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   padding-bottom: 10px;
   margin-bottom: 15px;
   border-bottom: 2px solid #f1f3f5;

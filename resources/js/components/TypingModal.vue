@@ -36,6 +36,23 @@
             />
             <label for="audio" class="">音声の有無</label>
           </div>
+          <div>
+            <input
+              type="checkbox"
+              class="form-checkbox"
+              id="limit"
+              v-model="limitCheaked"
+            />
+            <label for="limit" class="">制限時間の有無</label>
+          </div>
+          <div v-if="limitCheaked">
+            <label for="wpm-select">WPM目標値：</label>
+            <select id="wpm-select" class="form-select" v-model="targetWpm">
+              <option :value="n" v-for="n in wpmSelectOptions" :key="n">
+                {{ n }}
+              </option>
+            </select>
+          </div>
         </div>
         <p v-if="questionCount > 0" class="message missed">
           スペースキーを押すとスタートします。
@@ -50,6 +67,12 @@
           <span class="inputed">{{ displayInputedRoman }}</span
           >{{ displayRoman }}
         </p>
+        <div v-if="limitCheaked" class="progress">
+          <div
+            class="progress-bar"
+            :style="{ width: progress + '%', backgroundColor: progressColor }"
+          ></div>
+        </div>
       </div>
 
       <div class="result" v-if="phase === 3">
@@ -741,6 +764,17 @@ export default {
       audio: new Audio("/audio/beep.wav"),
       audioCheaked: false,
       canShowHistory: false,
+      targetWpm: 200,
+      limitTime: 0,
+      remainingTime: 0,
+      progress: 100,
+      progressColor: "",
+      intervalId: "",
+      limitCheaked: false,
+      wpmSelectOptions: [
+        100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425,
+        500, 525, 550, 575, 600,
+      ],
     };
   },
   mounted() {
@@ -858,6 +892,9 @@ export default {
     },
     start() {
       this.initQuestion();
+      if (this.limitCheaked) {
+        this.limitTimerStart();
+      }
       this.typeTime = performance.now();
       this.phase = 2;
     },
@@ -885,6 +922,9 @@ export default {
           this.missTypeCount / (this.correctTypeCount + this.missTypeCount)) *
           100
       );
+      if (Number.isNaN(this.correctPercentage)) {
+        this.correctPercentage = 0;
+      }
 
       // ログイン時、データ更新と履歴データ作成
       if (this.isLogin) {
@@ -894,6 +934,10 @@ export default {
         // トップページの更新
         this.updateParentPage(1);
       }
+
+      // 時間切れ終了時用クリア処理
+      this.missTypeKey = "";
+      this.roman[this.romanIndex] = "";
 
       // ミスタイプキーのスタイル設定
       this.setMissTypeKeyStyle();
@@ -1128,11 +1172,38 @@ export default {
       }
       return range;
     },
+    createProgressBarColor(progressPercentage) {
+      const rInitVal = 0;
+      const gInitVal = 230;
+      const bInitVal = 100;
+      const r =
+        (100 - progressPercentage) * 5 > 255
+          ? 255
+          : (100 - progressPercentage) * 5;
+      const g =
+        progressPercentage < 50
+          ? gInitVal - (50 - progressPercentage) * 4
+          : gInitVal;
+      const b = bInitVal - (100 - progressPercentage);
+      this.progressColor = "rgb(" + r + ", " + g + ", " + b + ")";
+    },
     changeHistoryPage(page) {
       if (1 <= page && page <= this.lastPage) {
         this.currentPage = page;
         this.getHistory();
       }
+    },
+    limitTimerStart() {
+      let typeCount = 0;
+      for (let i = 0; i < this.questionCount; i++) {
+        typeCount += this.questions[i].roman.length;
+      }
+      this.limitTime = ((60 * typeCount) / this.targetWpm) * 1000;
+      this.remainingTime = this.limitTime;
+      this.intervalId = setInterval(this.remainingTimeCountDown, 10, 10);
+    },
+    remainingTimeCountDown(n) {
+      this.remainingTime -= n;
     },
     isActive(page) {
       return this.currentPage === page;
@@ -1198,6 +1269,19 @@ export default {
     categoryId(val) {
       if (val !== "") {
         this.getQuestions();
+      }
+    },
+    remainingTime(val) {
+      if (this.phase === 3) {
+        clearInterval(this.intervalId);
+        return;
+      }
+      if (val < 0) {
+        clearInterval(this.intervalId);
+        this.showResult();
+      } else {
+        this.progress = Math.floor((this.remainingTime / this.limitTime) * 100);
+        this.createProgressBarColor(this.progress);
       }
     },
   },

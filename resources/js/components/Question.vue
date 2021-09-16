@@ -25,10 +25,10 @@
           v-model="searchText"
           placeholder="検索文字列を入力"
         />
-        <button class="btn btn-blue" @click="searchQuestion">
+        <button class="btn btn-search" @click="searchQuestion">
           <font-awesome-icon :icon="['fas', 'search']" />
         </button>
-        <button class="btn btn-gray" @click="searchClear">解除</button>
+        <button class="btn btn-gray btn-clear" @click="searchClear">解除</button>
       </div>
       <div class="setting-area" v-if="userRole !== 2">
         <input

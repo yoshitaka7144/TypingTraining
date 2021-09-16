@@ -37,15 +37,11 @@
 
       <div class="typing-menu menu">
         <p class="title">タイピングメニュー</p>
-        <div class="btn-wrapper">
-          <button
-            class="btn btn-blue"
-            v-for="category in categories"
-            :key="category.id"
-            @click="showTypingModal(category.id)"
-          >
-            {{ category.name }}
-          </button>
+        <div class="item-wrapper">
+          <div class="item" v-for="category in categories" :key="category.id" @click="showTypingModal(category.id)">
+            <p>{{ category.name }}</p>
+            <p>{{ category.description }}</p>
+          </div>
         </div>
       </div>
 

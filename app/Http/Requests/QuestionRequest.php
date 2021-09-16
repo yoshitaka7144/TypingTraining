@@ -33,11 +33,11 @@ class QuestionRequest extends FormRequest
     {
         return [
             "categoryId" => ["required", new CategoryRule],
-            "text" => ["required", new QuestionTextRule, "max:100"],
-            "kana" => ["required", new KanaRule, "max:100", Rule::unique('questions')->ignore($this->id)->where(function ($query) {
+            "text" => ["required", new QuestionTextRule, "max:30"],
+            "kana" => ["required", new KanaRule, "max:45", Rule::unique('questions')->ignore($this->id)->where(function ($query) {
                 $query->where('text', $this->text);
             }),],
-            "roman" => ["required", new RomanRule, "max:100"],
+            "roman" => ["required", new RomanRule, "max:90"],
         ];
     }
 

@@ -2,11 +2,11 @@
 $body-bg: #edf2f7;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family: "游ゴシック", "Hiragino Kaku Gothic ProN", sans-serif;
 $font-size-base: 1.0rem;
-$font-size-headline: 1.9rem;
-$font-size-large: 1.4rem;
-$font-size-large2: 1.8rem;
+$font-size-headline: 1.8rem;
+$font-size-large: 1.3rem;
+$font-size-large2: 1.6rem;
 $line-height-base: 1.6;
 
 // Colors
@@ -21,11 +21,11 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
-$base-font-color:rgba(0, 0, 0, 0.8);
+$base-font-color: rgba(0, 0, 0, 0.9);
 
 $max-width: 1200px;
 $link-color: rgb(64, 128, 224);
 $header-height: 60px;
 $footer-height: 60px;
 
-$target-key-color:$orange;
+$target-key-color: $orange;
