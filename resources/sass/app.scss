@@ -333,8 +333,8 @@ a {
           display: flex;
           flex-wrap: wrap;
           .item {
-            width: calc(50% - 30px);
-            margin: 15px;
+            width: calc(50% - 20px);
+            margin: 10px;
             padding: 15px;
             display: flex;
             flex-direction: column;
@@ -353,7 +353,7 @@ a {
             }
 
             p:nth-child(1) {
-              color: #2776b9;
+              color: #ff8100;
               font-weight: bold;
               font-size: $font-size-large;
               text-align: center;
@@ -473,6 +473,38 @@ a {
 
       .modal-main {
         padding: 15px;
+
+        .count-wrapper{
+          width: 100%;
+          height: 120px;
+          position: relative;
+          .count{
+            p{
+              opacity:0;
+              font-size: 70px;
+              font-weight: bold;
+              color: orange;
+              position: absolute;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+            p:nth-child(1) {
+              animation: count-down 1s 0s;
+            }
+            p:nth-child(2) {
+              animation: count-down 1s 1s;
+            }
+            p:nth-child(3) {
+              animation: count-down 1s 2s;
+            }
+            @keyframes count-down {
+              0% {opacity:1;}
+              50% {opacity:0.5;}
+              100% {opacity:0;}
+            }
+          }
+        }
+
         .display-question {
           width: 70%;
           margin: 10px auto;
@@ -480,7 +512,7 @@ a {
           border-radius: 10px;
           border: 3px solid #668ad8;
           word-break: break-all;
-          background-color: #f2f7fd;
+          background: repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px,#e9f4ff 3px, #e9f4ff 7px);
           .display-text {
             font-size: $font-size-headline;
             font-weight: bold;
@@ -494,6 +526,7 @@ a {
           }
           .display-roman {
             font-size: $font-size-large2;
+            font-weight: bold;
             color: rgb(166, 166, 166);
           }
           .inputed {
@@ -577,7 +610,7 @@ a {
 
         .message {
           text-align: center;
-          font-size: $font-size-large;
+          font-size: $font-size-large2;
           margin: 15px 0;
         }
         .missed {
@@ -658,6 +691,7 @@ a {
           #keyboard {
             display: flex;
             flex-direction: column;
+            background-color: rgb(252, 246, 236);
             .row {
               display: flex;
               .key {

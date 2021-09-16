@@ -35,6 +35,7 @@ Route::get('/category', 'CategoryController@index')->name('category');
 // 指定カテゴリーの問題取得
 Route::get('/question/category/{categoryId}', 'QuestionController@category')->name('question.category');
 
+// Yahooルビ振りAPIを使用してひらがなとローマ字取得
 Route::post('/roman', 'RomanController@index')->name('roman');
 
 // ログイン時のみ

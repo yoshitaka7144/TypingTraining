@@ -60,6 +60,14 @@
         <p v-else class="message error">問題が登録されていません。</p>
       </div>
 
+      <div class="count-wrapper" v-if="phase === 1.5">
+        <div class="count">
+          <p>3</p>
+          <p>2</p>
+          <p>1</p>
+        </div>
+      </div>
+
       <div class="display-question" v-if="phase === 2">
         <p class="display-text">{{ displayText }}</p>
         <p class="display-kana">{{ displayKana }}</p>
@@ -574,7 +582,7 @@
         </div>
       </div>
 
-      <div id="hand-container" v-if="phase === 1 || phase === 2">
+      <div id="hand-container" v-if="phase !== 3">
         <div id="hand" class="">
           <div id="hand-left" class="">
             <div
@@ -770,6 +778,7 @@ export default {
       progress: 100,
       progressColor: "",
       intervalId: "",
+      timeOutId:"",
       limitCheaked: false,
       wpmSelectOptions: [
         100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425,
@@ -964,6 +973,8 @@ export default {
       this.chartData = {};
       this.chartOptions = {};
       this.canShowHistory = false;
+      clearInterval(this.intervalId);
+      clearTimeout(this.timeOutId);
     },
     initQuestion() {
       this.roman = [];
@@ -983,6 +994,7 @@ export default {
           Math.ceil((this.missTypeKeyHash[key] / this.missTypeCount) * 10) / 10;
         this.missTypeKeyStyle[key] = {
           "background-color": "rgba(255,0,0," + percentage + ")",
+          "color": "#525151",
         };
       }
     },
@@ -1211,7 +1223,11 @@ export default {
     keyAction(e) {
       if (this.phase === 1) {
         if (e.code === "Space" && this.questionCount > 0) {
-          this.start();
+          // 3秒カウントhtml表示
+          this.phase = 1.5;
+
+          // 3秒後にスタート
+          this.timeOutId = setTimeout(this.start, 3000);
         }
       } else if (this.phase === 2) {
         e.preventDefault();
