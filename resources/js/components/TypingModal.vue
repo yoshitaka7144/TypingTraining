@@ -778,7 +778,7 @@ export default {
       progress: 100,
       progressColor: "",
       intervalId: "",
-      timeOutId:"",
+      timeOutId: "",
       limitCheaked: false,
       wpmSelectOptions: [
         100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425,
@@ -922,6 +922,19 @@ export default {
       // 時間測定終了
       this.typeTime = performance.now() - this.typeTime;
 
+      // ミスタイプキーの並び替え
+      if (Object.keys(this.missTypeKeyHash).length > 0) {
+        const pairs = Object.entries(this.missTypeKeyHash);
+        pairs.sort((a, b) => {
+          const aKey = a[0];
+          const bKey = b[0];
+          if (aKey < bKey) return -1;
+          if (aKey > bKey) return 1;
+          return 0;
+        });
+        this.missTypeKeyHash = Object.fromEntries(pairs);
+      }
+
       // 結果集計
       this.wpm = Math.floor(
         (this.correctTypeCount / this.typeTime) * 1000 * 60
@@ -994,7 +1007,7 @@ export default {
           Math.ceil((this.missTypeKeyHash[key] / this.missTypeCount) * 10) / 10;
         this.missTypeKeyStyle[key] = {
           "background-color": "rgba(255,0,0," + percentage + ")",
-          "color": "#525151",
+          color: "#525151",
         };
       }
     },
@@ -1124,7 +1137,7 @@ export default {
     async createHistory() {
       const missKey =
         Object.keys(this.missTypeKeyHash).length > 0
-          ? Object.keys(this.missTypeKeyHash).join(",")
+          ? Object.keys(this.missTypeKeyHash).join(" ")
           : "";
       const paramsCreate = {
         userId: this.userId,
