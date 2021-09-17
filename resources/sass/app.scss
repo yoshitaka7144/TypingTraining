@@ -129,10 +129,11 @@ a {
         a {
           line-height: $header-height;
           padding: 0 15px;
-          color: rgba(0, 0, 0, 0.5);
+          color: rgba(0, 0, 0, 0.8);
           display: block;
           &:hover {
-            opacity: 0.4;
+            cursor: pointer;
+            opacity: 0.7;
           }
         }
       }
@@ -171,6 +172,9 @@ a {
           font-size: 16px;
           color: white;
           cursor: pointer;
+          &:hover {
+            opacity: 0.7;
+          }
         }
       }
     }

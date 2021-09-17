@@ -128,7 +128,11 @@
       <p>Yahoo! JAPAN ルビ振りWebAPIを使用しています。</p>
       <div>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
-        <a href="https://developer.yahoo.co.jp/sitemap/" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://developer.yahoo.co.jp/sitemap/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img
             src="https://s.yimg.jp/images/yjdn/yjdn_attbtn2_105_17.gif"
             width="105"
@@ -364,7 +368,7 @@ export default {
       } else if (val.length > REGISTER_QUESTION_ROMAN_MAX_NUMBER) {
         this.romanError = REGISTER_QUESTION_ROMAN_ERROR_LIMIT;
       } else {
-        if (!val.match(/^[a-zA-Z0-9\-,\.]+$/u)) {
+        if (!val.match(/^[a-z0-9\-,\.]+$/u)) {
           this.romanError = REGISTER_QUESTION_ROMAN_ERROR_PATTERN;
         } else {
           this.romanError = "";

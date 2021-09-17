@@ -36,6 +36,6 @@ class QuestionTextRule implements Rule
      */
     public function message()
     {
-        return ":attribute は漢字 or カタカナ or ひらがな or 数字 or 記号（,.、。）で入力してください";
+        return ":attribute は漢字 or カタカナ or ひらがな or 数字 or 記号（ー,.、。）で入力してください";
     }
 }

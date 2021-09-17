@@ -137,12 +137,13 @@ a:hover {
 .header-container .header #pc-nav ul a {
   line-height: 60px;
   padding: 0 15px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.8);
   display: block;
 }
 
 .header-container .header #pc-nav ul a:hover {
-  opacity: 0.4;
+  cursor: pointer;
+  opacity: 0.7;
 }
 
 .header-container .header #sp-nav {
@@ -183,6 +184,11 @@ a:hover {
   font-size: 16px;
   color: white;
   cursor: pointer;
+}
+
+.header-container .header #sp-nav li a:hover,
+.header-container .header #sp-nav li span:hover {
+  opacity: 0.7;
 }
 
 .header-container .header #hamburger {

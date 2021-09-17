@@ -18,7 +18,9 @@
           </router-link>
           <button class="btn btn-red" @click="logout">ログアウト</button>
         </div>
-        <p class="message" v-if="!isLogin">ログインユーザーは問題編集、履歴機能が利用可能です。</p>
+        <p class="message" v-if="!isLogin">
+          ログインユーザーは問題編集、履歴機能が利用可能です。
+        </p>
         <table v-if="isLogin" class="user-info-table">
           <tr>
             <th>ユーザー名</th>
@@ -38,7 +40,12 @@
       <div class="typing-menu menu">
         <p class="title">タイピングメニュー</p>
         <div class="item-wrapper">
-          <div class="item" v-for="category in categories" :key="category.id" @click="showTypingModal(category.id)">
+          <div
+            class="item"
+            v-for="category in categories"
+            :key="category.id"
+            @click="showTypingModal(category.id)"
+          >
             <p>{{ category.name }}</p>
             <p>{{ category.description }}</p>
           </div>

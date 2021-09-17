@@ -194,7 +194,7 @@ export default {
       }
     },
     "registerForm.password": function (val) {
-      var regexp = new RegExp(
+      const regexp = new RegExp(
         "^[a-zA-Z0-9]{" + REGISTER_PASSWORD_MIN_NUMBER + ",}$"
       );
       if (val.length < 1) {

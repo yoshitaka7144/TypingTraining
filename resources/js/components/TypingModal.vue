@@ -800,43 +800,43 @@ export default {
       return this.$store.getters["auth/userId"];
     },
     isLeftLittle() {
-      var leftLittle = ["1", "q", "a", "z"];
-      var char = this.roman[this.romanIndex];
+      const leftLittle = ["1", "q", "a", "z"];
+      const char = this.roman[this.romanIndex];
       return leftLittle.includes(char);
     },
     isLeftRing() {
-      var leftRing = ["2", "w", "s", "x"];
-      var char = this.roman[this.romanIndex];
+      const leftRing = ["2", "w", "s", "x"];
+      const char = this.roman[this.romanIndex];
       return leftRing.includes(char);
     },
     isLeftMiddle() {
-      var leftMiddle = ["3", "e", "d", "c"];
-      var char = this.roman[this.romanIndex];
+      const leftMiddle = ["3", "e", "d", "c"];
+      const char = this.roman[this.romanIndex];
       return leftMiddle.includes(char);
     },
     isLeftIndex() {
-      var leftIndex = ["4", "5", "r", "t", "f", "g", "v", "b"];
-      var char = this.roman[this.romanIndex];
+      const leftIndex = ["4", "5", "r", "t", "f", "g", "v", "b"];
+      const char = this.roman[this.romanIndex];
       return leftIndex.includes(char);
     },
     isRightIndex() {
-      var rightIndex = ["6", "7", "y", "u", "h", "j", "n", "m"];
-      var char = this.roman[this.romanIndex];
+      const rightIndex = ["6", "7", "y", "u", "h", "j", "n", "m"];
+      const char = this.roman[this.romanIndex];
       return rightIndex.includes(char);
     },
     isRightMiddle() {
-      var rightMiddle = ["8", "i", "k", ","];
-      var char = this.roman[this.romanIndex];
+      const rightMiddle = ["8", "i", "k", ","];
+      const char = this.roman[this.romanIndex];
       return rightMiddle.includes(char);
     },
     isRightRing() {
-      var rightRing = ["9", "o", "l", "."];
-      var char = this.roman[this.romanIndex];
+      const rightRing = ["9", "o", "l", "."];
+      const char = this.roman[this.romanIndex];
       return rightRing.includes(char);
     },
     isRightLittle() {
-      var rightLittle = ["0", "p"];
-      var char = this.roman[this.romanIndex];
+      const rightLittle = ["0", "p"];
+      const char = this.roman[this.romanIndex];
       return rightLittle.includes(char);
     },
     canPlayAudio() {
@@ -1257,10 +1257,10 @@ export default {
             } else {
               this.displayRoman = "";
               this.displayInputedRoman = "";
-              for (var i = this.romanIndex; i < this.roman.length - 1; i++) {
+              for (let i = this.romanIndex; i < this.roman.length - 1; i++) {
                 this.displayRoman += this.roman[i];
               }
-              for (var i = 0; i < this.romanIndex; i++) {
+              for (let i = 0; i < this.romanIndex; i++) {
                 this.displayInputedRoman += this.roman[i];
               }
             }

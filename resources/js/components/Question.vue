@@ -28,7 +28,9 @@
         <button class="btn btn-search" @click="searchQuestion">
           <font-awesome-icon :icon="['fas', 'search']" />
         </button>
-        <button class="btn btn-gray btn-clear" @click="searchClear">解除</button>
+        <button class="btn btn-gray btn-clear" @click="searchClear">
+          解除
+        </button>
       </div>
       <div class="setting-area" v-if="userRole !== 2">
         <input

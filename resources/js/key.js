@@ -85,13 +85,13 @@ export function getChar(code) {
 }
 
 export function checkInputKey(code, roman, romanIndex) {
-  var inputChar = getChar(code);
-  var currentChar = roman[romanIndex];
-  var prevChar3 = romanIndex >= 3 ? roman[romanIndex - 3] : "";
-  var prevChar2 = romanIndex >= 2 ? roman[romanIndex - 2] : "";
-  var prevChar = romanIndex >= 1 ? roman[romanIndex - 1] : "";
-  var nextChar = roman[romanIndex + 1];
-  var nextChar2 = nextChar === END_SYMBOL ? END_SYMBOL : roman[romanIndex + 2];
+  const inputChar = getChar(code);
+  const currentChar = roman[romanIndex];
+  const prevChar3 = romanIndex >= 3 ? roman[romanIndex - 3] : "";
+  const prevChar2 = romanIndex >= 2 ? roman[romanIndex - 2] : "";
+  const prevChar = romanIndex >= 1 ? roman[romanIndex - 1] : "";
+  const nextChar = roman[romanIndex + 1];
+  const nextChar2 = nextChar === END_SYMBOL ? END_SYMBOL : roman[romanIndex + 2];
 
   if (inputChar === "") {
     return 0;

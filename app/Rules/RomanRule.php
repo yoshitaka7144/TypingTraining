@@ -26,7 +26,7 @@ class RomanRule implements Rule
     public function passes($attribute, $value)
     {
         //
-        return preg_match('/^[a-zA-Z0-9\-,\.]+$/', $value);
+        return preg_match('/^[a-z0-9\-,\.]+$/', $value);
     }
 
     /**
@@ -36,6 +36,6 @@ class RomanRule implements Rule
      */
     public function message()
     {
-        return ":attribute は半角英数字 or 記号（,.）で入力してください";
+        return ":attribute は半角数字 or 英小文字 or 記号（-,.）で入力してください";
     }
 }

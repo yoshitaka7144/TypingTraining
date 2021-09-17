@@ -34,7 +34,7 @@ const actions = {
   // ユーザー登録
   async register(context, data) {
     context.commit("setApiStatus", null);
-    var response = await axios.post("/api/register", data).catch(error => error.response || error);
+    const response = await axios.post("/api/register", data).catch(error => error.response || error);
 
     if (response.status === CREATED) {
       context.commit("setApiStatus", true);
@@ -52,7 +52,7 @@ const actions = {
   // ログイン
   async login(context, data) {
     context.commit("setApiStatus", null);
-    var response = await axios.post("/api/login", data).catch(error => error.response || error);
+    const response = await axios.post("/api/login", data).catch(error => error.response || error);
 
     if (response.status === OK) {
       context.commit("setApiStatus", true);
@@ -70,7 +70,7 @@ const actions = {
   // ログアウト
   async logout(context) {
     context.commit("setApiStatus", null);
-    var response = await axios.post("/api/logout").catch(error => error.response || error);
+    const response = await axios.post("/api/logout").catch(error => error.response || error);
 
     if (response.status === OK) {
       context.commit("setApiStatus", true);
@@ -85,8 +85,8 @@ const actions = {
   // ログインユーザー確認
   async currentUser(context) {
     context.commit("setApiStatus", null);
-    var response = await axios.get("/api/user").catch(error => error.response || error);
-    var user = response.data || null;
+    const response = await axios.get("/api/user").catch(error => error.response || error);
+    const user = response.data || null;
 
     if (response.status === OK) {
       context.commit("setApiStatus", true);

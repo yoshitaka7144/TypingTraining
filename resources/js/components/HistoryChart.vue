@@ -1,6 +1,6 @@
 <script>
 import { Bar } from "vue-chartjs";
-import chartjsPluginDatalabels from 'chartjs-plugin-datalabels';
+import chartjsPluginDatalabels from "chartjs-plugin-datalabels";
 
 export default {
   extends: Bar,
