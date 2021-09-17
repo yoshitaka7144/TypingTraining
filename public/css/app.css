@@ -1469,6 +1469,15 @@ a:hover {
   margin: 15px 0;
 }
 
+.main-container .modal-question-edit .credit-area {
+  text-align: left;
+}
+
+.main-container .modal-question-edit .credit-area p {
+  margin-left: 15px;
+  font-size: 8px;
+}
+
 /*----------------------------------------------
 
 レスポンシブ

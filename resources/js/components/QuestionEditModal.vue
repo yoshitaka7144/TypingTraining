@@ -11,11 +11,7 @@
     @before-open="beforeOpen"
   >
     <div class="header">
-      <font-awesome-icon
-        :icon="['fas', 'times']"
-        @click="hide"
-        class="icon"
-      />
+      <font-awesome-icon :icon="['fas', 'times']" @click="hide" class="icon" />
     </div>
     <div class="main">
       <div
@@ -128,6 +124,23 @@
         </div>
       </div>
     </div>
+    <div v-if="options.mode === 1 || options.mode === 2" class="credit-area">
+      <p>Yahoo! JAPAN ルビ振りWebAPIを使用しています。</p>
+      <div>
+        <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
+        <a href="https://developer.yahoo.co.jp/sitemap/" target="_blank" rel="noopener noreferrer">
+          <img
+            src="https://s.yimg.jp/images/yjdn/yjdn_attbtn2_105_17.gif"
+            width="105"
+            height="17"
+            title="Webサービス by Yahoo! JAPAN"
+            alt="Webサービス by Yahoo! JAPAN"
+            border="0"
+            style="margin: 15px 15px 15px 15px"
+        /></a>
+        <!-- End Yahoo! JAPAN Web Services Attribution Snippet -->
+      </div>
+    </div>
   </modal>
 </template>
 <script>
@@ -161,7 +174,7 @@ export default {
     return {
       registerErrorMessages: "",
       registerForm: {
-        id:"",
+        id: "",
         categoryId: "",
         text: "",
         kana: "",
@@ -263,22 +276,29 @@ export default {
         .catch((error) => error.response || error);
 
       if (response.status === OK) {
-        const xmlData = new window.DOMParser().parseFromString(
-          response.data,
-          "text/xml"
-        );
-        const romanList = xmlData.querySelectorAll("Word > Roman");
-        const furiganaList = xmlData.querySelectorAll("Word > Furigana");
+        let kana = "";
         let roman = "";
-        let furigana = "";
-        Array.from(romanList).forEach((item) => {
-          roman += item.textContent;
+        const wordData = response.data.result.word;
+        Object.keys(wordData).forEach((key) => {
+          const item = wordData[key];
+          if (
+            typeof item.furigana !== "undefined" &&
+            typeof item.roman !== "undefined"
+          ) {
+            kana += item.furigana;
+            roman += item.roman;
+          } else {
+            kana += item.surface;
+            roman += item.surface;
+          }
         });
-        Array.from(furiganaList).forEach((item) => {
-          furigana += item.textContent;
-        });
+
+        // 、。を,.に変換
+        roman = roman.replace(/、/g, ",").replace(/。/g, ".");
+
+        // 各入力フォームに結果をセット
+        this.registerForm.kana = kana;
         this.registerForm.roman = roman;
-        this.registerForm.kana = furigana;
       } else {
         this.$store.commit("error/setCode", response.status);
       }
