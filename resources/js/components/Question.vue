@@ -201,21 +201,36 @@ import QuestionEditModal from "./QuestionEditModal.vue";
 export default {
   data() {
     return {
+      // 問題データ
       questions: [],
+      // モーダル設定
       modalOptions: {
+        // mode:1（作成）,2（更新）3（削除）
         mode: "",
+        // 問題ID
         questionId: "",
+        // ページ更新用処理
         updateParentPage: this.getQuestions,
       },
+      // 編集者のみ設定
       isOnlyEditor: false,
+      // 並び替え列名
       orderColumn: "id",
+      // 並び替え順
       orderType: "asc",
+      // 1ページあたりの件数
       perPage: 5,
+      // 現在のページ数
       currentPage: 1,
+      // 最大ページ数
       lastPage: "",
+      // ページングの中間表示
       range: 5, // 奇数
+      // ページング先頭と中間の間のドット表示
       startDot: false,
+      // ページング末尾と中間の間のドット表示
       endDot: false,
+      // 検索対象列select
       selectOptions: [
         { value: "questions.id", name: "ID" },
         { value: "categories.name", name: "カテゴリー" },
@@ -223,16 +238,22 @@ export default {
         { value: "kana", name: "かな" },
         { value: "roman", name: "タイピング文字" },
       ],
+      // 検索対象列名
       searchColumn: "",
+      // 検索対象テキスト
       searchText: "",
+      // 検索状態フラグ
       isSearched: false,
     };
   },
   components: {
+    // 問題編集モーダル
     QuestionEditModal,
   },
   methods: {
+    // 問題一覧取得
     async getQuestions(topPage = 0) {
+      // api用パラメータ
       const params = {
         perPage: this.perPage,
         page: topPage === 0 ? this.currentPage : 1,
@@ -242,11 +263,13 @@ export default {
         searchColumn: this.isSearched ? this.searchColumn : null,
         searchText: this.isSearched ? this.searchText : null,
       };
+      // api呼び出し
       const response = await axios
         .get("/api/question", { params })
         .catch((error) => error.response || error);
 
       if (response.status === INTERNAL_SERVER_ERROR) {
+        // エラー時
         this.$store.commit("error/setCode", response.status);
       } else {
         const questions = response.data;
@@ -255,11 +278,16 @@ export default {
         this.questions = questions.data;
       }
     },
+    // 編集用モーダルウィンドウ表示
     modalShow(mode, id = "") {
+      // モード設定（作成：1、更新：2、削除：3）
       this.modalOptions.mode = mode;
+      // 問題ID設定
       this.modalOptions.questionId = id;
+      // モーダルウィンドウ表示
       this.$modal.show("modal-question-edit");
     },
+    // ページング用配列作成
     createRange(start, end) {
       const range = [];
       for (let i = start; i <= end; i++) {
@@ -267,15 +295,18 @@ export default {
       }
       return range;
     },
+    // ページング
     changeQuestionPage(page) {
       if (1 <= page && page <= this.lastPage) {
         this.currentPage = page;
         this.getQuestions();
       }
     },
+    // ページアクティブ状態
     isActive(page) {
       return this.currentPage === page;
     },
+    // 並び替え変更
     orderChange(columnName) {
       if (this.orderColumn !== columnName) {
         this.orderColumn = columnName;
@@ -285,15 +316,16 @@ export default {
       }
       this.getQuestions(1);
     },
+    // 検索条件で問題取得
     searchQuestion() {
+      // 対象列未選択または検索テキストが空の場合は何もしない
       if (this.searchColumn === "" || this.searchText.length <= 0) {
-        // エラーメッセージ表示
-
         return;
       }
       this.isSearched = true;
       this.getQuestions(1);
     },
+    // 検索条件クリア
     searchClear() {
       this.searchColumn = "";
       this.searchText = "";

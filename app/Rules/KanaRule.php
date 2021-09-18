@@ -4,6 +4,9 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
+/**
+ * かな用バリデーションルール
+ */
 class KanaRule implements Rule
 {
     /**
@@ -25,7 +28,6 @@ class KanaRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
         return preg_match('/^[0-9ぁ-んー、。,\.]+$/u', $value);
     }
 

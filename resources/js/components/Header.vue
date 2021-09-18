@@ -63,13 +63,15 @@
 export default {
   data() {
     return {
-      isShownSpNav: false,
+      isShownSpNav: false, // スマホ用ナビ表示フラグ
     };
   },
   methods: {
+    // ナビ表示
     toggleSpNav() {
       this.isShownSpNav = !this.isShownSpNav;
     },
+    // ログアウト
     async logout() {
       await this.$store.dispatch("auth/logout");
 
@@ -79,12 +81,15 @@ export default {
     },
   },
   computed: {
+    // apiステータス
     apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
+    // ログイン状態
     isLogin() {
       return this.$store.getters["auth/isLogin"];
     },
+    // ユーザー名
     username() {
       return this.$store.getters["auth/username"];
     },

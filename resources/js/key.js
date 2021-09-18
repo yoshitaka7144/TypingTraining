@@ -1,4 +1,5 @@
 import { END_SYMBOL } from "./util";
+// コードから文字列取得
 export function getChar(code) {
   switch (code) {
     case "KeyA":
@@ -84,6 +85,7 @@ export function getChar(code) {
   }
 }
 
+// 入力キー判定
 export function checkInputKey(code, roman, romanIndex) {
   const inputChar = getChar(code);
   const currentChar = roman[romanIndex];

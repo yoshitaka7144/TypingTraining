@@ -5,11 +5,20 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
-class RomanController extends Controller
+/**
+ * ルビ振りAPI呼び出しコントローラー
+ */
+class RubyController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * ふりがなとローマ字を取得
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getRuby(Request $request)
     {
-        $api_id = "dj00aiZpPVBuM3ptSVI4bHoyaiZzPWNvbnN1bWVyc2VjcmV0Jng9Nzg-";
+        $api_id = config("app.api_id");
         $url = "https://jlp.yahooapis.jp/FuriganaService/V2/furigana";
 
         $params = [

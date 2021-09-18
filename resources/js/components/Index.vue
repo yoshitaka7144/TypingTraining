@@ -178,20 +178,35 @@ export default {
   },
   data() {
     return {
+      // カテゴリーデータ
       categories: [],
+      // 履歴データ
       histories: [],
+      // グラフwpm間隔
       wpmStepSize: 50,
+      // ページング用：1ページあたりの件数
       perPage: 5,
+      // ページング用：現在のページ数
       currentPage: 1,
+      // ページング用：最大ページ数
       lastPage: "",
+      // ページング用：ページングの中間表示
       range: 5, // 奇数
+      // ページング用：ページング先頭と中間の間のドット表示
       startDot: false,
+      // ページング用：ページング末尾と中間の間のドット表示
       endDot: false,
+      // グラフデータ
       chartData: {},
+      // グラフオプション
       chartOptions: {},
+      // カテゴリーID
       categoryId: "",
+      // ユーザー情報：総タイプ数
       userTypeCount: "",
+      // ユーザー情報：平均wpm
       userAverageWpm: "",
+      // 選択カテゴリーID
       selectCategoryId: "",
     };
   },
@@ -267,6 +282,7 @@ export default {
     }
   },
   methods: {
+    // ユーザー情報取得
     async getUserInfo() {
       const response = await axios
         .get("/api/user/" + this.userId)
@@ -278,6 +294,7 @@ export default {
         this.userTypeCount = response.data.type_count;
       }
     },
+    // 平均wpm取得
     async getUserAverageWpm() {
       const params = {
         userId: this.userId,
@@ -292,6 +309,7 @@ export default {
         this.userAverageWpm = response.data;
       }
     },
+    // カテゴリーデータ取得
     async getCategories() {
       const response = await axios
         .get("/api/category")
@@ -303,6 +321,7 @@ export default {
         this.categories = response.data;
       }
     },
+    // 履歴データ取得
     async getHistory(topPage = 0) {
       const params = {
         categoryId: this.selectCategoryId,
@@ -321,9 +340,11 @@ export default {
         this.currentPage = histories.current_page;
         this.lastPage = histories.last_page;
         this.histories = histories.data;
+        // グラフデータ作成
         this.createHistoryChartData();
       }
     },
+    // ページング用配列作成
     createRange(start, end) {
       const range = [];
       for (let i = start; i <= end; i++) {
@@ -331,6 +352,7 @@ export default {
       }
       return range;
     },
+    // ページング
     changeHistoryPage(page) {
       if (1 <= page && page <= this.lastPage) {
         this.currentPage = page;
@@ -340,6 +362,7 @@ export default {
     isActive(page) {
       return this.currentPage === page;
     },
+    // グラフデータ作成
     createHistoryChartData() {
       if (!this.existsHistory) {
         return;
@@ -359,10 +382,13 @@ export default {
       let minWpm = wpmData.reduce((a, b) => {
         return a < b ? a : b;
       });
+      // wpmのグラフ表示最大値
       const maxWpmScale =
         Math.ceil(maxWpm / this.wpmStepSize) * this.wpmStepSize;
+      // wpmのグラフ表示最小値
       const minWpmScale =
         (Math.ceil(minWpm / this.wpmStepSize) - 1) * this.wpmStepSize;
+      // データが無い場合、空で埋める
       for (let i = labels.length; i < this.perPage; i++) {
         labels.push("");
         wpmData.push(null);
@@ -455,18 +481,22 @@ export default {
         },
       };
     },
+    // タイピング用モーダルウィンドウ表示
     showTypingModal(categoryId) {
       this.categoryId = categoryId;
       this.$modal.show("modal-typing");
     },
+    // カテゴリーID初期化
     initCategoryId() {
       this.categoryId = "";
     },
+    // ユーザー情報読み込み
     loadMemberInfo() {
       this.getHistory();
       this.getUserInfo();
       this.getUserAverageWpm();
     },
+    // ログアウト
     async logout() {
       await this.$store.dispatch("auth/logout");
 
@@ -476,6 +506,7 @@ export default {
     },
   },
   watch: {
+    // 選択カテゴリーID変化時に問題取得
     selectCategoryId() {
       this.getHistory(1);
     },

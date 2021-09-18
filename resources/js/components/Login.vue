@@ -109,31 +109,48 @@ import {
 export default {
   data() {
     return {
+      // ページタブ切替
       tab: 1,
+      // ログインユーザー名エラーメッセージ
       loginNameError: "",
+      // ログインパスワードエラーメッセージ
       loginPasswordError: "",
+      // ログインフォーム
       loginForm: {
+        // ユーザー名
         name: "",
+        // パスワード
         password: "",
       },
+      // 登録ユーザー名入力フォーム用プレースホルダ
       registerNamePlaceholder:
         REGISTER_NAME_MAX_NUMBER + "文字以内で入力して下さい。",
+      // 登録ユーザー名エラーメッセージ
       registerNameError: "",
+      // 登録パスワード用プレースホルダ
       registerPasswordPlaceholder:
         "半角英数字" +
         REGISTER_PASSWORD_MIN_NUMBER +
         "文字以上で入力して下さい。",
+      // 登録パスワードエラーメッセージ
       registerPasswordError: "",
+      // 登録パスワード確認用プレースホルダ
       registerPasswordConfirmationPlaceholder: "パスワードを入力して下さい。",
+      // 登録パスワード確認エラーメッセージ
       registerPasswordConfirmationError: "",
+      // 登録フォーム
       registerForm: {
+        // ユーザー名
         name: "",
+        // パスワード
         password: "",
+        // パスワード確認
         password_confirmation: "",
       },
     };
   },
   methods: {
+    // ログイン
     async login() {
       await this.$store.dispatch("auth/login", this.loginForm);
 
@@ -142,6 +159,7 @@ export default {
         this.$router.push("/");
       }
     },
+    // ユーザ新規登録
     async register() {
       await this.$store.dispatch("auth/register", this.registerForm);
 
@@ -150,18 +168,22 @@ export default {
         this.$router.push("/");
       }
     },
+    // エラーメッセージクリア
     clearError() {
       this.$store.commit("auth/setLoginErrorMessages", null);
       this.$store.commit("auth/setRegisterErrorMessages", null);
     },
   },
   computed: {
+    // api可否
     apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
+    // ログイン時のエラーメッセージ
     loginErrors() {
       return this.$store.state.auth.loginErrorMessages;
     },
+    // 登録時のエラーメッセージ
     registerErrors() {
       return this.$store.state.auth.registerErrorMessages;
     },
@@ -170,6 +192,7 @@ export default {
     this.clearError();
   },
   watch: {
+    // ログイン：ユーザー名入力時
     "loginForm.name": function (val) {
       if (val.length < 1) {
         this.loginNameError = LOGIN_NAME_ERROR_REQUIRE;
@@ -177,6 +200,7 @@ export default {
         this.loginNameError = "";
       }
     },
+    // ログイン：パスワード入力時
     "loginForm.password": function (val) {
       if (val.length < 1) {
         this.loginPasswordError = LOGIN_PASSWORD_ERROR_REQUIRE;
@@ -184,6 +208,7 @@ export default {
         this.loginPasswordError = "";
       }
     },
+    // ユーザー新規登録：ユーザー名入力時
     "registerForm.name": function (val) {
       if (val.length < 1) {
         this.registerNameError = REGISTER_NAME_ERROR_REQUIRE;
@@ -193,6 +218,7 @@ export default {
         this.registerNameError = "";
       }
     },
+    // ユーザー新規登録：パスワード入力時
     "registerForm.password": function (val) {
       const regexp = new RegExp(
         "^[a-zA-Z0-9]{" + REGISTER_PASSWORD_MIN_NUMBER + ",}$"
@@ -212,6 +238,7 @@ export default {
           REGISTER_PASSWORD_CONFIRMATION_ERROR_INCORRECT;
       }
     },
+    // ユーザー新規登録：パスワード確認入力時
     "registerForm.password_confirmation": function (val) {
       if (val.length < 1) {
         this.registerPasswordConfirmationError =

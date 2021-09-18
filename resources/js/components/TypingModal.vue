@@ -735,51 +735,90 @@ export default {
   },
   props: {
     categoryId: "",
-    updateParentPage: null,
+    updateParentPage: Function,
     initCategoryId: Function,
   },
   data() {
     return {
+      // 問題データ
       questions: [],
+      // 問題数
       questionCount: "",
+      // 状態:1（初期待機画面）、1.5（カウントダウン）、2（タイピング画面）、3（結果表示画面）
       phase: 1,
+      // 現在の問題番目
       currentCount: 0,
+      // 現在の問題データ
       currentQuestion: [],
+      // タイピング文字データ
       roman: [],
       romanIndex: 0,
+      // 問題表示用テキスト
       displayText: "",
+      // かな表示用テキスト
       displayKana: "",
+      // タイピング文字表示用テキスト
       displayRoman: "",
+      // 入力済みタイピング文字テキスト
       displayInputedRoman: "",
+      // 現在タイプ数
       correctTypeCount: 0,
+      // ミスタイプ数
       missTypeCount: 0,
+      // タイプ時間
       typeTime: 0,
+      // wpm
       wpm: 0,
+      // 正答率
       correctPercentage: 0,
+      // ミスタイプキー
       missTypeKey: "",
+      // ミスタイプキーリスト
       missTypeKeyHash: {},
+      // ミスタイプキーのスタイル
       missTypeKeyStyle: {},
+      // 履歴データ
       histories: {},
+      // グラフ用：wpmStepSize
       wpmStepSize: 50,
+      // ページング用：1ページあたりの件数
       perPage: 4,
+      // ページング用：現在のページ数
       currentPage: 1,
+      // ページング用：最大ページ数
       lastPage: "",
+      // ページング用：ページングの中間表示
       range: 5, // 奇数
+      // ページング用：ページング先頭と中間の間のドット表示
       startDot: false,
+      // ページング用：ページング末尾と中間の間のドット表示
       endDot: false,
+      // グラフデータ
       chartData: {},
+      // グラフオプション
       chartOptions: {},
+      // 音声データ
       audio: new Audio("/audio/beep.wav"),
+      // 音声の有無
       audioCheaked: false,
+      // 履歴表示可否
       canShowHistory: false,
+      // wpm目標値
       targetWpm: 200,
+      // 制限時間
       limitTime: 0,
+      // 残り時間
       remainingTime: 0,
+      // プログレスバー進捗率
       progress: 100,
+      // プログレスバーの色スタイル
       progressColor: "",
+      // 繰り返し制御用
       intervalId: "",
       timeOutId: "",
+      // 制限時間の有無
       limitCheaked: false,
+      // wpm目標値セレクトデータ
       wpmSelectOptions: [
         100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425,
         500, 525, 550, 575, 600,
@@ -787,58 +826,71 @@ export default {
     };
   },
   mounted() {
+    // keydownイベントに処理を設定
     window.addEventListener("keydown", this.keyAction);
   },
   beforeDestroy() {
+    // keydownイベントに設定した処理を削除
     window.removeEventListener("keydown", this.keyAction);
   },
   computed: {
+    // ログイン状態
     isLogin() {
       return this.$store.getters["auth/isLogin"];
     },
+    // ユーザーID
     userId() {
       return this.$store.getters["auth/userId"];
     },
+    // キータイプが左手小指
     isLeftLittle() {
       const leftLittle = ["1", "q", "a", "z"];
       const char = this.roman[this.romanIndex];
       return leftLittle.includes(char);
     },
+    // キータイプが左手薬指
     isLeftRing() {
       const leftRing = ["2", "w", "s", "x"];
       const char = this.roman[this.romanIndex];
       return leftRing.includes(char);
     },
+    // キータイプが左手中指
     isLeftMiddle() {
       const leftMiddle = ["3", "e", "d", "c"];
       const char = this.roman[this.romanIndex];
       return leftMiddle.includes(char);
     },
+    // キータイプが左手人差し指
     isLeftIndex() {
       const leftIndex = ["4", "5", "r", "t", "f", "g", "v", "b"];
       const char = this.roman[this.romanIndex];
       return leftIndex.includes(char);
     },
+    // キータイプが右手人差し指
     isRightIndex() {
       const rightIndex = ["6", "7", "y", "u", "h", "j", "n", "m"];
       const char = this.roman[this.romanIndex];
       return rightIndex.includes(char);
     },
+    // キータイプが右手中指
     isRightMiddle() {
       const rightMiddle = ["8", "i", "k", ","];
       const char = this.roman[this.romanIndex];
       return rightMiddle.includes(char);
     },
+    // キータイプが右手薬指
     isRightRing() {
       const rightRing = ["9", "o", "l", "."];
       const char = this.roman[this.romanIndex];
       return rightRing.includes(char);
     },
+    // キータイプが右手小指
     isRightLittle() {
       const rightLittle = ["0", "p"];
       const char = this.roman[this.romanIndex];
       return rightLittle.includes(char);
     },
+    // 音声の可否
     canPlayAudio() {
       return this.audioCheaked;
     },
@@ -885,6 +937,7 @@ export default {
         return this.createRange(start, end);
       }
     },
+    // ミスタイプキー結果表示用文字列
     missKeyResult() {
       let result = "";
       Object.keys(this.missTypeKeyHash).forEach(
@@ -894,32 +947,41 @@ export default {
     },
   },
   methods: {
+    // モーダルウィンドウ閉じる
     hide() {
       this.clear();
       this.initCategoryId();
       this.$modal.hide("modal-typing");
     },
+    // タイピング開始
     start() {
       this.initQuestion();
       if (this.limitCheaked) {
+        // 制限時間カウント開始
         this.limitTimerStart();
       }
+      // タイピング時間計測開始
       this.typeTime = performance.now();
       this.phase = 2;
     },
+    // 問題を進める
     next() {
       if (this.questionCount > this.currentCount + 1) {
+        // 次の問題へ
         this.currentCount++;
       } else {
+        // 結果表示
         this.showResult();
       }
     },
+    // もう一度やるボタン処理
     retry() {
       this.getQuestions();
       this.clear();
     },
+    // 結果表示
     showResult() {
-      // 時間測定終了
+      // タイピング時間測定終了
       this.typeTime = performance.now() - this.typeTime;
 
       // ミスタイプキーの並び替え
@@ -967,6 +1029,7 @@ export default {
       // 結果画面表示
       this.phase = 3;
     },
+    // クリア
     clear() {
       this.roman = [];
       this.currentCount = 0;
@@ -989,11 +1052,11 @@ export default {
       clearInterval(this.intervalId);
       clearTimeout(this.timeOutId);
     },
+    // 問題表示初期化
     initQuestion() {
       this.roman = [];
       this.romanIndex = 0;
       this.currentQuestion = this.questions[this.currentCount];
-
       this.roman = this.currentQuestion.roman.split("");
       this.roman.push(END_SYMBOL);
       this.displayText = this.currentQuestion.text;
@@ -1001,6 +1064,7 @@ export default {
       this.displayRoman = this.currentQuestion.roman;
       this.displayInputedRoman = "";
     },
+    // ミスタイプキースタイル設定
     setMissTypeKeyStyle() {
       for (let key in this.missTypeKeyHash) {
         const percentage =
@@ -1011,6 +1075,7 @@ export default {
         };
       }
     },
+    // グラフデータ作成
     createHistoryChartData() {
       let labels = [];
       let wpmData = [];
@@ -1027,10 +1092,14 @@ export default {
       let minWpm = wpmData.reduce((a, b) => {
         return a < b ? a : b;
       });
+      // wpmのグラフ表示最大値
       const maxWpmScale =
         Math.ceil(maxWpm / this.wpmStepSize) * this.wpmStepSize;
+      // wpmのグラフ表示最小値
       const minWpmScale =
         (Math.ceil(minWpm / this.wpmStepSize) - 1) * this.wpmStepSize;
+
+      // データが無い場合、空で埋める
       for (let i = labels.length; i < this.perPage; i++) {
         labels.push("");
         wpmData.push(null);
@@ -1123,18 +1192,20 @@ export default {
         },
       };
     },
+    // ユーザー情報更新
     async updateUserInfo() {
       const response = await axios
         .put("/api/user/" + this.userId, { typeCount: this.correctTypeCount })
         .catch((error) => error.response || error);
 
       if (response.status === OK) {
-      } else if (response.status === UNPROCESSABLE_ENTITY) {
       } else {
         this.$store.commit("error/setCode", response.status);
       }
     },
+    // 履歴データ作成
     async createHistory() {
+      // ミスタイプキーを登録用に文字列に変換
       const missKey =
         Object.keys(this.missTypeKeyHash).length > 0
           ? Object.keys(this.missTypeKeyHash).join(" ")
@@ -1153,6 +1224,7 @@ export default {
         this.$store.commit("error/setCode", responseCreate.status);
       }
     },
+    // 履歴データ取得
     async getHistory() {
       const params = {
         userId: this.userId,
@@ -1171,9 +1243,11 @@ export default {
         this.currentPage = histories.current_page;
         this.lastPage = histories.last_page;
         this.histories = histories.data;
+        // グラフデータ作成
         this.createHistoryChartData();
       }
     },
+    // 問題取得
     async getQuestions() {
       const response = await axios
         .get("/api/question/category/" + this.categoryId)
@@ -1183,13 +1257,16 @@ export default {
         this.$store.commit("error/setCode", response.status);
       } else {
         this.questions = response.data;
+        // 問題数設定
         if (Object.keys(this.questions).length < DEFAULT_QUESTION_COUNT) {
+          // デフォルトの設定数に足りない場合は取得問題数を設定
           this.questionCount = Object.keys(this.questions).length;
         } else {
           this.questionCount = DEFAULT_QUESTION_COUNT;
         }
       }
     },
+    // ページング用配列作成
     createRange(start, end) {
       const range = [];
       for (let i = start; i <= end; i++) {
@@ -1197,7 +1274,9 @@ export default {
       }
       return range;
     },
+    // プログレスバー色作成
     createProgressBarColor(progressPercentage) {
+      // 残り時間減少で緑、黄、赤色へと変化していく
       const rInitVal = 0;
       const gInitVal = 230;
       const bInitVal = 100;
@@ -1212,30 +1291,41 @@ export default {
       const b = bInitVal - (100 - progressPercentage);
       this.progressColor = "rgb(" + r + ", " + g + ", " + b + ")";
     },
+    // ページング
     changeHistoryPage(page) {
       if (1 <= page && page <= this.lastPage) {
         this.currentPage = page;
         this.getHistory();
       }
     },
+    // 制限時間タイマースタート
     limitTimerStart() {
+      // 問題の合計タイプ数を求める
       let typeCount = 0;
       for (let i = 0; i < this.questionCount; i++) {
         typeCount += this.questions[i].roman.length;
       }
+      // 合計タイプ数と設定wpmから制限時間（秒）を求める
       this.limitTime = ((60 * typeCount) / this.targetWpm) * 1000;
       this.remainingTime = this.limitTime;
+      // 残り時間をカウントしていく処理を10ms毎に呼び出す
       this.intervalId = setInterval(this.remainingTimeCountDown, 10, 10);
     },
+    // 残り時間を減らす
     remainingTimeCountDown(n) {
+      // nミリ秒減らす
       this.remainingTime -= n;
     },
+    // ページアクティブ状態
     isActive(page) {
       return this.currentPage === page;
     },
+    // キータイプ処理
     keyAction(e) {
       if (this.phase === 1) {
+        // キー処理：待機画面
         if (e.code === "Space" && this.questionCount > 0) {
+          // スペースキー押下且つ問題が存在していればスタート
           // 3秒カウントhtml表示
           this.phase = 1.5;
 
@@ -1243,23 +1333,36 @@ export default {
           this.timeOutId = setTimeout(this.start, 3000);
         }
       } else if (this.phase === 2) {
+        // キー処理：タイピング画面
+        
+        // キーの処理をキャンセル
         e.preventDefault();
+
+        // 入力キー判定処理
         switch (checkInputKey(e.code, this.roman, this.romanIndex)) {
           case 1:
           case 2:
+            // 正解のタイプ時
             this.missTypeKey = "";
             this.correctTypeCount++;
+            // 次のタイピング文字へ進める
             this.romanIndex++;
             if (this.roman[this.romanIndex] === END_SYMBOL) {
+              // 設定された最終文字に達したとき
+              // 次の問題へ
               this.next();
+              // 結果表示時は抜ける
               if (this.phase === 3) break;
+              // 問題表示初期化処理
               this.initQuestion();
             } else {
               this.displayRoman = "";
               this.displayInputedRoman = "";
+              // 表示文字列
               for (let i = this.romanIndex; i < this.roman.length - 1; i++) {
                 this.displayRoman += this.roman[i];
               }
+              // 入力済み表示文字列
               for (let i = 0; i < this.romanIndex; i++) {
                 this.displayInputedRoman += this.roman[i];
               }
@@ -1268,7 +1371,6 @@ export default {
           case 0:
           case 3:
             //タイプミス時
-
             // ミス音声再生
             if (this.canPlayAudio) {
               this.audio.play();
@@ -1286,7 +1388,6 @@ export default {
             } else {
               this.missTypeKeyHash[this.missTypeKey] = 1;
             }
-
             break;
           default:
             break;
@@ -1295,21 +1396,30 @@ export default {
     },
   },
   watch: {
+    // 選択カテゴリー
     categoryId(val) {
       if (val !== "") {
         this.getQuestions();
       }
     },
+    // 残り時間
     remainingTime(val) {
       if (this.phase === 3) {
+        // 結果表示時
+        // 残り時間カウント処理を止める
         clearInterval(this.intervalId);
         return;
       }
       if (val < 0) {
+        // 残り時間が0未満
+        // 残り時間カウント処理を止める
         clearInterval(this.intervalId);
+        // 結果表示
         this.showResult();
       } else {
+        // 残り時間割合
         this.progress = Math.floor((this.remainingTime / this.limitTime) * 100);
+        // プログレスバー色作成
         this.createProgressBarColor(this.progress);
       }
     },

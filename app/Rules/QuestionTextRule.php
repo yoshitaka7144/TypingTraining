@@ -4,6 +4,9 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
+/**
+ * 問題用バリデーションルール
+ */
 class QuestionTextRule implements Rule
 {
     /**
@@ -25,7 +28,6 @@ class QuestionTextRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
         return preg_match("/^[0-9ぁ-んァ-ヶ一-龠々ー、。,\.]+$/u", $value);
     }
 

@@ -4,6 +4,9 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
+/**
+ * タイピング文字用バリデーションルール
+ */
 class RomanRule implements Rule
 {
     /**
@@ -25,7 +28,6 @@ class RomanRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
         return preg_match('/^[a-z0-9\-,\.]+$/', $value);
     }
 

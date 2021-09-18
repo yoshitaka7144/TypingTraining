@@ -5,6 +5,9 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use App\Category;
 
+/**
+ * カテゴリー用バリデーションルール
+ */
 class CategoryRule implements Rule
 {
     /**

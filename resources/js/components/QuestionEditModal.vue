@@ -90,7 +90,7 @@
           />
           <p class="error" v-if="romanError">{{ romanError }}</p>
           <div class="btn-wrapper">
-            <button type="button" class="btn btn-green" @click="getRoman">
+            <button type="button" class="btn btn-green" @click="getRuby">
               かな、タイピング文字生成
             </button>
             <button
@@ -196,10 +196,12 @@ export default {
     };
   },
   methods: {
+    // モーダルを閉じる
     hide() {
       this.clear();
       this.$modal.hide("modal-question-edit");
     },
+    // 問題データ削除
     async deleteQuestion() {
       const response = await axios
         .delete("/api/question/" + this.options.questionId)
@@ -215,6 +217,7 @@ export default {
         this.hide();
       }
     },
+    // カテゴリーデータ取得
     async getCategories() {
       const response = await axios
         .get("/api/category")
@@ -226,6 +229,7 @@ export default {
         this.selectOptions = response.data;
       }
     },
+    // 問題取得
     async getQuestion() {
       const response = await axios
         .get("/api/question/" + this.options.questionId)
@@ -240,6 +244,7 @@ export default {
         this.registerForm.roman = response.data.roman;
       }
     },
+    // 問題更新
     async update() {
       this.registerForm.id = this.options.questionId;
       const response = await axios
@@ -256,6 +261,7 @@ export default {
         this.$store.commit("error/setCode", response.status);
       }
     },
+    // 問題作成
     async register() {
       const response = await axios
         .post("/api/question", this.registerForm)
@@ -271,15 +277,17 @@ export default {
         this.$store.commit("error/setCode", response.status);
       }
     },
-    async getRoman() {
+    // ルビ振りAPI呼び出し
+    async getRuby() {
       if (this.registerForm.text.length <= 0) {
         return;
       }
       const response = await axios
-        .post("/api/roman", this.registerForm)
+        .post("/api/ruby", this.registerForm)
         .catch((error) => error.response || error);
 
       if (response.status === OK) {
+        // apiのレスポンスからローマ字とかなを取得
         let kana = "";
         let roman = "";
         const wordData = response.data.result.word;
@@ -307,6 +315,7 @@ export default {
         this.$store.commit("error/setCode", response.status);
       }
     },
+    // クリア
     clear() {
       this.watchFlag = false;
       this.registerForm = {
@@ -321,6 +330,7 @@ export default {
       this.kanaError = "";
       this.romanError = "";
     },
+    // モーダル開く前の処理
     beforeOpen() {
       this.watchFlag = true;
       if (this.options.mode === 1) {
@@ -333,6 +343,7 @@ export default {
   },
   computed: {},
   watch: {
+    // 問題テキスト入力バリデーション
     "registerForm.text": function (val) {
       if (!this.watchFlag) return;
       if (val.length < 1) {
@@ -347,6 +358,7 @@ export default {
         }
       }
     },
+    // かなテキスト入力バリデーション
     "registerForm.kana": function (val) {
       if (!this.watchFlag) return;
       if (val.length < 1) {
@@ -361,6 +373,7 @@ export default {
         }
       }
     },
+    // タイピング文字テキスト入力バリデーション
     "registerForm.roman": function (val) {
       if (!this.watchFlag) return;
       if (val.length < 1) {

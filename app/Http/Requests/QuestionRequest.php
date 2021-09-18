@@ -12,6 +12,9 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
+/**
+ * 問題リクエスト
+ */
 class QuestionRequest extends FormRequest
 {
     /**

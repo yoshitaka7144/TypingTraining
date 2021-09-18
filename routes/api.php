@@ -36,7 +36,7 @@ Route::get('/category', 'CategoryController@index')->name('category');
 Route::get('/question/category/{categoryId}', 'QuestionController@category')->name('question.category');
 
 // Yahooルビ振りWebAPIを使用してひらがなとローマ字取得
-Route::post('/roman', 'RomanController@index')->name('roman');
+Route::post('/ruby', 'RubyController@getRuby')->name('ruby');
 
 // ログイン時のみ
 Route::group(["middleware" => "auth"], function () {
