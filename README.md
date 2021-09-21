@@ -75,7 +75,7 @@ https://typing.mikanbako.jp
 ### 履歴データ
 ![top_history](https://user-images.githubusercontent.com/18690548/134147349-3b9a281f-f61c-4e03-938d-c3d36414c26f.png)
 
-ログイン時に表示されます。今までの履歴データを閲覧できます。対象カテゴリーを変更することで表示を変更できます。
+ログインユーザーのみ表示されます。今までの履歴データを閲覧でき、対象カテゴリーを変更することで表示を変更できます。
 ## ログイン/新規登録画面
 ログインまたは新規ユーザー登録を行いログインできます。
 
@@ -94,7 +94,7 @@ https://typing.mikanbako.jp
 ### 作成、編集
 ![question_create](https://user-images.githubusercontent.com/18690548/134140479-eb281c51-8e0e-4fd1-a385-3ceb27f468a1.gif)
 
-問題データを作成できます。問題フォームへ入力された文字列（漢字カタカナひらがな記号）からふりがなとローマ字を生成（Yahoo ルビ振りWebAPIを使用）できます。編集は自分が作成したデータのみ可能です。（管理者ユーザーは全て可能です）
+問題データを作成できます。問題フォームへ入力された文字列からふりがなとローマ字を生成（[Yahoo ルビ振りWebAPI](https://developer.yahoo.co.jp/webapi/jlp/furigana/v2/furigana.html)を使用）できます。編集は自分が作成したデータのみ可能です。（管理者ユーザーは全て可能です）
 
 ### 削除
 ![question_delete](https://user-images.githubusercontent.com/18690548/134140777-7faca11b-80c4-41f2-b2c6-0826367b4b2f.gif)
@@ -114,7 +114,7 @@ https://typing.mikanbako.jp
 ### タイピング
 ![typing_typing](https://user-images.githubusercontent.com/18690548/134144810-14e73407-e50e-46f8-be42-2d877b7f9bc1.png)
 
-表示されているタイピング文字通りにタイピングを行います。音声有りの場合はミス時に音声が鳴ります。設定した問題数を終える、または制限時間設定有りの場合は残り時間が無くなると結果画面が表示されます。
+表示されているタイピング文字通りにタイピングを行います。音声有りの場合はミス時に音声が鳴ります。設定した問題数を終える、または制限時間設定有りの場合は残り時間が無くなると結果画面が表示されます。キー入力判定アルゴリズムは[柔軟な入力方法に対応したタイピングゲームの作り方](https://crieit.net/posts/dc0eb0f0a74f6e15e362e1f384d28f0d#%E6%9F%94%E8%BB%9F%E3%81%AA%E5%85%A5%E5%8A%9B%E6%96%B9%E6%B3%95%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%99%E3%82%8B%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)で紹介されているものを参考、改変させていただきました。
 * ①：問題
 * ②：かな
 * ③：タイピング文字（入力済み文字はオレンジ色）
@@ -132,5 +132,7 @@ https://typing.mikanbako.jp
 * キーボード：ミスしたキーが回数の割合に応じて色付けされる
 
 # リンク
+* [柔軟な入力方法に対応したタイピングゲームの作り方](https://crieit.net/posts/dc0eb0f0a74f6e15e362e1f384d28f0d)：キー入力判定アルゴリズムを参考、改変させていただきました。
+* [Yahoo ルビ振りWebAPI](https://developer.yahoo.co.jp/webapi/jlp/furigana/v2/furigana.html)：問題登録時に問題からふりがなとローマ字を生成する為に使用しました。
 * <a href="https://github.com/yoshitaka7144" target="_blank" rel="noopener noreferrer">Githubアカウント</a>
 * <a href="https://portfolio.mikanbako.jp" target="_blank" rel="noopener noreferrer">ポートフォリオ</a>
