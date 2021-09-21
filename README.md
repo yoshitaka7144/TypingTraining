@@ -56,15 +56,6 @@ https://typing.mikanbako.jp
 テーブル定義書です。  
 <a href="https://docs.google.com/spreadsheets/d/1kVXoGfiHeqIjOmaL_yGdpNlI5RM-VdwZH-dEmz2TPb0/edit?usp=sharing" target="_blank" rel="noopener noreferrer">テーブル定義書（Googleスプレッドシート）</a>
 
-# テスト
-テストを行いました。  
-<a href="" target="_blank" rel="noopener noreferrer">機能単体テスト（Googleスプレッドシート）</a>  
-
-テスト環境  
-PC
-* OS：
-* ブラウザ：
-
 # 使用方法
 ## トップ画面
 ![top_top](https://user-images.githubusercontent.com/18690548/134171044-8f684a3a-e0b3-4249-816e-c805b1bc49a9.PNG)
