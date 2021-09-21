@@ -980,7 +980,7 @@ export default {
       this.clear();
     },
     // 結果表示
-    showResult() {
+    async showResult() {
       // タイピング時間測定終了
       this.typeTime = performance.now() - this.typeTime;
 
@@ -1012,9 +1012,9 @@ export default {
 
       // ログイン時、データ更新と履歴データ作成
       if (this.isLogin) {
-        this.updateUserInfo();
-        this.createHistory();
-        this.getHistory();
+        await this.createHistory();
+        await this.updateUserInfo();
+        await this.getHistory();
         // トップページの更新
         this.updateParentPage(1);
       }
