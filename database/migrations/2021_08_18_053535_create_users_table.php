@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer("role")->default(1);
             $table->integer("type_count")->default(0);
             $table->timestamps();
+            $table->unique(['name']);
         });
     }
 

@@ -318,12 +318,10 @@ export default {
     // クリア
     clear() {
       this.watchFlag = false;
-      this.registerForm = {
-        categoryId: "",
-        text: "",
-        kana: "",
-        roman: "",
-      };
+      this.registerForm.categoryId = "";
+      this.registerForm.text = "";
+      this.registerForm.kana = "";
+      this.registerForm.roman = "";
       this.registerErrorMessages = "";
       this.selectOptions = "";
       this.textError = "";
