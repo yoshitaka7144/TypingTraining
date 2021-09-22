@@ -479,13 +479,13 @@ a {
       .modal-main {
         padding: 15px;
 
-        .count-wrapper{
+        .count-wrapper {
           width: 100%;
           height: 120px;
           position: relative;
-          .count{
-            p{
-              opacity:0;
+          .count {
+            p {
+              opacity: 0;
               font-size: 70px;
               font-weight: bold;
               color: orange;
@@ -503,9 +503,15 @@ a {
               animation: count-down 1s 2s;
             }
             @keyframes count-down {
-              0% {opacity:1;}
-              50% {opacity:0.5;}
-              100% {opacity:0;}
+              0% {
+                opacity: 1;
+              }
+              50% {
+                opacity: 0.5;
+              }
+              100% {
+                opacity: 0;
+              }
             }
           }
         }
@@ -517,7 +523,7 @@ a {
           border-radius: 10px;
           border: 3px solid #668ad8;
           word-break: break-all;
-          background: repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px,#e9f4ff 3px, #e9f4ff 7px);
+          background: repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px, #e9f4ff 3px, #e9f4ff 7px);
           .display-text {
             font-size: $font-size-headline;
             font-weight: bold;
@@ -1114,10 +1120,10 @@ a {
           border-bottom: 3px solid #ccc;
           background-color: lavender;
           &:nth-child(1) {
-            width: 5%;
+            width: 8%;
           }
           &:nth-child(2) {
-            width: 15%;
+            width: 17%;
           }
           &:nth-child(3) {
             width: 20%;
@@ -1129,10 +1135,13 @@ a {
             width: 20%;
           }
           &:nth-child(6) {
-            width: 10%;
+            width: 5%;
           }
           &:nth-child(7) {
-            width: 10%;
+            width: 5%;
+          }
+          &:nth-child(8) {
+            width: 5%;
           }
           .icon {
             margin-left: 5px;
@@ -1147,7 +1156,8 @@ a {
           &:nth-child(1),
           &:nth-child(2),
           &:nth-child(6),
-          &:nth-child(7) {
+          &:nth-child(7),
+          &:nth-child(8) {
             text-align: center;
           }
         }
@@ -1174,6 +1184,243 @@ a {
       }
       .disabled {
         cursor: not-allowed;
+      }
+    }
+    .modal-typing-test {
+      .vm--modal {
+        height: auto !important;
+      }
+      .modal-header {
+        text-align: right;
+        .icon {
+          margin-top: 10px;
+          margin-right: 10px;
+          &:hover {
+            opacity: 0.7;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .modal-main {
+        padding: 15px;
+
+        .display-question {
+          width: 70%;
+          margin: 10px auto;
+          padding: 10px 20px;
+          border-radius: 10px;
+          border: 3px solid #668ad8;
+          word-break: break-all;
+          background: repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px, #e9f4ff 3px, #e9f4ff 7px);
+          .display-text {
+            font-size: $font-size-headline;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: rgb(112, 112, 112);
+          }
+          .display-kana {
+            font-size: $font-size-large;
+            margin-bottom: 5px;
+            color: rgb(112, 112, 112);
+          }
+          .display-roman {
+            font-size: $font-size-large2;
+            font-weight: bold;
+            color: rgb(166, 166, 166);
+          }
+          .inputed {
+            font-size: $font-size-large2;
+            color: orange;
+          }
+          .progress {
+            display: inline-block;
+            width: 100%;
+            border-radius: 15px;
+            height: 10px;
+            background-color: #e9edf1;
+            position: relative;
+
+            .progress-bar {
+              display: inline-block;
+              position: absolute;
+              top: 0;
+              left: 0;
+              border-radius: 15px;
+              width: 0%;
+              height: 100%;
+              background-color: rgb(0, 230, 100);
+              transition: all 1ms linear;
+            }
+          }
+        }
+
+        .missed {
+          animation: flash 0.9s linear infinite;
+        }
+        @keyframes flash {
+          0%,
+          100% {
+            opacity: 1;
+          }
+
+          50% {
+            opacity: 0;
+          }
+        }
+
+        .error {
+          color: red;
+        }
+
+        #keyboard-container {
+          display: flex;
+          justify-content: center;
+          #keyboard {
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(252, 246, 236);
+            .row {
+              display: flex;
+              .key {
+                border: 1px solid #d8d8d8;
+                border-radius: 3px;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 35px;
+                text-align: center;
+                margin: 3px 3px 3px 3px;
+                width: 35px;
+                height: 35px;
+                color: rgb(156, 156, 156);
+              }
+              .target-key {
+                background-color: $target-key-color;
+                color: #525151;
+              }
+              .missed {
+                animation: flash 0.3s linear infinite;
+              }
+              @keyframes flash {
+                0%,
+                100% {
+                  opacity: 1;
+                }
+
+                50% {
+                  opacity: 0;
+                }
+              }
+              #key-tab {
+                width: 55px;
+              }
+
+              #key-enter-1 {
+                border-left: 1px solid #d8d8d8;
+                border-top: 1px solid #d8d8d8;
+                border-right: 1px solid #d8d8d8;
+                border-radius: 3px 3px 0 3px;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 35px;
+                text-align: center;
+                margin: 3px 3px 3px 3px;
+                width: 55px;
+                position: relative;
+              }
+
+              #key-enter-1::before {
+                content: "";
+                position: absolute;
+                left: 10%;
+                bottom: 0px;
+                display: inline-block;
+                width: 10px;
+                height: 1px;
+                transform: translateX(-50%);
+                background-color: #d8d8d8;
+              }
+
+              #key-caps {
+                width: 65px;
+              }
+
+              #key-enter-2 {
+                border-left: 1px solid #d8d8d8;
+                border-bottom: 1px solid #d8d8d8;
+                border-right: 1px solid #d8d8d8;
+                border-radius: 0 0 3px 3px;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 35px;
+                text-align: center;
+                margin: -4px 3px 3px 3px;
+                width: 45px;
+                position: relative;
+              }
+
+              #key-shift-left {
+                width: 80px;
+              }
+
+              #key-shift-right {
+                width: 70px;
+              }
+
+              #key-ctrl {
+                width: 50px;
+              }
+
+              #key-space {
+                width: 140px;
+              }
+            }
+          }
+        }
+
+        #hand-container {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 15px;
+          #hand {
+            display: flex;
+            #hand-left,
+            #hand-right {
+              display: flex;
+              align-items: flex-end;
+              .finger {
+                border: 1px solid #d8d8d8;
+                border-radius: 20px 20px 0 0;
+                margin: 5px 5px 5px 5px;
+                width: 35px;
+              }
+
+              .target-finger {
+                background-color: $target-key-color;
+              }
+
+              .finger-little {
+                height: 70px;
+              }
+
+              .finger-ring {
+                height: 90px;
+              }
+
+              .finger-middle {
+                height: 100px;
+              }
+
+              .finger-index {
+                height: 85px;
+              }
+
+              .finger-thumb {
+                height: 40px;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -1275,9 +1522,9 @@ a {
         }
       }
     }
-    .credit-area{
-      text-align: left; 
-      p{
+    .credit-area {
+      text-align: left;
+      p {
         margin-left: 15px;
         font-size: 8px;
       }

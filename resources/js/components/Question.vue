@@ -120,6 +120,7 @@
           </th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -135,7 +136,7 @@
               class="btn btn-blue"
               @click="modalShow(2, question.id)"
             >
-              編集
+              <font-awesome-icon :icon="['fas', 'edit']" />
             </button>
           </td>
           <td>
@@ -144,7 +145,12 @@
               class="btn btn-red"
               @click="modalShow(3, question.id)"
             >
-              削除
+              <font-awesome-icon :icon="['far', 'trash-alt']" />
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-gray" @click="testModalShow(question.id)">
+              <font-awesome-icon :icon="['far', 'keyboard']" />
             </button>
           </td>
         </tr>
@@ -192,12 +198,14 @@
     </ul>
 
     <QuestionEditModal :options="modalOptions" />
+    <TypingTestModal :testModalOptions="testModalOptions" />
   </div>
 </template>
 
 <script>
 import { INTERNAL_SERVER_ERROR } from "../util";
 import QuestionEditModal from "./QuestionEditModal.vue";
+import TypingTestModal from "./TypingTestModal.vue";
 export default {
   data() {
     return {
@@ -244,11 +252,18 @@ export default {
       searchText: "",
       // 検索状態フラグ
       isSearched: false,
+      // タイピングテストモーダル用
+      testModalOptions: {
+        // 問題ID
+        questionId: "",
+      },
     };
   },
   components: {
     // 問題編集モーダル
     QuestionEditModal,
+    // タイピングテストモーダル
+    TypingTestModal,
   },
   methods: {
     // 問題一覧取得
@@ -286,6 +301,13 @@ export default {
       this.modalOptions.questionId = id;
       // モーダルウィンドウ表示
       this.$modal.show("modal-question-edit");
+    },
+    // タイピングテストモーダルウィンドウ表示
+    testModalShow(id) {
+      // 問題ID設定
+      this.testModalOptions.questionId = id;
+      // モーダルウィンドウ表示
+      this.$modal.show("modal-typing-test");
     },
     // ページング用配列作成
     createRange(start, end) {

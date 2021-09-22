@@ -1283,11 +1283,11 @@ a:hover {
 }
 
 .main-container #question table thead th:nth-child(1) {
-  width: 5%;
+  width: 8%;
 }
 
 .main-container #question table thead th:nth-child(2) {
-  width: 15%;
+  width: 17%;
 }
 
 .main-container #question table thead th:nth-child(3) {
@@ -1303,11 +1303,15 @@ a:hover {
 }
 
 .main-container #question table thead th:nth-child(6) {
-  width: 10%;
+  width: 5%;
 }
 
 .main-container #question table thead th:nth-child(7) {
-  width: 10%;
+  width: 5%;
+}
+
+.main-container #question table thead th:nth-child(8) {
+  width: 5%;
 }
 
 .main-container #question table thead th .icon {
@@ -1323,7 +1327,8 @@ a:hover {
 .main-container #question table tbody td:nth-child(1),
 .main-container #question table tbody td:nth-child(2),
 .main-container #question table tbody td:nth-child(6),
-.main-container #question table tbody td:nth-child(7) {
+.main-container #question table tbody td:nth-child(7),
+.main-container #question table tbody td:nth-child(8) {
   text-align: center;
 }
 
@@ -1354,6 +1359,268 @@ a:hover {
 
 .main-container #question .pagination .disabled {
   cursor: not-allowed;
+}
+
+.main-container #question .modal-typing-test .vm--modal {
+  height: auto !important;
+}
+
+.main-container #question .modal-typing-test .modal-header {
+  text-align: right;
+}
+
+.main-container #question .modal-typing-test .modal-header .icon {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.main-container #question .modal-typing-test .modal-header .icon:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.main-container #question .modal-typing-test .modal-main {
+  padding: 15px;
+}
+
+.main-container #question .modal-typing-test .modal-main .display-question {
+  width: 70%;
+  margin: 10px auto;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 3px solid #668ad8;
+  word-break: break-all;
+  background: repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px, #e9f4ff 3px, #e9f4ff 7px);
+}
+
+.main-container #question .modal-typing-test .modal-main .display-question .display-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #707070;
+}
+
+.main-container #question .modal-typing-test .modal-main .display-question .display-kana {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  color: #707070;
+}
+
+.main-container #question .modal-typing-test .modal-main .display-question .display-roman {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #a6a6a6;
+}
+
+.main-container #question .modal-typing-test .modal-main .display-question .inputed {
+  font-size: 1.6rem;
+  color: orange;
+}
+
+.main-container #question .modal-typing-test .modal-main .display-question .progress {
+  display: inline-block;
+  width: 100%;
+  border-radius: 15px;
+  height: 10px;
+  background-color: #e9edf1;
+  position: relative;
+}
+
+.main-container #question .modal-typing-test .modal-main .display-question .progress .progress-bar {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 15px;
+  width: 0%;
+  height: 100%;
+  background-color: #00e664;
+  transition: all 1ms linear;
+}
+
+.main-container #question .modal-typing-test .modal-main .missed {
+  -webkit-animation: flash 0.9s linear infinite;
+          animation: flash 0.9s linear infinite;
+}
+
+@keyframes flash {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.main-container #question .modal-typing-test .modal-main .error {
+  color: red;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container {
+  display: flex;
+  justify-content: center;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard {
+  display: flex;
+  flex-direction: column;
+  background-color: #fcf6ec;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row {
+  display: flex;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row .key {
+  border: 1px solid #d8d8d8;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 35px;
+  text-align: center;
+  margin: 3px 3px 3px 3px;
+  width: 35px;
+  height: 35px;
+  color: #9c9c9c;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row .target-key {
+  background-color: #f6993f;
+  color: #525151;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row .missed {
+  -webkit-animation: flash 0.3s linear infinite;
+          animation: flash 0.3s linear infinite;
+}
+
+@keyframes flash {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-tab {
+  width: 55px;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-enter-1 {
+  border-left: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  border-radius: 3px 3px 0 3px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 35px;
+  text-align: center;
+  margin: 3px 3px 3px 3px;
+  width: 55px;
+  position: relative;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-enter-1::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: 0px;
+  display: inline-block;
+  width: 10px;
+  height: 1px;
+  transform: translateX(-50%);
+  background-color: #d8d8d8;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-caps {
+  width: 65px;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-enter-2 {
+  border-left: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  border-radius: 0 0 3px 3px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 35px;
+  text-align: center;
+  margin: -4px 3px 3px 3px;
+  width: 45px;
+  position: relative;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-shift-left {
+  width: 80px;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-shift-right {
+  width: 70px;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-ctrl {
+  width: 50px;
+}
+
+.main-container #question .modal-typing-test .modal-main #keyboard-container #keyboard .row #key-space {
+  width: 140px;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand {
+  display: flex;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right {
+  display: flex;
+  align-items: flex-end;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left .finger,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right .finger {
+  border: 1px solid #d8d8d8;
+  border-radius: 20px 20px 0 0;
+  margin: 5px 5px 5px 5px;
+  width: 35px;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left .target-finger,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right .target-finger {
+  background-color: #f6993f;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left .finger-little,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right .finger-little {
+  height: 70px;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left .finger-ring,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right .finger-ring {
+  height: 90px;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left .finger-middle,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right .finger-middle {
+  height: 100px;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left .finger-index,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right .finger-index {
+  height: 85px;
+}
+
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-left .finger-thumb,
+.main-container #question .modal-typing-test .modal-main #hand-container #hand #hand-right .finger-thumb {
+  height: 40px;
 }
 
 .main-container .modal-question-edit .vm--modal {
