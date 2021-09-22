@@ -47,6 +47,7 @@ https://typing.mikanbako.jp
   * 作成
   * 編集
   * 削除
+  * タイピングテスト
 * タイピング画面
   * 待機画面
   * タイピング
@@ -88,18 +89,23 @@ https://typing.mikanbako.jp
 
 ## 問題編集画面
 ### データ一覧表示
-![question_view](https://user-images.githubusercontent.com/18690548/134158885-62bd9d60-0238-426b-9788-06e7dba214ef.png)
+![question_view](https://user-images.githubusercontent.com/18690548/134401898-d201f452-a1f3-4042-b881-575490708837.png)
 
 登録されている問題データが表示されます。編集可能データのみ表示の切替もできます。テーブルヘッダーをクリックすることで昇順、降順で並び替えができます。検索機能を使用するとデータの絞り込みができます。
 ### 作成、編集
-![question_create](https://user-images.githubusercontent.com/18690548/134140479-eb281c51-8e0e-4fd1-a385-3ceb27f468a1.gif)
+![question_create](https://user-images.githubusercontent.com/18690548/134402002-8e8145af-62dd-406b-8717-b84bc2e91531.gif)
 
 問題データを作成できます。問題フォームへ入力された文字列からふりがなとローマ字を生成（[Yahoo ルビ振りWebAPI](https://developer.yahoo.co.jp/webapi/jlp/furigana/v2/furigana.html)を使用）できます。編集は自分が作成したデータのみ可能です。（管理者ユーザーは全て可能です）
 
 ### 削除
-![question_delete](https://user-images.githubusercontent.com/18690548/134140777-7faca11b-80c4-41f2-b2c6-0826367b4b2f.gif)
+![question_delete](https://user-images.githubusercontent.com/18690548/134402126-5aceb1a4-60db-4351-81be-0a4301772e40.gif)
 
 問題データを削除します。自分が作成したデータのみ可能です。（管理者ユーザーは全て可能です）
+
+### タイピングテスト
+![question_test](https://user-images.githubusercontent.com/18690548/134403711-292ca028-f9f1-4699-9659-43218ddcd0a6.gif)
+
+問題のタイピングテストを行うことができます。全てのログインユーザーが実施可能です。
 
 ## タイピング画面
 タイピングを行う画面です。タイピングはPCでの操作を想定して作成しています。
